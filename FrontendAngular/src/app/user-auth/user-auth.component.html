@@ -1,0 +1,46 @@
+
+<section class="login_body" >
+    <div class="wrapper">
+        <form action="#" (ngSubmit)="loginSubmit()" [formGroup]="loginForm">
+          <h2>Login</h2>
+
+          <div class="as_a_instructor">
+            <label for="instructor">
+              <input type="checkbox" id="instructor" formControlName="is_ins">
+              <!-- <p>As a Instrcutor</p> -->
+            </label>
+            <a>As a Instrcutor</a>
+          </div>
+          <!-- <div class="info">
+            <p>In case of instructor provide Email in place of Username</p>
+          </div> -->
+
+          <div class="input-field">
+            <input type="text" formControlName="username" required>
+            <label>Enter Username</label>
+          </div>
+          <!-- <div class="input-field">
+            <input type="email" formControlName="email" required>
+            <label>Enter your email</label>
+          </div> -->
+          <div class="input-field">
+            <input type="password" formControlName="password" required>
+            <label>Enter your password</label>
+          </div>
+          <div class="forget">
+            <label for="remember">
+              <input type="checkbox" id="remember">
+              <p>Remember me</p>
+            </label>
+            <a href="#">Forgot password?</a>
+          </div>
+          <button type="submit">Log In</button>
+          <div class="register">
+            <p>Don't have an account? <a routerLink="/register">Register</a></p>
+          </div>
+          
+        </form>
+      </div>
+</section>
+
+

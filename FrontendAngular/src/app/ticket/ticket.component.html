@@ -1,0 +1,59 @@
+<div class="ticket_container">
+
+
+    <div>
+        <div class="new_ticket_container" *ngIf="!is_instructor">
+            <h2>Create Ticket</h2>
+            <div>
+                <form (ngSubmit)="createTickets()" [formGroup]="ticketForm">
+                    <div class="input-box">
+                      <input type="text" placeholder="Title" formControlName="title" required>
+                    </div>
+                    <div class="input-box">
+                     
+                        <select name="" id="" formControlName="reason" required>
+                            <option value="Leave">Leave</option>
+                            <option value="Assignment">Assignment</option>
+                            <option value="Support">Support</option>
+                           
+                        </select>
+                    </div>
+                    <div class="input-box message-box">
+                      <textarea name="message-box" id="" cols="30" rows="10" placeholder="Enter Your Message" formControlName="description" required></textarea>
+                    </div>
+                    <div class="input-box">
+                        <input type="number" placeholder="studentId" formControlName="studentId" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="file" disabled>
+                    </div>
+                    
+                  
+                    <div class="ticket_button">
+                        <select name="" id="" formControlName="instructorId" required>
+                            <option value="1">Leave</option>
+                            <option value="2">Assignment</option>
+                            <option value="3">Support</option>
+                           
+                        </select>
+                    </div>
+
+                    <div class="create_button">
+                        <input type="submit" value="Create Ticket" >
+                      </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="previous_ticket_container" *ngFor="let item of list_ticket">
+            <div class="ticket_item">
+                <h4>{{item.title}}</h4>
+                <h5>Reason: {{item.reason}}</h5>
+              
+            </div>
+           
+        </div>
+
+
+    </div>
+</div>

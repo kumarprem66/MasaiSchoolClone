@@ -1,0 +1,112 @@
+
+<section class="instructor_register_body">
+    <div class="wrapper">
+        <form (ngSubmit)="instruc_regis()" [formGroup]="instructor_form">
+          <h2 class="form_header">INSTRUCTOR REGISTRATION FORM</h2>
+          <div class="register_form_div">
+            <div>
+
+                <div class="input-field">
+                    <input type="text" formControlName="name" required>
+                    <label>Enter Name</label>
+                  </div>
+                    <div class="input-field">
+                    
+                      <select name="gender" id="gender" formControlName="gender" required >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      <label>Enter Gender</label>
+                  </div>
+          
+                  <div class="input-field">
+                    <input type="number" formControlName="experience" required>
+                    <label>Teaching Experience(offline/online)</label>
+                  </div>
+                  <div class="input-field">
+                    <input type="file" disabled>
+                    <label>Attach Resume</label>
+                  </div>
+                  <div class="input-field">
+                    <input type="date" placeholder="Date of Birth" formControlName="data_of_birth" required>
+                    <!-- <label>Date of Birth</label> -->
+                  </div>
+                  <div class="input-field">
+                    
+                    <select name="department" id="department" formControlName="department"  required >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+
+                    <!-- <input type="number" formControlName="department" required> -->
+                    <label>Enter department</label>
+                </div>
+
+
+              </div>
+              
+              <div>
+                <div class="input-field">
+                    <input type="text" formControlName="qualification" required>
+                    <label>Qualification</label>
+                  </div>
+                  <div class="input-field">
+                   <input type="text" formControlName="expertise" required>
+                   <label>Expertise</label>
+                  </div>
+                  <div class="input-field">
+                    <input type="number" formControlName="expected_salary" required>
+                    <label>Expected salary</label>
+                   </div>
+                   <div class="input-field">
+                    <input type="email" formControlName="email" required>
+                    <label>Enter Email</label>
+                   </div>
+                   <div class="input-field">
+                    <input type="text" formControlName="contact_number" required>
+                    <label>Contact Number</label>
+                   </div>
+                   <div class="input-field">
+                    <input type="password" formControlName="password" required>
+                    <label>Set a Password</label>
+                   </div>
+                 
+              </div>
+          </div>
+          <button type="submit">Save</button>
+          
+        </form>
+      </div>
+  </section>
+  
+
+  <section class="all_Instructor_container">
+
+  
+
+    <div class="card_container">
+        <div class="card mycard" *ngFor="let instruc of all_instructor; let i = index">
+            <img src="../../assets/courses{{(i+1)%8}}.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{instruc.name}}</h5>
+              <h6>Qualification: {{instruc.qualification !== '' ? instruc.qualification: 'MBA'}}</h6>
+              <h6>Expertise: {{instruc.expertise !== '' ? instruc.expertise : 'JAVA'}}</h6>
+              <h6>Gender: {{instruc.gender}}</h6>
+              <h6>Phone: {{instruc.contact_number}}</h6>
+              <h6>Email: {{instruc.email}}</h6>
+              <div class="edit_delete_div">
+                <a (click)="edit_instruc(instruc.id)" class="btn btn-primary">Edit</a>
+                <a (click)="delete_instruc(instruc.id)" class="btn btn-secondary">Delete</a>
+              </div>
+
+            </div>
+        </div>
+
+       
+    </div>
+  </section>
+  
+  
+  

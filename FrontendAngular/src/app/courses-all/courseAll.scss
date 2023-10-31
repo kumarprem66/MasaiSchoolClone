@@ -1,0 +1,118 @@
+
+$primary-color1: #0A2647;
+$primary-color2:  #144272;
+$primary-color3: #205295;
+$primary-color4: #2C74B3;
+$primary-color5: #88aac9;
+
+.all_courses_container{
+    margin-bottom: 50px;
+    // margin-left: 100px;
+    // margin-right: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.all_courses_container h1,.all_courses_container h5{
+
+    text-align: center;
+    color: $primary-color1;
+    font-weight: 700;
+}
+
+
+
+.all_courses_container .card_container{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+}
+
+.all_courses_container .card_container .mycard{
+    width: 17rem;
+    cursor: pointer;
+}
+
+.all_courses_container .card_container .mycard .card-body .edit_delete_div{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    // border: 1px solid red;
+}
+.all_courses_container .card_container .mycard .card-body .edit_delete_div a{
+   flex: 1;
+   margin: 10px;
+}
+
+.rating {
+    display: inline-block;
+    font-size: 24px;
+}
+
+.star_count{
+    font-size: 15px;
+}
+  
+.star {
+color: #ccc; /* Default star color (empty) */
+padding: 2px;
+}
+  
+.star.filled {
+color: gold; /* Colored star */
+}
+  
+
+
+@media screen and (max-width: 650px) {
+    .all_courses_container .card_container{
+
+        grid-template-columns: 1fr;
+        gap: 30px;
+        justify-items: center;
+        
+    }
+
+    .all_courses_container .card_container .mycard{
+        width: 95%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .all_courses_container .card_container .mycard img{
+        width: 50%;
+        height: auto;
+    }
+
+    .all_courses_container .card_container .mycard .card-body .edit_delete_div a{
+        flex: 1;
+        margin: 0px;
+     }
+
+
+}
+
+@media (min-width:651px) and (max-width: 850px) {
+   
+    .all_courses_container .card_container{
+
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+
+}
+
+@media (min-width:851px) and (max-width: 1100px) {
+    .all_courses_container .card_container{
+
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 30px;
+    }
+
+
+}

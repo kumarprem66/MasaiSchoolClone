@@ -1,0 +1,126 @@
+.categories_container{
+
+
+    display: flex;
+    flex-direction: column;
+    margin: 60px;
+ 
+}
+
+.categories_container, .card_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
+    
+}
+
+.categories_container .card_container .category_card{
+
+    position:relative;
+    /* background-color: #205295; */
+    width: 250px;
+    height: 140px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    padding: 30px;
+    margin: 20px;
+    transition: 0.3s;
+    
+}
+
+.categories_container .card_container .category_card:nth-child(1){
+    background-image: url('../../assets/categories1.jpg');
+}
+
+.categories_container .card_container .category_card:nth-child(2){
+    background-image: url('../../assets/categories2.jpg');
+}
+
+.categories_container .card_container .category_card:nth-child(3){
+    background-image: url('../../assets/categories3.jpg');
+}
+
+.categories_container .card_container .category_card:nth-child(4){
+    background-image: url('../../assets/categories4.jpg');
+}
+
+.categories_container .card_container .category_card:nth-child(5){
+    background-image: url('../../assets/categories5.jpg');
+}
+
+.categories_container .card_container .category_card:nth-child(6){
+    background-image: url('../../assets/categories6.jpg');
+}
+
+.categories_container .card_container .category_card:nth-child(7){
+    background-image: url('../../assets/categories7.jpg');
+}
+
+.categories_container .card_container .category_card:nth-child(8){
+    background-image: url('../../assets/categories8.jpg');
+}
+
+h1{
+    display: block;
+    text-align: center;
+    margin: auto;
+
+}
+
+
+
+.categories_container .card_container .category_card h2{
+    text-align: center;
+    font-size: 23px;
+
+  
+}
+
+.categories_container .card_container .category_card a{
+
+    position: absolute;
+    background-color: rgba(148, 71, 71, 0.959);
+    display: flex;
+    color: wheat;
+    margin: 0 2px;
+    font-weight: 600;
+    padding: 8px 15px;
+    transition: 0.4s ease-in;
+    opacity: 0.1;
+
+    bottom: -10px;
+    border-radius: 10px;
+    visibility: hidden;
+
+}
+
+.categories_container .card_container .category_card:hover{
+    background-color: #20539563;
+
+}
+.categories_container .card_container .category_card:hover a{
+    visibility: visible;
+    bottom: 15px;
+    opacity: 1;
+}
+
+@media screen and (max-width:720px){
+
+    .categories_container .card_container .category_card{
+
+        width: 100%;
+        height: 200px;
+
+       
+    }
+
+    
+    
+   
+    
+}

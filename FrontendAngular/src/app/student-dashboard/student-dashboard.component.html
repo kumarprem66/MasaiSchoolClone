@@ -1,0 +1,62 @@
+<section class="student_dash_container">
+    <div class="student_dashboard">
+        <h1>Today's Schedule</h1>
+        <div class="announcement_section">
+           
+            <!-- <div class="ann_item">
+               <div>
+                <p>
+
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, deleniti?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit, eum?.
+                </p>
+                <p>8/30/23 - 2:27 PM</p>
+               </div>
+               <div>
+                <p>
+
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, deleniti?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit, eum?.
+                </p>
+                <p>8/30/23 - 2:27 PM</p>
+               </div>
+               <div>
+                <p>
+
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, deleniti?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit, eum?.
+                </p>
+                <p>8/30/23 - 2:27 PM</p>
+               </div>
+               <div>
+                <p>
+
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, deleniti?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit, eum?.
+                </p>
+                <p>8/30/23 - 2:27 PM</p>
+               </div>
+               
+            </div> -->
+        </div>
+        <div class="lectures_section" *ngFor="let lecture of lecture_list">
+            <div class="lecture_item">
+                <div class="item_left">
+                    <div>
+                        <h2>{{convertDate(lecture.timing)}}</h2>
+                        <h3>Lecture</h3>
+                    </div>
+                    <div>
+                        <h2>{{lecture.topic_title}}</h2>
+                        <span>{{lecture.lecture_course_name}}</span>
+                        <p> starting this at 11:00 AM</p>
+                        <div class="course_type_tag">
+                            <span>coding</span>
+                            <span>Live</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item_right">
+                    <p>Details</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

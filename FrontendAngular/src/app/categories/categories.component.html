@@ -1,0 +1,12 @@
+<section class="categories_container">
+    <h1>Explore top categories</h1>
+
+    <div class="card_container">
+        <div class="category_card" *ngFor="let cat of categories">
+            <h2>{{cat.cat_name}}</h2>
+            <a (click)="getCategoryCourses(cat.id)" class="">Courses</a>
+        </div>
+       
+       
+    </div>
+</section>

@@ -1,0 +1,124 @@
+<header class="shadow-lg p-3 mb-5 bg-white rounded" [class.sticky]="navbarIsSticky" id="nav" >
+    <div class="logo">
+        <h2 class="website_logo" (click)="go_home_page()" >SPARLEOM</h2>
+    </div>
+    <input type="checkbox" id="nav_check" hidden>
+    <nav>
+       
+        <div class="logo">
+            <h2 class="website_logo" (click)="go_home_page()">SPARLEOM</h2>
+        </div>
+      <div [ngSwitch]="menuType">
+        <ul *ngSwitchCase="'default'">
+            <li>
+                <a routerLink=""  [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')">Home</a>
+            </li>
+           
+            <li>
+                <a routerLink="/courses" [ngClass]="{'active': activeItem === 'Courses'}" (click)="setActiveItem('Courses')">Courses</a>
+            </li>
+            <li>
+                <a routerLink="/about" [ngClass]="{'active': activeItem === 'About'}" (click)="setActiveItem('About')">About</a>
+            </li>
+            <li>
+                <a routerLink="/contact" [ngClass]="{'active': activeItem === 'Contact'}" (click)="setActiveItem('Contact')">Contact</a>
+            </li>
+            <li>
+                <a (click)="login()" [ngClass]="{'active': activeItem === current_user}" (click)="setActiveItem(current_user)">{{current_user}}</a>
+            </li>
+            <li>
+                <a (click)="logout()" [ngClass]="{'active': activeItem === 'Logout'}" (click)="setActiveItem('Logout')" *ngIf="current_user != 'Login'">Logout</a>
+            </li>
+            <li>
+                <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Profile')">Profile</a>
+            </li>
+            <li>
+                <a routerLink="/admin-auth" [ngClass]="{'active': activeItem === 'Admin'}" (click)="setActiveItem('Admin')">Admin</a>
+            </li>
+        </ul>
+
+        <ul *ngSwitchCase="'instructor'">
+            <li>
+                <a routerLink="/instructor-dashboard" [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')">Home</a>
+            </li>
+
+            <li>
+                <a routerLink="/admin-create-lecture" [ngClass]="{'active': activeItem === 'Lectures'}" (click)="setActiveItem('Lectures')">Lectures</a>
+            </li>
+           
+            <li>
+                <a routerLink="/instruc-assignment" [ngClass]="{'active': activeItem === 'Assignment'}" (click)="setActiveItem('Assignment')">Assignment</a>
+            </li>
+            <li>
+                <a routerLink="/admin-create-announcement" [ngClass]="{'active': activeItem === 'Announcement'}" (click)="setActiveItem('Announcement')">Announcement</a>
+            </li>
+            <li>
+                <a routerLink="/ticket" [ngClass]="{'active': activeItem === 'Ticket'}" (click)="setActiveItem('Ticket')">Ticket</a>
+            </li>
+          
+            <li>
+                <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Add Course')">Profile</a>
+            </li>
+            <li>
+                <a (click)="instructorlogout()">Logout</a>
+            </li>
+        </ul>
+
+        <ul *ngSwitchCase="'admin'">
+            <li>
+                <a routerLink="/admin-dashboard" [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')" >Home</a>
+            </li>
+           
+            <li>
+                <a routerLink="/admin-add-course" [ngClass]="{'active': activeItem === 'Add Course'}" (click)="setActiveItem('Add Course')">Add Course</a>
+            </li>
+            <li>
+                <a routerLink="/admin-create-announcement" [ngClass]="{'active': activeItem === 'Announcement'}" (click)="setActiveItem('Announcement')">Announcement</a>
+            </li>
+            <li>
+                <a routerLink="/admin-create-lecture" [ngClass]="{'active': activeItem === 'Lecture'}" (click)="setActiveItem('Lecture')">Lecture</a>
+            </li>
+            <li>
+                <a routerLink="/courses-all" [ngClass]="{'active': activeItem === 'Courses'}" (click)="setActiveItem('Courses')">Courses</a>
+            </li>
+            <li>
+                <a routerLink="/instruc-register" [ngClass]="{'active': activeItem === 'Instructors'}" (click)="setActiveItem('Instructors')">Instructors</a>
+            </li>
+            <li>
+                <a (click)="adminlogout()">Logout</a>
+            </li>
+        </ul>
+        <ul *ngSwitchCase="'student'">
+            <li>
+                <a routerLink="/student_dashboard" [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')">Home</a>
+            </li>
+           
+            <li>
+                <a routerLink="/lecture" [ngClass]="{'active': activeItem === 'Lectures'}" (click)="setActiveItem('Lectures')">Lectures</a>
+            </li>
+            <li>
+                <a routerLink="/assignment" [ngClass]="{'active': activeItem === 'Assignment'}" (click)="setActiveItem('Assignment')">Assignment</a>
+            </li>
+            <li>
+                <a routerLink="/announcement" [ngClass]="{'active': activeItem === 'Announcement'}" (click)="setActiveItem('Announcement')">Announcement</a>
+            </li>
+            <li>
+                <a routerLink="/ticket" [ngClass]="{'active': activeItem === 'Ticket'}" (click)="setActiveItem('Ticket')">Ticket</a>
+            </li>
+            <li>
+                <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Profile')">Profile</a>
+            </li>
+           <li>
+            <a (click)="studentlogout()">Logout</a>
+           </li>
+        </ul>
+      </div>
+
+        
+    </nav>
+    <label for="nav_check" class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </label>
+</header>

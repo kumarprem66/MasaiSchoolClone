@@ -1,0 +1,62 @@
+:root{
+    
+--prima: #0A2647;
+
+}
+
+.instructor_assign_container{
+    margin: 5%;
+}
+
+
+.instructor_assign_container>div .new_assignment_container h2{
+
+   
+    text-align: center;
+}
+
+.instructor_assign_container>div .new_assignment_container .input-box input,
+.instructor_assign_container>div .new_assignment_container .input-box textarea{
+
+   
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.instructor_assign_container>div .new_assignment_container .create_button input{
+
+    padding: 5px 10px;
+    background-color: #0A2647;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.instructor_assign_container>div .previous_assignment_container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    margin-top: 30px;
+    background-color: white;
+
+}
+.instructor_assign_container>div .previous_assignment_container .assignment_item{
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    padding: 10px;
+    background-color: red;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+}
+
+.instructor_assign_container>div .previous_assignment_container .assignment_item>div>span{
+
+    margin-left: 10px;
+}

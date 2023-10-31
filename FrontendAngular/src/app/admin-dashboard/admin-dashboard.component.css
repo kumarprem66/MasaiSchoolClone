@@ -1,0 +1,71 @@
+:root{
+
+    --primary1: #0A2647;
+    --primary2:  #144272;
+    --primary3: #205295;
+    --primary4: #2C74B3;
+    --primary5: #88aac9;
+}
+
+
+.admin_dash_container{
+
+    margin: 5%;
+    
+}
+
+.admin_course_select{
+    font-size: 20px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.admin_dash_container h1{
+    text-align: center;
+    margin: 20px;
+}
+
+.content-table{
+    border-collapse: collapse;
+    
+    min-width: 500px;
+    font-size: 1.1rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+}
+
+.content-table thead tr{
+    background-color: #205295;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+    /* border: 1px solid red; */
+    text-align: center;
+}
+
+.content-table tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom:  2px solid var(--primary5);
+}
+.content-table tbody tr.active-row{
+    font-weight: bold;
+    color: #205295;
+}

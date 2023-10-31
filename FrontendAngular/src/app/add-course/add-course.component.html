@@ -1,0 +1,89 @@
+
+
+
+<section class="add_course_body">
+  <div class="wrapper">
+      <form (ngSubmit)="onSubmit()" [formGroup]="courseForm" enctype="multipart/form-data">
+        <h2 class="form_heading">ADD COURSE</h2>
+        <div class="add_course_form">
+          <div>
+            <div class="input-field">
+              <input type="text" formControlName="course_code" placeholder="Enter Course Code" required>
+              <!-- <label>Enter Course Code</label> -->
+            </div>
+            <div class="input-field">
+              <input type="text" formControlName="course_name" placeholder="Enter Course Name" required>
+              <!-- <label>Enter Course Name</label> -->
+            </div>
+              <div class="input-field">
+              <input type="text" formControlName="duration" placeholder="Enter Course Duration" required>
+              <!-- <label>Enter Course Duration</label> -->
+            </div>
+            <div class="input-field">
+              <input type="number" formControlName="course_price" placeholder="Enter Price" required>
+              <!-- <label>Enter Price</label> -->
+            </div>
+            <div class="input-field">
+              <input type="number" formControlName="rating" placeholder="Enter Rating" required>
+              <!-- <label>Enter Rating</label> -->
+            </div>
+            <div class="input-field">
+              <input type="number" formControlName="rating_count" placeholder="Number of Rating" required>
+              <!-- <label>Number of Rating</label> -->
+            </div>
+            <div class="input-field">
+              <input type="text" formControlName="course_language" placeholder="Enter Language" required>
+              <!-- <label>Enter Language</label> -->
+            </div>
+
+    
+          </div>
+         <div>
+          <div class="input-field">
+            <!-- name="image" formControlName="image" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png" -->
+            <input type="file"  disabled>
+            
+          </div>
+          <div class="input-field">
+            <label>Instructor id </label>
+            <select name="Instructor" id="Instructor" formControlName="Instructor" required>
+              <option *ngFor="let item of intruc_options" [value]="item.value">{{item.text}}</option>
+              
+            </select>
+            
+          </div>
+          <div class="input-field">
+            <label>Department id</label>
+            <select name="department" id="department" formControlName="department">
+              <option *ngFor="let item of depart_options" [value]="item.value">{{item.text}}</option>
+              
+            </select>
+          
+          </div>
+          <div class="check">
+            <input type="checkbox" formControlName="is_available" required>
+            <label>is available</label>
+          </div>
+          <div class="input-field">
+            <input type="number" formControlName="student_enrolled" placeholder="Studnet Erolled" required>
+            <!-- <label>Studnet Erolled</label> -->
+          </div>
+          <div class="input-field">
+            <!-- <input type="text" formControlName="" required> -->
+            <textarea name="description" id="description"  formControlName="description" placeholder="Enter Description" ></textarea>
+            <!-- <label>Description</label> -->
+          </div>
+         </div>
+        </div>
+
+
+        <div class="create_button">
+          <input type="submit" value="Create" >
+        </div>
+        
+      </form>
+    </div>
+</section>
+
+
+

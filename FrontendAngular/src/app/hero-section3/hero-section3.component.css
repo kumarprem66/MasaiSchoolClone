@@ -1,0 +1,15 @@
+
+.card-link {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background: #0A2647;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition:  0.2s;
+}
+
+.hero3_right:hover .card-link {
+    background: #0A2647;
+}
+

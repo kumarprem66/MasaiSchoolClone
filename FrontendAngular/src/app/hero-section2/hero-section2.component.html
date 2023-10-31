@@ -1,0 +1,56 @@
+<section class="container">
+
+    <h1 class="hero_section2_h1">{{main_heading}}</h1>
+    <h5>{{second_heading}}</h5>
+
+    <ul class="cards">
+       
+        <li class="card" *ngFor="let course of all_courses; let i = index" (click)="show_course_details(course.id)">
+
+            <div class="mycard" >
+              <img src="../../assets/courses{{(i+1)%8}}.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{course.course_name}}</h5>
+                <h6>Duraton: {{course.duration}}</h6>
+                <h6>₨. {{course.course_price}}</h6>
+             
+                <div class="rating">
+                  <span class="star {{ course.rating >= 1 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ course.rating >= 2 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ course.rating >= 3 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ course.rating >= 4 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ course.rating >= 5 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star_count">({{course.rating_count}})</span>
+                </div>
+                <br>
+                
+                <div class="details_buy_div">
+                  <a (click)="details_course(course.id)" class="btn btn-primary">Details</a>
+                  <a (click)="buy_course(course.id)" class="btn btn-secondary">Buy Now</a>
+                </div>
+  
+              </div>
+          </div>
+        </li>
+
+        <!-- <li class="card">
+
+            <div class="mycard">
+                <img src="../../assets/courses1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <div>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                  </div>
+                  <a href="#" class="btn btn-primary">Enroll Now</a>
+                </div>
+            </div>
+        </li> -->
+       
+    </ul>
+</section>

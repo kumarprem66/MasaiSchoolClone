@@ -1,0 +1,52 @@
+<div class="instructor_assign_container">
+    <div>
+        <div class="new_assignment_container">
+            <h2>Create Assignment</h2>
+            <div>
+                <form (ngSubmit)="createAssignment()" [formGroup]="assignmentForm">
+                    <div class="input-box">
+                      <input type="text" placeholder="Topic" formControlName="title">
+                    </div>
+                  
+                    <div class="input-box message-box">
+                      <textarea name="message-box" id="" cols="30" rows="10" placeholder="Enter Instruction" formControlName="description" required></textarea>
+                    </div>
+                    <div class="input-box message-box">
+                        <textarea name="message-box" id="" cols="30" rows="10" placeholder="Enter Assignment details" formControlName="instructon"></textarea>
+                    </div>
+                    <div class="input-box">
+                        <input type="datetime-local" placeholder="Start date" formControlName="start_date" required>
+                      </div>
+                      <div class="input-box">
+                        <input type="date" placeholder="End Date" formControlName="due_date" required>
+                      </div>
+                      <div class="input-field">
+                        <select name="course" id="course" formControlName="course" required>
+                          <option *ngFor="let item of course_options" [value]="item.value">{{item.text}}</option>
+                          
+                        </select>
+                        <label>Select Course</label>
+                      </div>  
+                    <div class="create_button">
+                      <input type="submit" value="Create Assignment" >
+                    </div>
+                    
+
+                </form>
+            </div>
+        </div>
+
+        <div class="previous_assignment_container" *ngFor="let item of all_assignment">
+            <div class="assignment_item">
+                <h4>{{item.title}}</h4>
+               <div>
+                <span>Start date: {{ convertDate(item.start_date)}}</span>
+                <span>End date: {{item.due_date}}</span>
+               </div>
+            </div>
+           
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,76 @@
+
+
+    
+.create_announce_body{
+    margin: 5%;
+}
+
+
+.create_announce_body>div .wrapper h2{
+
+    
+    text-align: center;
+}
+
+.create_announce_body>div .wrapper .input-box input,
+.create_announce_body>div .wrapper .input-box textarea{
+
+    
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.create_announce_body>div .wrapper .create_button input{
+
+    padding: 5px 10px;
+    background-color: #0A2647;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+
+
+   
+
+
+
+  /*   ====================================     list  ================================ */
+
+  .previous_announcement_container{
+    margin: 3%;
+    background-color: white;
+  }
+
+  .previous_announcement_container .announcement_item{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid #0A2647;
+    height: 105px;
+    overflow: auto;
+    margin-bottom: 10px;
+    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+
+  }
+  .previous_announcement_container .announcement_item h5{
+    color: #0A2647;
+    font-weight: 700;
+  }
+  .previous_announcement_container .announcement_item>div{
+    display: flex;
+  }
+  .previous_announcement_container .announcement_item>div a{
+    margin-left: 20px;
+    color: red;
+    cursor: pointer;
+  }
+
+  .previous_announcement_container .announcement_item>div p{
+    color: #0A2647;
+    font-weight: 600;
+    padding-bottom: 5px;
+  }

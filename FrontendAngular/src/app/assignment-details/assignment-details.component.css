@@ -1,0 +1,45 @@
+.assignment_container{
+    padding: 5%;
+    background-color: white;
+}
+
+.assignment_container .assign_cont{
+    display: flex;
+    flex-direction: column;
+
+}
+.assignment_container .assign_cont .instruction_cont h1{
+
+    text-align: center;
+
+
+}
+
+.assignment_container .assign_cont .problem_cont h1{
+    text-align: center;
+}
+
+.assignment_container .assign_cont div:last-child input{
+    padding: 5px 10px;
+    width: 50%;
+
+}
+.assignment_container .assign_cont>div:last-child{
+
+    display: flex;
+
+    flex-direction: row;
+    justify-content: center;
+
+}
+.assignment_container .assign_cont>div:last-child button{
+    padding: 0 10px;
+    background-color: #205295;
+    color: white;
+    outline: none;
+    border: none;
+}
+.assignment_container .assign_cont p{
+    font-size: 18px;
+   
+}

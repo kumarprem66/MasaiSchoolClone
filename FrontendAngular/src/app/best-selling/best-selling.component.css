@@ -1,0 +1,11 @@
+.container .cards .card .mycard .card-body>div:last-child{
+ 
+    display: flex;
+
+    justify-content: center;
+    flex-direction: row;
+
+}
+.container .cards .card .mycard .card-body>div:last-child a{
+  flex: 1;
+}

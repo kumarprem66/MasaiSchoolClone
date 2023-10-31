@@ -1,0 +1,18 @@
+.banner_container{
+    height: 300px;
+    background-color: #0A2647;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-bottom: 50px;
+   
+}
+.banner_container h2,p{
+
+    color: white;
+    margin-left: 30px;
+
+
+}

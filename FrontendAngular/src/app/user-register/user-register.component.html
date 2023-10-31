@@ -1,0 +1,34 @@
+
+<section class="register_body">
+    <div class="wrapper">
+
+        <form (ngSubmit)="userRegister()" [formGroup]="userData">
+          <h2>Register</h2>
+          <div class="input-field">
+            <input type="text" formControlName="username" required>
+            <label>Enter Username</label>
+          </div>
+        
+
+            <div class="input-field">
+            <input type="text" formControlName="email" required>
+            <label>Enter your email</label>
+          </div>
+
+        
+          <div class="input-field">
+            <input type="password" formControlName="password" required>
+            <label>Set your password</label>
+          </div>
+         
+
+          <button type="submit">Register</button>
+          <div class="register">
+            <p>Already have an account? <a routerLink="/login">Login</a></p>
+          </div>
+        </form>
+      </div>
+</section>
+
+
+

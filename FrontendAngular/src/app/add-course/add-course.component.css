@@ -1,0 +1,43 @@
+
+ .add_course_body{
+  margin: 5%;
+}
+
+
+.add_course_body .wrapper h2{
+
+  
+  text-align: center;
+}
+
+.add_course_body .wrapper .input-field input,
+.add_course_body .wrapper .input-field textarea,
+.add_course_body .wrapper .input-field select{
+
+  
+  padding: 10px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.add_course_body .wrapper .create_button input{
+
+  padding: 5px 10px;
+  background-color: #0A2647;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.add_course_body .wrapper .check{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.add_course_body .wrapper .check label{
+  margin-left: 10px;
+}

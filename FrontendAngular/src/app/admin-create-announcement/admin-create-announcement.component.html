@@ -1,0 +1,52 @@
+
+<section class="create_announce_body" *ngIf="!is_inst_is_stu">
+   
+  <div>
+    <div class="wrapper">
+      <h2>CREATE ANNOUONCEMENT</h2>
+
+        <form  (ngSubmit)="createAnnounce()" [formGroup]="announceForm">
+          <div>
+
+           
+          <div class="input-box">
+            <input type="text" formControlName="title" placeholder="Enter Title" required>
+            <!-- <label>Enter Title</label> -->
+          </div>
+          <div class="input-box">
+            <textarea name="" id="" placeholder="Enter Details" formControlName="description"></textarea>
+          
+          </div>
+          <div class="input-box">
+            <input type="date" formControlName="publish_date" required>
+            <!-- <label>Enter date</label> -->
+          </div>
+          <div class="create_button">
+            <input type="submit" value="Create" >
+          </div>
+        </div>
+         
+        </form>
+
+        
+          
+    </div>
+  </div>
+   
+
+  </section>
+  <div class="previous_announcement_container">
+    <div class="announcement_item" *ngFor="let ann of ann_list">
+        <h5>{{ann.title}}</h5>
+        <p>{{ann.description}}</p>
+        <div> 
+          <p>{{ann.publish_date}}</p>
+          <a (click)="deleteAnnoun(ann.id)">Delete</a>
+        </div>
+    </div>
+  </div>
+
+  
+  
+  
+  
