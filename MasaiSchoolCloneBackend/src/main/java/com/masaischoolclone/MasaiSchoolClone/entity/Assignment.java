@@ -21,7 +21,12 @@ public class Assignment {
     private String title;
     private String description;
     private String instruction;
+
+
+    @Temporal(TemporalType.DATE)
     private Date start_date;
+
+    @Temporal(TemporalType.DATE)
     private Date due_date;
 
     private Integer lectureId;

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,7 +20,9 @@ public class Lecture {
     private Integer id;
     private String courseName;
     private String topicTitle;
-    private LocalDateTime timing;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timing;
     private String meetingUrl;
 
     private Integer courseId;

@@ -1,9 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +12,17 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Instructor {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Instructor extends User{
 
 
-    private User user;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private String name;
+
+    @Temporal(TemporalType.DATE)
     private Date date_of_birth;
+
     private String email;
     private String contact_number;
     private String password;

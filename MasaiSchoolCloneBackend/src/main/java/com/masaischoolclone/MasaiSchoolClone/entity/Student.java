@@ -1,7 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +13,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Student {
-
-    private User user;
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Student extends User{
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Temporal(TemporalType.DATE)
     private Date date_of_birth;
     private String contactNumber;
 
