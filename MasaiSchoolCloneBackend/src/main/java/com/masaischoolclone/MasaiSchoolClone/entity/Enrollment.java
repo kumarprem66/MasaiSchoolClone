@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +18,7 @@ public class Enrollment {
     private Integer id;
 
     @Temporal(TemporalType.DATE)
-    private Date enrollment_date;
+    private Date enrollmentDate;
 
     private Student student;
 

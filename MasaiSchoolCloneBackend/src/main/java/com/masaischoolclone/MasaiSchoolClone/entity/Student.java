@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +13,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Student extends User{
+
+public class Student{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private String name;
 
@@ -22,9 +26,11 @@ public class Student extends User{
     private Gender gender;
 
     @Temporal(TemporalType.DATE)
-    private Date date_of_birth;
+    private Date dateOfBirth;
     private String contactNumber;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
 
     @OneToMany
     private Set<Course> courses;

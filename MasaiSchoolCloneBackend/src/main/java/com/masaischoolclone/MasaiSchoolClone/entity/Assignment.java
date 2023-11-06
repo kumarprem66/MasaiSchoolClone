@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -24,10 +24,10 @@ public class Assignment {
 
 
     @Temporal(TemporalType.DATE)
-    private Date start_date;
+    private Date startDate;
 
     @Temporal(TemporalType.DATE)
-    private Date due_date;
+    private Date dueDate;
 
     private Integer lectureId;
 

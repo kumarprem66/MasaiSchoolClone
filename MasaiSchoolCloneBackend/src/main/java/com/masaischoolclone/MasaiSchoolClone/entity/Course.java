@@ -17,17 +17,17 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String course_code;
-    private String course_name;
+    private String courseCode;
+    private String courseName;
     private String duration;
     private Integer rating;
     private String image;
-    private Boolean is_available;
+    private Boolean isAvailable;
     private String description;
-    private Integer course_price;
-    private Integer rating_count;
-    private String course_language;
-    private Integer student_enrolled;
+    private Integer coursePrice;
+    private Integer ratingCount;
+    private String courseLanguage;
+    private Integer studentEnrolled;
 
 
     @ManyToOne

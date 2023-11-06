@@ -8,6 +8,9 @@ public class MasaiSchoolCloneApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MasaiSchoolCloneApplication.class, args);
+
+
+		System.out.println("prem kumar running......");
 	}
 
 }

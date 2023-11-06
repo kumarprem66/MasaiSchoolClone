@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +20,6 @@ public class Announcement {
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date publish_date;
+    private Date publishDate;
 
 }
