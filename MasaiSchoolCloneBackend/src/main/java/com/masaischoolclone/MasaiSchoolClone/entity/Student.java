@@ -32,6 +32,6 @@ public class Student{
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @OneToMany
+    @ManyToMany
     private Set<Course> courses;
 }

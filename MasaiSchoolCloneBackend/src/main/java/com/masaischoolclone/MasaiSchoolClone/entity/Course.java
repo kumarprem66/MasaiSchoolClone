@@ -45,5 +45,10 @@ public class Course {
     @ManyToMany(mappedBy = "courses",cascade = CascadeType.ALL)
     private Set<Student> students;
 
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    private Set<Announcement> announcements;
+
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    private Set<Assignment> assignments;
 
 }

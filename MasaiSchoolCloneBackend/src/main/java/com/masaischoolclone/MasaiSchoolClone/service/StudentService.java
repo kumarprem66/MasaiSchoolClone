@@ -17,7 +17,7 @@ public interface StudentService {
     Integer deleteStudent(Integer id);
 
     Student getStudent(Integer studentId);
-    
+
     void addCourseToStudent(Integer studentId,Integer courseId);
 
 }

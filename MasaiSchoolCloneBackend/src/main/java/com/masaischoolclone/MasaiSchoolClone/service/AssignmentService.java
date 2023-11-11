@@ -5,12 +5,13 @@ import com.masaischoolclone.MasaiSchoolClone.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AssignmentService {
 
     Assignment assignmentCreate(Assignment assignment);
 
-    List<Assignment> getAssignementList();
+    Set<Assignment> getAssignementList(Integer courseId);
 
     Assignment updateAssignment(Integer updateId,Assignment updatedAssignment);
 

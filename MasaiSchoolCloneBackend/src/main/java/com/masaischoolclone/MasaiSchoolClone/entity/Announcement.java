@@ -22,4 +22,8 @@ public class Announcement {
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
 
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
 }

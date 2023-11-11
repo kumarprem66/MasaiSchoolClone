@@ -34,4 +34,8 @@ public class Assignment {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Submission> submissions;
 
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
 }

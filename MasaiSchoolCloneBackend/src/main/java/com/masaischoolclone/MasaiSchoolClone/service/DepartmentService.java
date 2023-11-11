@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DepartmentService {
 
-    List<Department> getDepartmentList();
+    List<Department> getDepartmentList(Integer numberOfRecords);
 
     Department createDepartment(Department department);
 }
