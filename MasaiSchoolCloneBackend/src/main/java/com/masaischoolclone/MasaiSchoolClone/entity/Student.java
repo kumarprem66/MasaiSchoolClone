@@ -34,4 +34,7 @@ public class Student{
 
     @ManyToMany
     private Set<Course> courses;
+
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
+    private Set<Submission> submissions;
 }

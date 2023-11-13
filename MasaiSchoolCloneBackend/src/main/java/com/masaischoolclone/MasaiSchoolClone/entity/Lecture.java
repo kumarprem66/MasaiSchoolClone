@@ -25,6 +25,11 @@ public class Lecture {
     private Date timing;
     private String meetingUrl;
 
-    private Integer courseId;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
+    @ManyToOne
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
 }

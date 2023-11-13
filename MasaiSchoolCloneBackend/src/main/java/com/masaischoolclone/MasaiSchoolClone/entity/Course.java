@@ -51,4 +51,7 @@ public class Course {
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Assignment> assignments;
 
+    @OneToMany(mappedBy = "course")
+    private List<Lecture> lectures;
+
 }

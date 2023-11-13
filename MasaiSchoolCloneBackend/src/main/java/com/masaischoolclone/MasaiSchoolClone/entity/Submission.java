@@ -24,9 +24,13 @@ public class Submission {
     private Status statusChoices;
     private String remarks;
 
-    private Integer assignmentId;
+    @ManyToOne
+    @JoinColumn(name = "assignment_id")
+    private Assignment assignment;
 
-    private Integer studentId;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
 
 

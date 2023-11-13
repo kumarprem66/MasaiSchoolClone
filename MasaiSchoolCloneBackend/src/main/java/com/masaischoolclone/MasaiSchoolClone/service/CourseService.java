@@ -1,5 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.service;
 
+import com.masaischoolclone.MasaiSchoolClone.dto.CourseDTO;
 import com.masaischoolclone.MasaiSchoolClone.entity.Category;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ public interface CourseService {
 
     List<Course> getCourseList();
 
-    Course updateCourse(Integer updateId,Course updatedCourse);
+    Course updateCourse(Integer updateId, CourseDTO updatedCourse);
     Integer deleteCourse(Integer courseId);
 
     Course getCourse(Integer id);

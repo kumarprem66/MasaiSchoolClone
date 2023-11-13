@@ -1,5 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.service;
 
+import com.masaischoolclone.MasaiSchoolClone.dto.InstructorDTO;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,7 +12,7 @@ public interface InstructorService {
 
     List<Instructor> getInstructors();
 
-    Instructor updateInstructor(Integer instructorId,Instructor updatedInstructor);
+    Instructor updateInstructor(Integer instructorId, InstructorDTO updatedInstructor);
 
     Integer deleteInstructor(Integer insId);
 

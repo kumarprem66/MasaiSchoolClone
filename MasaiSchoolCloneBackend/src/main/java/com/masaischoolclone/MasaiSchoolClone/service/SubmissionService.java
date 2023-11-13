@@ -9,5 +9,9 @@ public interface SubmissionService {
 
     Submission createSubmission(Submission submission);
 
-    List<Submission> getSubmissionList();
+     List<Submission> getSubmissionList(Integer studentId);
+
+
+    List<Submission> getSubmissionList(Integer studentId,Integer AssignmentId);
+
 }

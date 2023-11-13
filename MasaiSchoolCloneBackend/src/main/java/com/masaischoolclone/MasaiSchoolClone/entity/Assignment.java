@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.sql.ast.tree.expression.Summarization;
 
 import java.util.Date;
 import java.util.Set;
@@ -31,11 +32,15 @@ public class Assignment {
 
     private Integer lectureId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assignment",cascade = CascadeType.ALL)
     private Set<Submission> submissions;
+
+
 
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+
 
 }

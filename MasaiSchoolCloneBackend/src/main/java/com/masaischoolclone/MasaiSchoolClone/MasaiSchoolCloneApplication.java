@@ -25,11 +25,6 @@ public class MasaiSchoolCloneApplication {
 	}
 
 
-	@Bean
-	public CommandLineRunner run(AnotherService anotherService) {
-		return args -> {
-			anotherService.someMethod();
-		};
-	}
+
 
 }

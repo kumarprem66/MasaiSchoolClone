@@ -18,6 +18,6 @@ public interface StudentService {
 
     Student getStudent(Integer studentId);
 
-    void addCourseToStudent(Integer studentId,Integer courseId);
+    void enrollInCourse(Integer studentId,Integer courseId);
 
 }

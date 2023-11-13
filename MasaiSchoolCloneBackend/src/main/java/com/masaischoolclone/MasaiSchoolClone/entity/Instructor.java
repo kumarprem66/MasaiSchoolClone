@@ -43,4 +43,7 @@ public class Instructor{
     @ManyToOne
     private Department department;
 
+    @OneToMany(mappedBy = "instructor",cascade = CascadeType.ALL)
+    private Set<Lecture> lectures;
+
 }

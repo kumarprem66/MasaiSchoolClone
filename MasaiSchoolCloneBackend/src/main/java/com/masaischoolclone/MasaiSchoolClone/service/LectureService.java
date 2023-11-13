@@ -13,14 +13,14 @@ public interface LectureService {
 
     List<Lecture> getLectures();
 
-    Instructor updateInstructor(Integer lectureId,Lecture updatedLecture);
+    Lecture updateLecture(Integer lectureId,Lecture updatedLecture);
 
     Integer deleteLecture(Integer lectureId);
 
-    Instructor getLecture(Integer id);
+    Lecture getLecture(Integer id);
 
-    List<Course> getLectureCourse(Integer courseId);
+    List<Lecture> getLectureCourse(Integer courseId);
 
-    List<Course> getInstructorLecture(Integer instructorId,Course courseId);
+    List<Lecture> getInstructorLecture(Integer instructorId,Integer courseId);
 
 }
