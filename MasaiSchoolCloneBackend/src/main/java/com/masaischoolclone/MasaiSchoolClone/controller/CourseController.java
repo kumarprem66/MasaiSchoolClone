@@ -47,7 +47,7 @@ public class CourseController {
 
     }
 
-    @PostMapping("/update/{updateId}")
+    @PutMapping("/update/{updateId}")
     ResponseEntity<Course> updateCourse(@PathVariable Integer updateId, @RequestBody CourseDTO updatedCourse){
         try {
 

@@ -1,5 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
 public class Student{
 
     @Id
@@ -27,14 +27,22 @@ public class Student{
 
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
+
     private String contactNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @ManyToMany
-    private Set<Course> courses;
+    @JsonIgnore
+    @ManyToMany()
+    @JoinTable(
+            name = "student_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courses;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
     private Set<Submission> submissions;
 }

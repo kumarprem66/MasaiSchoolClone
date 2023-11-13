@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
     private CourseRepo courseRepo;
     
     @Override
-    public Student getStudent(Student student) {
+    public Student createdStudent(Student student) {
         Optional<Student> student1 = studentRepo.findById(student.getId());
 
         if(student1.isPresent()){
@@ -79,11 +79,10 @@ public class StudentServiceImpl implements StudentService {
     public void enrollInCourse(Integer studentId, Integer courseId) {
 
 
-        Optional<Student> optionalStudent = studentRepo.findById(studentId);
-        Optional<Course> optionalCourse = courseRepo.findById(courseId);
+            Optional<Student> optionalStudent = studentRepo.findById(studentId);
+            Optional<Course> optionalCourse = courseRepo.findById(courseId);
 
-        if (optionalCourse.isPresent()) {
-            if (optionalStudent.isPresent()){
+            if (optionalStudent.isPresent() && optionalCourse.isPresent()) {
                 Student student = optionalStudent.get();
                 Course course = optionalCourse.get();
 
@@ -92,19 +91,20 @@ public class StudentServiceImpl implements StudentService {
                     // Enroll the student for the course
                     student.getCourses().add(course);
                     studentRepo.save(student);
+
+                    // Ensure that the course also knows about the student
+                    course.getStudents().add(student);
+                    courseRepo.save(course);
                 } else {
                     // Handle case where the student is already enrolled in the course
                     throw new RuntimeException("Student is already enrolled in the course");
                 }
-            }else {
-                throw new RuntimeException("Student not found");
+            } else {
+                // Handle case where student or course is not found
+                throw new RuntimeException("Student or course not found");
             }
-
-        } else {
-            // Handle case where student or course is not found
-            throw new RuntimeException("Course not found");
         }
 
 
-    }
+
 }

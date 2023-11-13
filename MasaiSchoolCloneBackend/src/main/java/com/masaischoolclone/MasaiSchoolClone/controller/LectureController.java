@@ -80,7 +80,7 @@ public class LectureController {
 
     }
 
-    @PostMapping("/fetch/{id}")
+    @GetMapping("/fetch/{id}")
     public ResponseEntity<Lecture> getLecture(@PathVariable Integer id){
         try {
 
@@ -109,7 +109,7 @@ public class LectureController {
         }
     }
 
-    @GetMapping("/lecture-of-course-instructor/{instructorId}{courseId}")
+    @GetMapping("/lecture-of-course-instructor/{instructorId}/{courseId}")
     public ResponseEntity<List<Lecture>> getInstructorLecture(@PathVariable Integer instructorId,@PathVariable Integer courseId){
 
         try {

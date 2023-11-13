@@ -1,9 +1,11 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.List;
 import java.util.Set;
@@ -21,6 +23,8 @@ public class Course {
     private String courseName;
     private String duration;
     private Integer rating;
+
+    @URL(message = "Invalid URL format")
     private String image;
     private Boolean isAvailable;
     private String description;
@@ -30,27 +34,34 @@ public class Course {
     private Integer studentEnrolled;
 
 
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "courses",cascade = CascadeType.ALL)
-    private Set<Student> students;
+    private List<Student> students;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Announcement> announcements;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Assignment> assignments;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<Lecture> lectures;
 

@@ -19,10 +19,10 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/create")
-    ResponseEntity<Student> createStudent(Student student){
+    ResponseEntity<Student> createStudent(@RequestBody Student student){
         try {
 
-            return new ResponseEntity<>(studentService.getStudent(student), HttpStatus.CREATED);
+            return new ResponseEntity<>(studentService.createdStudent(student), HttpStatus.CREATED);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class StudentController {
     }
 
     @PutMapping("/update/{studentId}")
-    ResponseEntity<Student> updateStudent(Integer studentId,Student updatedStudent){
+    ResponseEntity<Student> updateStudent(@PathVariable Integer studentId,@PathVariable Student updatedStudent){
         try {
 
             return new ResponseEntity<>(studentService.updateStudent(studentId,updatedStudent), HttpStatus.ACCEPTED);
@@ -61,7 +61,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Integer> deleteStudent(Integer id){
+    public ResponseEntity<Integer> deleteStudent(@PathVariable Integer id){
         try {
 
             Integer id1 = studentService.deleteStudent(id);
@@ -76,7 +76,7 @@ public class StudentController {
     }
 
     @GetMapping("/fetch/{studentId}")
-    public ResponseEntity<Student> getStudent(Integer studentId){
+    public ResponseEntity<Student> getStudent(@PathVariable Integer studentId){
         try {
 
             return new ResponseEntity<>(studentService.getStudent(studentId), HttpStatus.OK);
@@ -90,7 +90,7 @@ public class StudentController {
     }
 
     @PutMapping("/enroll/{studentId}/{courseId}")
-   public ResponseEntity<String> enrollInCourse(Integer studentId,Integer courseId){
+   public ResponseEntity<String> enrollInCourse(@PathVariable Integer studentId,@PathVariable Integer courseId){
         try {
 
             studentService.enrollInCourse(studentId,courseId);

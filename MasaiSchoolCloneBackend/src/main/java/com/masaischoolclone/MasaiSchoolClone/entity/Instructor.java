@@ -1,5 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,12 +38,15 @@ public class Instructor{
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "instructor",cascade = CascadeType.ALL)
     private Set<Course> courses;
 
+    @JsonIgnore
     @ManyToOne
     private Department department;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "instructor",cascade = CascadeType.ALL)
     private Set<Lecture> lectures;
 

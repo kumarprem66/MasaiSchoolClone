@@ -17,7 +17,7 @@ public class InstructorController {
     @Autowired
     private InstructorService instructorService;
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<Instructor> createInstructor(@RequestBody Instructor instructor){
         try {
 

@@ -16,6 +16,7 @@ public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
 
+    @PostMapping("/create")
     public ResponseEntity<String> assignmentCreate(@RequestBody Assignment assignment){
         try {
             assignmentService.assignmentCreate(assignment);

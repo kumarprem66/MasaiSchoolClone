@@ -57,6 +57,7 @@ public class LectureServiceImpl implements LectureService {
             updatableLecture.setMeetingUrl(updatedLecture.getMeetingUrl());
             updatableLecture.setTopicTitle(updatedLecture.getTopicTitle());
 
+            lectureRepo.save(updatableLecture);
             return updatableLecture;
 
 
@@ -107,7 +108,7 @@ public class LectureServiceImpl implements LectureService {
             if(optionalCourse.isPresent()){
                return lectureRepo.findAllByInstructorAndCourse(optionalInstructor.get(),optionalCourse.get());
             }else{
-                throw new InstructorException("No Instructor found with this id of instructor");
+                throw new InstructorException("No Course found with this id");
             }
 
         }else{
