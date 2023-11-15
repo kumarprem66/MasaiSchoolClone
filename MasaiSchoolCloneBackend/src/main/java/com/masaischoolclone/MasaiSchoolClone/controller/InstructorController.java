@@ -17,11 +17,11 @@ public class InstructorController {
     @Autowired
     private InstructorService instructorService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Instructor> createInstructor(@RequestBody Instructor instructor){
+    @PostMapping("/create/{departId}")
+    public ResponseEntity<Instructor> createInstructor(@RequestBody Instructor instructor,@PathVariable Integer departId){
         try {
 
-            return ResponseEntity.ok(instructorService.createInstructor(instructor));
+            return ResponseEntity.ok(instructorService.createInstructor(instructor,departId));
         } catch (Exception e) {
 
             e.printStackTrace();

@@ -5,10 +5,7 @@ import com.masaischoolclone.MasaiSchoolClone.service.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,11 +17,11 @@ public class SubmissionController {
     private SubmissionService submissionService;
 
     @PostMapping("/create")
-    public ResponseEntity<Submission> createSubmission(Submission submission){
+    public ResponseEntity<Submission> createSubmission(@RequestParam Integer studentId,@RequestParam Integer courseId, @RequestParam Integer lectureId, @RequestParam Integer assignmentId,@RequestBody Submission submission){
 
         try {
 
-            return new ResponseEntity<>(submissionService.createSubmission(submission), HttpStatus.CREATED);
+            return new ResponseEntity<>(submissionService.createSubmission(studentId,courseId,lectureId,assignmentId,submission), HttpStatus.CREATED);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -52,7 +49,7 @@ public class SubmissionController {
     }
 
 
-    @GetMapping("/fetch-all-ofStudent")
+    @GetMapping("/fetch-all-assignment")
     public ResponseEntity<List<Submission>> getSubmissionList(Integer studentId,Integer assignmentId){
 
         try {

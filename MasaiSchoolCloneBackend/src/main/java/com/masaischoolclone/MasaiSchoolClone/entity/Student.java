@@ -33,6 +33,11 @@ public class Student{
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Enrollment enrollment;
+
     @JsonIgnore
     @ManyToMany()
     @JoinTable(

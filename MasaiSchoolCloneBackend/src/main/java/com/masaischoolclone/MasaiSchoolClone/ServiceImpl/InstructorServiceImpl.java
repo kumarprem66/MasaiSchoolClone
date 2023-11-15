@@ -1,14 +1,15 @@
 package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
 import com.masaischoolclone.MasaiSchoolClone.dto.InstructorDTO;
-import com.masaischoolclone.MasaiSchoolClone.entity.Category;
-import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
+import com.masaischoolclone.MasaiSchoolClone.entity.*;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.exception.CategoryException;
 import com.masaischoolclone.MasaiSchoolClone.exception.InstructorException;
 import com.masaischoolclone.MasaiSchoolClone.exception.InstructorException;
+import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.InstructorRepo;
+import com.masaischoolclone.MasaiSchoolClone.repository.UserRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,21 +20,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class InstructorServiceImpl implements InstructorService {
     
     @Autowired
     private InstructorRepo instructorRepo;
+
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    private DepartmentRepo departmentRepo;
     
     @Override
-    public Instructor createInstructor(Instructor instructor) {
+    public Instructor createInstructor(Instructor instructor,Integer departId) {
         Optional<Instructor> instructor1 = instructorRepo.findById(instructor.getId());
+        Optional<Department> optionalDepartment = departmentRepo.findById(departId);
 
         if(instructor1.isPresent()){
             throw new InstructorException("Instructor already exist with this name");
         }else{
-            return instructorRepo.save(instructor);
+            if(optionalDepartment.isPresent()){
+                instructor.setDepartment(optionalDepartment.get());
+                return instructorRepo.save(instructor);
+            }else{
+                throw new InstructorException("No Department exist with given id "+departId);
+            }
+
             
         }
     }
@@ -80,5 +95,24 @@ public class InstructorServiceImpl implements InstructorService {
             return instructorOptional.get();
         }
         throw new InstructorException("Instructor can not be fetched, given id does not exist");
+    }
+
+    @Override
+    public Instructor getInstructorByUser(Integer userID) {
+
+        Optional<User> optionalUser = userRepo.findById(userID);
+        return optionalUser.map(user -> instructorRepo.findByUser(user)).orElse(null);
+
+    }
+
+    @Override
+    public Set<Instructor> getAllInstructor(Integer departmentId) {
+        Optional<Department> optionalDepartment = departmentRepo.findById(departmentId);
+        if (optionalDepartment.isPresent()){
+            return instructorRepo.findAllByDepartment(optionalDepartment.get());
+        }else{
+            throw new InstructorException("departmentId is not available");
+        }
+
     }
 }

@@ -16,17 +16,18 @@ public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> assignmentCreate(@RequestBody Assignment assignment){
+    @PostMapping("/create/{courseId}/{lectureId}")
+    public ResponseEntity<String> assignmentCreate(@PathVariable Integer courseId,@PathVariable Integer lectureId,@RequestBody Assignment assignment){
         try {
-            assignmentService.assignmentCreate(assignment);
-            return ResponseEntity.ok("Announcement created successfully");
+
+            assignmentService.assignmentCreate(courseId,lectureId,assignment);
+            return ResponseEntity.ok("Assignment created successfully");
         } catch (Exception e) {
 
             e.printStackTrace();
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to create announcement");
+                    .body("Failed to create assignment");
         }
     }
 
@@ -35,6 +36,20 @@ public class AssignmentController {
         try {
 
             return ResponseEntity.ok(assignmentService.getAssignementList(courseId));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    @GetMapping("/fetch-all/{courseId}/{lectureId}")
+    ResponseEntity<Set<Assignment>> getAssignmentList(@PathVariable Integer courseId,@PathVariable Integer lectureId){
+        try {
+
+            return ResponseEntity.ok(assignmentService.getAssignmentList(courseId,lectureId));
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -59,7 +74,7 @@ public class AssignmentController {
 
     }
 
-    @PutMapping("/delete/{assignmentId}")
+    @DeleteMapping("/delete/{assignmentId}")
     ResponseEntity<Integer> deleteAssignment(@PathVariable Integer assignmentId){
         try {
 

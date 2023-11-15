@@ -1,5 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,14 +25,20 @@ public class Submission {
     private Status statusChoices;
     private String remarks;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "assignment_id")
     private Assignment assignment;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
 
 
 }

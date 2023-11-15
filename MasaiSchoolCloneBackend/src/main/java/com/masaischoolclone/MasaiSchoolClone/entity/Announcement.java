@@ -1,5 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,14 @@ public class Announcement {
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
 }

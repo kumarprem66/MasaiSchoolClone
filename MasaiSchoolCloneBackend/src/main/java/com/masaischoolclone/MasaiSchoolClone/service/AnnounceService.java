@@ -7,9 +7,12 @@ import java.util.Set;
 
 public interface AnnounceService {
 
-    Announcement announceCreate(Announcement announcement);
+    Announcement announceCreate(Integer departId,Integer courseId,Announcement announcement);
 
-    Set<Announcement> announceList(Integer courseId);
+    Set<Announcement> announceListOfCourse(Integer courseId);
+    List<Announcement> announceList();
+    Set<Announcement> announceListOfDepartAndCourse(Integer courseId,Integer departmentId);
+    Set<Announcement> announceListOfDepart(Integer departmentId);
 
     Announcement announceUpdate(Integer announceId,Announcement announcement);
 

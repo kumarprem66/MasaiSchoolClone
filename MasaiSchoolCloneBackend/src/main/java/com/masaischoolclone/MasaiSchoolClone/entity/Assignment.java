@@ -24,15 +24,19 @@ public class Assignment {
     private String description;
     private String instruction;
 
-
     @Temporal(TemporalType.DATE)
     private Date startDate;
 
     @Temporal(TemporalType.DATE)
     private Date dueDate;
 
-    private Integer lectureId;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    private Lecture lecture;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "assignment",cascade = CascadeType.ALL)
     private Set<Submission> submissions;
 

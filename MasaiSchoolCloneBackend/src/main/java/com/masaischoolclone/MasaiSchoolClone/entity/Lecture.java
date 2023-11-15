@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.URL;
 
 import java.util.Date;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,14 +30,22 @@ public class Lecture {
     @URL(message = "Enter valid url")
     private String meetingUrl;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
+
+//    @JsonIgnore
+    @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
+    private Set<Submission> submissions;
+
+    //   @JsonIgnore
+    @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
+    private Set<Assignment> assignments;
 }

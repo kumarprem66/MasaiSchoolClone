@@ -1,18 +1,16 @@
 package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
-import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
-import com.masaischoolclone.MasaiSchoolClone.entity.Student;
-import com.masaischoolclone.MasaiSchoolClone.entity.Submission;
+import com.masaischoolclone.MasaiSchoolClone.entity.*;
 import com.masaischoolclone.MasaiSchoolClone.exception.StudentException;
-import com.masaischoolclone.MasaiSchoolClone.repository.AssignmentRepo;
-import com.masaischoolclone.MasaiSchoolClone.repository.StudentRepo;
-import com.masaischoolclone.MasaiSchoolClone.repository.SubmissionRepo;
+import com.masaischoolclone.MasaiSchoolClone.repository.*;
 import com.masaischoolclone.MasaiSchoolClone.service.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Service
 public class SubmissionServiceImpl  implements SubmissionService {
@@ -25,14 +23,62 @@ public class SubmissionServiceImpl  implements SubmissionService {
 
     @Autowired
     private AssignmentRepo assignmentRepo;
+
+    @Autowired
+    private CourseRepo courseRepo;
+
+    @Autowired
+    private LectureRepo lectureRepo;
+
     @Override
-    public Submission createSubmission(Submission submission) {
+    public Submission createSubmission(Integer studentId, Integer courseId, Integer lectureId,Integer assignmentId, Submission submission) {
+        // Fetch entities from repositories
+        Optional<Student> optionalStudent = studentRepo.findById(studentId);
+        Optional<Course> optionalCourse = courseRepo.findById(courseId);
+        Optional<Lecture> optionalLecture = lectureRepo.findById(lectureId);
+        Optional<Assignment> optionalAssignment = assignmentRepo.findById(assignmentId);
+
+        if (optionalStudent.isPresent() && optionalCourse.isPresent() && optionalLecture.isPresent() && optionalAssignment.isPresent()) {
+            Student student = optionalStudent.get();
+            Course course = optionalCourse.get();
+            Lecture lecture = optionalLecture.get();
+            Assignment assignment = optionalAssignment.get();
+
+            // Validate that the student belongs to the course
+            if (!course.getStudents().contains(student)) {
+                throw new RuntimeException("Student does not belong to the course");
+            }
+
+            // Validate that the lecture is associated with the course
+//            if (!course.getLectures().contains(lecture)) {
+//                throw new RuntimeException("Lecture is not associated with the course");
+//            }
+
+            // Validate that the assignment is associated with the course and lecture
+            if (!assignmentRepo.findAllByCourseAndLecture(course,lecture).contains(assignment)) {
+                throw new RuntimeException("assignment is not associated with the lecture");
+            }
+            // Set associations
+            submission.setStudent(student);
+            submission.setAssignment(assignment);
+            submission.setLecture(lecture);
+
+            // Save the submission
 
 
-        return submissionRepo.save(submission);
+            return  submissionRepo.save(submission);
+        } else {
+            throw new RuntimeException("Student, Course, or Lecture not found");
+        }
     }
 
-    @Override
+
+
+
+
+
+
+@Override
     public List<Submission> getSubmissionList(Integer studentId) {
 
         Optional<Student> student = studentRepo.findById(studentId);

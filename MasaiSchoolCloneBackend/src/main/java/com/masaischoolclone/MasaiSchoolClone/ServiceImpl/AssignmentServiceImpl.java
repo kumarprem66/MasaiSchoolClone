@@ -1,12 +1,13 @@
 package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
+import com.masaischoolclone.MasaiSchoolClone.entity.*;
 import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
-import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
-import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.exception.AssignmentException;
 import com.masaischoolclone.MasaiSchoolClone.exception.CourseException;
+import com.masaischoolclone.MasaiSchoolClone.exception.LectureException;
 import com.masaischoolclone.MasaiSchoolClone.repository.AssignmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
+import com.masaischoolclone.MasaiSchoolClone.repository.LectureRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,16 +24,38 @@ public class AssignmentServiceImpl implements AssignmentService {
     
     @Autowired
     private CourseRepo courseRepo;
+
+    @Autowired
+    private LectureRepo lectureRepo;
     
     @Override
-    public Assignment assignmentCreate(Assignment assignment) {
+    public Assignment assignmentCreate(Integer courseId, Integer lectureId, Assignment assignment) {
 
-        Optional<Assignment> optionalAssignment = assignmentRepo.findById(assignment.getAnId());
 
-        if(optionalAssignment.isPresent()){
-            throw new AssignmentException("Assignment is already exist with given id");
-        }else{
+
+        // Fetch entities from repositories
+
+        Optional<Course> optionalCourse = courseRepo.findById(courseId);
+        Optional<Lecture> optionalLecture = lectureRepo.findById(lectureId);
+
+        if (optionalCourse.isPresent() && optionalLecture.isPresent()) {
+
+            Course course = optionalCourse.get();
+            Lecture lecture = optionalLecture.get();
+
+
+            // Validate that the lecture is associated with the course
+            if (!course.getLectures().contains(lecture)) {
+                throw new AssignmentException("Lecture is not associated with the course");
+            }
+
+
+            assignment.setCourse(course);
+            assignment.setLecture(lecture);
             return assignmentRepo.save(assignment);
+
+        }else{
+            throw new AssignmentException("Course or lecture is not available");
         }
 
     }
@@ -41,9 +64,20 @@ public class AssignmentServiceImpl implements AssignmentService {
     public Set<Assignment> getAssignementList(Integer courseId) {
         Optional<Course> courseOptional = courseRepo.findById(courseId);
         if(courseOptional.isPresent()){
-            return courseOptional.get().getAssignments();
+            return assignmentRepo.findAllByCourse(courseOptional.get());
         }else {
             throw new CourseException("Course not available with given id "+courseId);
+        }
+    }
+
+    @Override
+    public Set<Assignment> getAssignmentList(Integer courseId,Integer lectureId) {
+        Optional<Course> courseOptional = courseRepo.findById(courseId);
+        Optional<Lecture> lectureOptional = lectureRepo.findById(lectureId);
+        if(courseOptional.isPresent() && lectureOptional.isPresent()){
+            return assignmentRepo.findAllByCourseAndLecture(courseOptional.get(),lectureOptional.get());
+        }else {
+            throw new CourseException("Course or lecture not available with given id "+courseId);
         }
     }
 

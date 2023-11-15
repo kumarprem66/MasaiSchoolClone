@@ -19,10 +19,10 @@ public class AnnouncementController {
 
 
 
-    @PostMapping("/create/announcement")
-    public ResponseEntity<String> createAnnouncement(@RequestBody Announcement announcement){
+    @PostMapping("/create/{departId}/{courseId}")
+    public ResponseEntity<String> createAnnouncement(@PathVariable Integer departId,@PathVariable Integer courseId,@RequestBody Announcement announcement){
         try {
-            announceService.announceCreate(announcement);
+            announceService.announceCreate(departId,courseId,announcement);
             return ResponseEntity.ok("Announcement created successfully");
         } catch (Exception e) {
 
@@ -33,11 +33,11 @@ public class AnnouncementController {
         }
     }
 
-    @GetMapping("/getAnnounce-list/{courseId}")
-    public ResponseEntity<Set<Announcement>> getAnnounceList(@PathVariable Integer courseId) {
+    @GetMapping("/getAnnounce-list")
+    public ResponseEntity<List<Announcement>> getAnnounceList() {
         try {
 
-            return ResponseEntity.ok(announceService.announceList(courseId));
+            return ResponseEntity.ok(announceService.announceList());
         } catch (Exception e) {
 
             e.printStackTrace();

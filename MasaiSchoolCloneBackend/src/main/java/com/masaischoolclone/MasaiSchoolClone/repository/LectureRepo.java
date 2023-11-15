@@ -14,4 +14,6 @@ public interface LectureRepo extends JpaRepository<Lecture,Integer> {
     List<Lecture> findAllByInstructor(Instructor instructor);
 
     List<Lecture> findAllByInstructorAndCourse(Instructor instructor, Course course);
+
+
 }

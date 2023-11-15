@@ -3,10 +3,12 @@ package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
 import com.masaischoolclone.MasaiSchoolClone.entity.Announcement;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
+import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.exception.AnnouncementException;
 import com.masaischoolclone.MasaiSchoolClone.exception.CourseException;
 import com.masaischoolclone.MasaiSchoolClone.repository.AnnounementRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
+import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.AnnounceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +26,37 @@ public class AnnouncementServiceImpl implements AnnounceService {
     @Autowired
     private CourseRepo courseRepo;
 
+    @Autowired
+    private DepartmentRepo departmentRepo;
+
     @Override
-    public Announcement announceCreate(Announcement announcement) {
+    public Announcement announceCreate(Integer departId, Integer courseId,Announcement announcement) {
 
         Optional<Announcement> optionalAnnouncement = announementRepo.findById(announcement.getAid());
 
+        Optional<Department> optionalDepartment = departmentRepo.findById(departId);
+        Optional<Course> optionalCourse = courseRepo.findById(courseId);
+
         if(optionalAnnouncement.isPresent()){
+
             throw new AnnouncementException("Announcement is already exist with given id");
         }else{
-            return announementRepo.save(announcement);
+            if(optionalDepartment.isPresent() && optionalCourse.isPresent()){
+
+                Department department = optionalDepartment.get();
+                Course course = optionalCourse.get();
+
+
+                if(!courseRepo.findAllByDepartment(department).contains(course)){
+                    throw new AnnouncementException("Course does not belongs to the department");
+                }
+                announcement.setCourse(optionalCourse.get());
+                announcement.setDepartment(optionalDepartment.get());
+                return announementRepo.save(announcement);
+            }else{
+                throw new AnnouncementException("Department does not exist with given id");
+            }
+
         }
 
 
@@ -40,15 +64,27 @@ public class AnnouncementServiceImpl implements AnnounceService {
     }
 
     @Override
-    public Set<Announcement> announceList(Integer courseId) {
+    public Set<Announcement> announceListOfCourse(Integer courseId) {
+        return null;
+    }
 
-        Optional<Course> courseOptional = courseRepo.findById(courseId);
-        if(courseOptional.isPresent()){
-            return courseOptional.get().getAnnouncements();
-        }else {
-            throw new CourseException("Course not available with given id "+courseId);
-        }
+    @Override
+    public List<Announcement> announceList() {
 
+
+        return announementRepo.findAll();
+
+
+    }
+
+    @Override
+    public Set<Announcement> announceListOfDepartAndCourse(Integer courseId, Integer departmentId) {
+        return null;
+    }
+
+    @Override
+    public Set<Announcement> announceListOfDepart(Integer departmentId) {
+        return null;
     }
 
     @Override

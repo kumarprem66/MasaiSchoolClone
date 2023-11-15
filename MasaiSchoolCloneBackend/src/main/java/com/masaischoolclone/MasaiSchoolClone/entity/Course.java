@@ -35,6 +35,7 @@ public class Course {
 
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -62,7 +63,7 @@ public class Course {
     private Set<Assignment> assignments;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private List<Lecture> lectures;
 
 }
