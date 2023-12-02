@@ -1,7 +1,9 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
 import com.masaischoolclone.MasaiSchoolClone.dto.InstructorDTO;
+import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
+import com.masaischoolclone.MasaiSchoolClone.service.DepartmentService;
 import com.masaischoolclone.MasaiSchoolClone.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/instructor")
@@ -16,6 +20,9 @@ public class InstructorController {
 
     @Autowired
     private InstructorService instructorService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @PostMapping("/create/{departId}")
     public ResponseEntity<Instructor> createInstructor(@RequestBody Instructor instructor,@PathVariable Integer departId){
@@ -81,6 +88,19 @@ public class InstructorController {
         try {
 
             return ResponseEntity.ok(instructorService.getInstructor(id));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+    @GetMapping("/fetch-all-byDept/{departID}")
+        public ResponseEntity<Set<Instructor>> getInstructorByDepart(@PathVariable Integer departID){
+        try {
+
+            return ResponseEntity.ok(instructorService.getAllInstructor(departID));
         } catch (Exception e) {
 
             e.printStackTrace();

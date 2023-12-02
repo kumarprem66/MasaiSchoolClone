@@ -21,7 +21,7 @@ public class Lecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String courseName;
+//    private String courseName;
     private String topicTitle;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,22 +30,22 @@ public class Lecture {
     @URL(message = "Enter valid url")
     private String meetingUrl;
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
     private Set<Submission> submissions;
 
-    //   @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
     private Set<Assignment> assignments;
 }

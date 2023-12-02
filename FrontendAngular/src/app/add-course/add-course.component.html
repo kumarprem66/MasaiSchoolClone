@@ -8,11 +8,11 @@
         <div class="add_course_form">
           <div>
             <div class="input-field">
-              <input type="text" formControlName="course_code" placeholder="Enter Course Code" required>
+              <input type="text" formControlName="courseCode" placeholder="Enter Course Code" required>
               <!-- <label>Enter Course Code</label> -->
             </div>
             <div class="input-field">
-              <input type="text" formControlName="course_name" placeholder="Enter Course Name" required>
+              <input type="text" formControlName="courseName" placeholder="Enter Course Name" required>
               <!-- <label>Enter Course Name</label> -->
             </div>
               <div class="input-field">
@@ -20,19 +20,19 @@
               <!-- <label>Enter Course Duration</label> -->
             </div>
             <div class="input-field">
-              <input type="number" formControlName="course_price" placeholder="Enter Price" required>
+              <input type="number" formControlName="coursePrice" placeholder="Enter Price" required>
               <!-- <label>Enter Price</label> -->
             </div>
             <div class="input-field">
-              <input type="number" formControlName="rating" placeholder="Enter Rating" required>
+              <input type="number" formControlName="rating" placeholder="Enter Rating">
               <!-- <label>Enter Rating</label> -->
             </div>
             <div class="input-field">
-              <input type="number" formControlName="rating_count" placeholder="Number of Rating" required>
+              <input type="number" formControlName="ratingCount" placeholder="Number of Rating">
               <!-- <label>Number of Rating</label> -->
             </div>
             <div class="input-field">
-              <input type="text" formControlName="course_language" placeholder="Enter Language" required>
+              <input type="text" formControlName="courseLanguage" placeholder="Enter Language" required>
               <!-- <label>Enter Language</label> -->
             </div>
 
@@ -40,32 +40,40 @@
           </div>
          <div>
           <div class="input-field">
-            <!-- name="image" formControlName="image" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png" -->
-            <input type="file"  disabled>
-            
+            <input type="url" formControlName="image" placeholder="Enter Image Url" required>
+            <!-- <label>Enter Language</label> -->
+          </div>
+
+          <div class="input-field">
+            <label>Category</label>
+            <select name="category" id="category" formControlName="category" (change)="selectedCategory($event)">
+              <option *ngFor="let item of cate_options" [value]="item.value">{{item.text}}</option>
+              
+            </select>
+          
           </div>
           <div class="input-field">
-            <label>Instructor id </label>
-            <select name="Instructor" id="Instructor" formControlName="Instructor" required>
+            <label>Instructor</label>
+            <select name="Instructor" id="Instructor" formControlName="Instructor" (change)="selectedInstr($event)" >
               <option *ngFor="let item of intruc_options" [value]="item.value">{{item.text}}</option>
               
             </select>
             
           </div>
           <div class="input-field">
-            <label>Department id</label>
-            <select name="department" id="department" formControlName="department">
+            <label>Department</label>
+            <select name="department" id="department" formControlName="department" (change)="selectedDepart($event)">
               <option *ngFor="let item of depart_options" [value]="item.value">{{item.text}}</option>
               
             </select>
           
           </div>
           <div class="check">
-            <input type="checkbox" formControlName="is_available" required>
+            <input type="checkbox" formControlName="isAvailable">
             <label>is available</label>
           </div>
           <div class="input-field">
-            <input type="number" formControlName="student_enrolled" placeholder="Studnet Erolled" required>
+            <input type="number" formControlName="studentEnrolled" placeholder="Studnet Erolled">
             <!-- <label>Studnet Erolled</label> -->
           </div>
           <div class="input-field">

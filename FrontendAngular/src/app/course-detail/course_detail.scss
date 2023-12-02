@@ -93,6 +93,7 @@ color: gold; /* Colored star */
 
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
 }
 
 .course_descriptionc_container .course_description .cou_des_right button{
@@ -108,6 +109,10 @@ color: gold; /* Colored star */
 }
 
 
+.card-img-top{
+    height: 200px;
+    
+}
 
 @media screen and (max-width: 650px) {
     .all_courses_container .card_container{

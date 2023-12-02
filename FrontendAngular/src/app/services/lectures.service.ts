@@ -7,45 +7,47 @@ import { Observable } from 'rxjs';
 })
 export class LecturesService {
 
-  baseUrl = "http://127.0.0.1:8000/sparleom/lectures/"
+  baseUrl = "http://127.0.0.1:8088/lecture/"
   constructor(private http:HttpClient) { }
 
-  createLecture(data:any):Observable<any>{
+  createLecture(data:any,course_id:number,instructor_id:number):Observable<any>{
 
     const headers = new HttpHeaders({
       'Content-Type':"Application/json"
     })
 
-    return this.http.post(this.baseUrl+'create',JSON.stringify(data),{headers})
+    return this.http.post(this.baseUrl+'create/'+course_id+"/"+instructor_id,JSON.stringify(data),{headers})
   }
 
   getAllLectures():Observable<any[]>{
-    return this.http.get<any[]>(this.baseUrl)
+    return this.http.get<any[]>(this.baseUrl+"fetch-all")
   }
 
-  getLectureOfCourse(id:number){
+  getLectureOfCourse(courseId:number){
 
-    return this.http.get(`${this.baseUrl}get_lectures_for_course/${id}/`)
+    return this.http.get(`${this.baseUrl}lecture-of-course/${courseId}/`)
     
   }
 
-  updateLecture(id:number,data:any){
+  updateLecture(lectureId:number,data:any){
     const headers = new HttpHeaders({
       'Content-Type':"Application/json"
     })
-    return this.http.put(`${this.baseUrl}${id}/update`,JSON.stringify(data),{headers})
+    return this.http.put(`${this.baseUrl}update/${lectureId}`,JSON.stringify(data),{headers})
   }
 
-  deleteLecture(id:number){
-    return this.http.delete(`${this.baseUrl}${id}/delete`)
+  deleteLecture(lectureId:number){
+    return this.http.delete(`${this.baseUrl}/delete/${lectureId}`)
   }
 
-  getLectureById(lectureId:number){
-    const url = `${this.baseUrl}${lectureId}`
+  getLectureById(id:number){
+    const url = `${this.baseUrl}/fetch/${id}`
     return this.http.get(url)
   }
 
-  getInstructorLectures(id:number){
-    return this.http.get(`http://127.0.0.1:8000/sparleom/instructor/${id}/lectures/`)
+  getInstructorLectures(instrcutorId:number,courseId:number){
+    return this.http.get(`${this.baseUrl}/lecture-of-course-instructor/${instrcutorId}/${courseId}`)
   }
+
+
 }

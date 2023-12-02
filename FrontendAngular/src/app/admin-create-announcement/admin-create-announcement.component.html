@@ -18,8 +18,25 @@
           
           </div>
           <div class="input-box">
-            <input type="date" formControlName="publish_date" required>
+            <input type="date" formControlName="publishDate" required>
             <!-- <label>Enter date</label> -->
+          </div>
+          <div class="input-box">
+            <label>Course</label>
+            <select name="course" id="course" formControlName="course" (change)="selectedCourse($event)">
+              <option *ngFor="let item of course_options" [value]="item.value">{{item.text}}</option>
+              
+            </select>
+          
+          </div>
+
+          <div class="input-box">
+            <label for="announce_department">Department</label>
+            
+          <select name="announce_department" id="announce_department" formControlName="department"
+           (change)="selectedDept($event)">
+           <option *ngFor="let item of depart_options" [value]="item.value">{{item.text}}</option>
+            </select>
           </div>
           <div class="create_button">
             <input type="submit" value="Create" >

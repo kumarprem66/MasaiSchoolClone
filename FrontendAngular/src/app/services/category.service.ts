@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CategoryService {
 
-  private baseUrl = 'http://localhost:8000/sparleom/category/';
+  private baseUrl = 'http://localhost:8088/category/';
   constructor(private http: HttpClient) { }
 
   createCategories(category:any):Observable<any>{
@@ -19,12 +19,12 @@ export class CategoryService {
   }
 
   getCategories(){
-    return this.http.get<any[]>(this.baseUrl)
+    return this.http.get<any[]>(this.baseUrl+"getAll")
   }
 
   getCategoriesById(id:number){
 
-    return this.http.get(`${this.baseUrl}${id}/`)
+    return this.http.get(`${this.baseUrl}get/${id}`)
   }
 
   // getInstructorCourses(ins_id:number){
@@ -34,7 +34,7 @@ export class CategoryService {
 
 
   deleteCategory(id:number){
-    return this.http.delete(`${this.baseUrl}${id}/`)
+    return this.http.delete(`${this.baseUrl}delete/${id}`)
   }
 
 
@@ -44,6 +44,6 @@ export class CategoryService {
     const headers = new HttpHeaders({
       "Content-Type":"Application/json"
     })
-    return this.http.put(`${this.baseUrl}${id}/`,JSON.stringify(data),{headers})
+    return this.http.put(`${this.baseUrl}update/${id}`,JSON.stringify(data),{headers})
   }
 }

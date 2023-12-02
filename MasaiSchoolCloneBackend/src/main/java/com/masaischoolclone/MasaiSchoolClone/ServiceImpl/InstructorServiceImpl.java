@@ -36,12 +36,12 @@ public class InstructorServiceImpl implements InstructorService {
     
     @Override
     public Instructor createInstructor(Instructor instructor,Integer departId) {
-        Optional<Instructor> instructor1 = instructorRepo.findById(instructor.getId());
+//        Optional<Instructor> instructor1 = instructorRepo.findById(instructor.getId());
         Optional<Department> optionalDepartment = departmentRepo.findById(departId);
 
-        if(instructor1.isPresent()){
-            throw new InstructorException("Instructor already exist with this name");
-        }else{
+//        if(instructor1.isPresent()){
+//            throw new InstructorException("Instructor already exist with this name");
+//        }else{
             if(optionalDepartment.isPresent()){
                 instructor.setDepartment(optionalDepartment.get());
                 return instructorRepo.save(instructor);
@@ -50,7 +50,7 @@ public class InstructorServiceImpl implements InstructorService {
             }
 
             
-        }
+//        }
     }
 
     @Override

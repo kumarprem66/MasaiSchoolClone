@@ -5,6 +5,26 @@ $primary-color3: #205295;
 $primary-color4: #2C74B3;
 $primary-color5: #88aac9;
 
+.select_div_filter{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.select_div_filter>div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.select_div_filter>div>select{
+    font-size: 25px;
+}
 .all_courses_container{
     margin-bottom: 50px;
     // margin-left: 100px;
@@ -65,9 +85,12 @@ padding: 2px;
 .star.filled {
 color: gold; /* Colored star */
 }
+
+.card-img-top{
+    height: 200px;
+    
+}
   
-
-
 @media screen and (max-width: 650px) {
     .all_courses_container .card_container{
 

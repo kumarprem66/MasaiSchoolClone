@@ -72,6 +72,18 @@
     pointer-events: none;
     transition: 0.15s ease;
   }
+
+  .input-field>label:nth-child(1) {
+    position: absolute;
+    top: -40%;
+    left: 0;
+    
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.15s ease;
+  }
   
   .input-field input {
     width: 100%;

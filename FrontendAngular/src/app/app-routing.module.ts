@@ -46,16 +46,6 @@ const routes: Routes = [
   {path:"about",component:AboutComponent},
   {path:"student-register",component:StudentRegsiterComponent},
   {path:"payment",component:PaymentComponent},
-
-
-
-
-
-
-
-
-  
-
   {path:"assignment-details",component:CoursesAllComponent},
 
 

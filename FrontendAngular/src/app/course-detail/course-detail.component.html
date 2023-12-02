@@ -1,7 +1,7 @@
 <div class="course_descriptionc_container">
     <div class="course_description" >
        <div class="cou_des_left">
-        <h1>{{current_course.course_name}}</h1>
+        <h1>{{current_course.courseName}}</h1>
         <h4>{{current_course.description}}</h4>
         <div class="rating">
             <span class="star {{ current_course.rating >= 1 ? 'filled' : 'empty' }}">★</span>
@@ -9,15 +9,15 @@
             <span class="star {{ current_course.rating >= 3 ? 'filled' : 'empty' }}">★</span>
             <span class="star {{ current_course.rating >= 4 ? 'filled' : 'empty' }}">★</span>
             <span class="star {{ current_course.rating >= 5 ? 'filled' : 'empty' }}">★</span>
-            <span class="star_count">({{current_course.rating_count}})</span><span class="star_count student_enrolled">Student Enrolled: {{current_course.student_enrolled}}</span>
+            <span class="star_count">({{current_course.rating_count}})</span><span class="star_count student_enrolled">Student Enrolled: {{current_course.studentEnrolled}}</span>
 
         </div>
         <h5>Duration: {{current_course.duration}}</h5>
-        <h5>Created by: {{current_course.Instructor}}</h5>
-        <h5>{{current_course.course_language}}</h5>
+        <h5>Created by: {{instructor_name}}</h5>
+        <h5>Language: {{current_course.courseLanguage}}</h5>
        </div>
        <div class="cou_des_right">
-        <img src="../../assets/courses1.jpg" alt="">
+        <img class="card-img-top" src="{{ current_course.image }}" alt="">
         <button>Buy Now</button>
        </div>
 
@@ -28,9 +28,9 @@
 
     <div class="card_container">
         <div class="card mycard" *ngFor="let course of all_courses_instructor; let i = index" (click)="show_course_details(course.id)">
-            <img src="../../assets/courses{{(i+1)%8}}.jpg" class="card-img-top" alt="...">
+            <img src="{{course.image}}" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{course.course_name}}</h5>
+              <h5 class="card-title">{{course.courseName}}</h5>
        
               <div class="rating">
                 <span class="star {{ course.rating >= 1 ? 'filled' : 'empty' }}">★</span>
@@ -38,7 +38,7 @@
                 <span class="star {{ course.rating >= 3 ? 'filled' : 'empty' }}">★</span>
                 <span class="star {{ course.rating >= 4 ? 'filled' : 'empty' }}">★</span>
                 <span class="star {{ course.rating >= 5 ? 'filled' : 'empty' }}">★</span>
-                <span class="star_count">({{course.rating_count}})</span>
+                <span class="star_count">({{course.ratingCount}})</span>
               </div>
               <br>
               

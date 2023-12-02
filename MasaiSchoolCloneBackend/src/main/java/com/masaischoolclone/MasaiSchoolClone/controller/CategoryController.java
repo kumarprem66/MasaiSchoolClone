@@ -46,6 +46,21 @@ public class CategoryController {
         }
     }
 
+    @GetMapping("get/{id}")
+    public ResponseEntity<Category> getCategoryList(@PathVariable Integer id){
+
+        try {
+
+            return ResponseEntity.ok(categoryService.getCategory(id));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
 
     @PutMapping("/update/{updateId}")
     public ResponseEntity<Category> updateCategory(@PathVariable Integer updateId,@RequestBody Category updatedCategory){

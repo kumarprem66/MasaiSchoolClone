@@ -13,5 +13,5 @@ public interface StudentRepo extends JpaRepository<Student,Integer> {
 
     Student findByUser(User user);
 
-//    String findByContactNumber(String contactNumber);
+    String findByContactNumber(String contactNumber);
 }

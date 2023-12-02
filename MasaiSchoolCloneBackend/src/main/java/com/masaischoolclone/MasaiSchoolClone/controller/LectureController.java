@@ -17,12 +17,12 @@ public class LectureController {
     @Autowired
     private LectureService lectureService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture){
+    @PostMapping("/create/{courseId}/{instructorId}")
+    public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture,@PathVariable Integer courseId,@PathVariable Integer instructorId){
 
         try {
 
-            return new ResponseEntity<>(lectureService.createLecture(lecture),HttpStatus.CREATED);
+            return new ResponseEntity<>(lectureService.createLecture(lecture,courseId,instructorId),HttpStatus.CREATED);
         } catch (Exception e) {
 
             e.printStackTrace();

@@ -16,12 +16,12 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @GetMapping("/fetch-all/{numberOfRecords}")
-    ResponseEntity<List<Department>> getDepartmentList(@PathVariable Integer numberOfRecords){
+    @GetMapping("/fetch-all")
+    ResponseEntity<List<Department>> getDepartmentList(){
 
         try {
 
-            return ResponseEntity.ok(departmentService.getDepartmentList(numberOfRecords));
+            return ResponseEntity.ok(departmentService.getDepartmentList());
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -30,8 +30,6 @@ public class DepartmentController {
 
         }
     }
-
-
 
 
     @PostMapping("/create")
@@ -44,6 +42,20 @@ public class DepartmentController {
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
+    @GetMapping("/get/{department_id}")
+    ResponseEntity<Department> getDepartment(@PathVariable Integer department_id){
+        try {
+
+            return ResponseEntity.ok(departmentService.getDepartment(department_id));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
     }

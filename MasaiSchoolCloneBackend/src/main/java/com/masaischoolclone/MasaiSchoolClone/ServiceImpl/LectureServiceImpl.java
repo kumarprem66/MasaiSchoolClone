@@ -31,15 +31,17 @@ public class LectureServiceImpl implements LectureService {
     private InstructorRepo instructorRepo;
 
     @Override
-    public Lecture createLecture(Lecture lecture) {
-        Optional<Lecture> lecture1 = lectureRepo.findById(lecture.getId());
-
-        if(lecture1.isPresent()){
-            throw new InstructorException("Lectures already exist with this name");
-        }else{
+    public Lecture createLecture(Lecture lecture,Integer course_id,Integer instructor_id) {
+        Optional<Instructor> instructorOptional = instructorRepo.findById(instructor_id);
+        Optional<Course> courseOptional = courseRepo.findById(course_id);
+        if(instructorOptional.isPresent() && courseOptional.isPresent()){
+            lecture.setCourse(courseOptional.get());
+            lecture.setInstructor(instructorOptional.get());
             return lectureRepo.save(lecture);
-
+        }else{
+            throw new LectureException("Instructor or course is not available");
         }
+
     }
 
     @Override

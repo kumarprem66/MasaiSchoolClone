@@ -24,6 +24,9 @@ export class AdminDashboardComponent implements OnInit{
 
   instructor_id:number = 0
 
+  selected_course:number = 0;
+  selected_instructor:number = 0
+
   
 
   constructor(private cour_ser:CourseService,private lec_ser:LecturesService,private router:Router
@@ -45,41 +48,50 @@ export class AdminDashboardComponent implements OnInit{
     
  
 
-    const ins = localStorage.getItem("who_is_login")
-    if(ins=="instructor"){
-      this.is_instructor = true
-    }else{
-      this.getCourses()
-    }
+    // const ins = localStorage.getItem("who_is_login")
+    // if(ins=="instructor"){
+    //   this.is_instructor = true
+    // }else{
+    //   this.getCourses()
+    // }
 
-    const  localIns = localStorage.getItem("instructor_data")
-    if(localIns != null){
+    // const  localIns = localStorage.getItem("instructor_data")
+    // if(localIns != null){
 
-      const parseIns = JSON.parse(localIns)
-      this.instructor_id = parseIns.id
-    }
+    //   const parseIns = JSON.parse(localIns)
+    //   this.instructor_id = parseIns.id
+    // }
     
 
-    if(this.instructor_id != 0 && this.instructor_id != undefined){
+    // if(this.instructor_id != 0 && this.instructor_id != undefined){
 
-      this.getCourseByinstructor(this.instructor_id)
-      this.getAllLecturesOfInstructor(this.instructor_id)
+    //   this.getCourseByinstructor(this.instructor_id)
+    //   this.getAllLecturesOfInstructor(this.instructor_id)
       
-    }
+    // }
 
+    this.getCourses()
+    this.getAllLectures()
 
+    
 
 
   }
 
+  getAllLectures(){
+    this.lec_ser.getAllLectures().subscribe((response)=>{
+      this.letures_data = response
+    })
+  }
+
   getCourses(){
 
-    if(this.is_instructor){
+    // if(this.is_instructor){
     
 
-      this.getCourseByinstructor(1)
+    //   this.getCourseByinstructor(1)
   
-    }else{
+    // }else{
 
       this.cour_ser.getcourses().subscribe((response:any)=>{
         const courses = response.results
@@ -90,12 +102,22 @@ export class AdminDashboardComponent implements OnInit{
       
       })
   
-    }
+    // }
 
 
     
    
     
+  }
+
+  onCourseSelected(event:any){
+    this.selected_course = event.target.value;
+    this.getLectureOfCourse(this.selected_course)
+
+  }
+
+  onInstructorSelected(event:any){
+    this.selected_instructor = event.target.value;
   }
 
   getCourseByinstructor(id:number){
@@ -129,8 +151,8 @@ export class AdminDashboardComponent implements OnInit{
     })
   }
 
-  getAllLecturesOfInstructor(id:number){
-    this.lec_ser.getInstructorLectures(id).subscribe((response:any)=>{
+  getAllLecturesOfInstructor(instrcutorId:number,courseId:number){
+    this.lec_ser.getInstructorLectures(instrcutorId,courseId).subscribe((response:any)=>{
       this.letures_data = response
      
     })

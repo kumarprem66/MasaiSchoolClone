@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators,FormsModule } from '@angular/forms';
 import { InstructorService } from '../services/instructor.service';
 import { DepartmentService } from '../services/department.service';
 import { ActivatedRoute } from '@angular/router';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-add-course',
@@ -18,10 +19,11 @@ export class AddCourseComponent implements OnInit{
   course_name:string = '';
   duration:string = '';
   rating:number = 0;
-  image:string = '';
-  is_available:boolean = false;
+  image_url:string = '';
+  isAvailable:boolean = false;
   Instructor:number = 0;
   department:number = 0;
+  category:number = 0;
   description:string = '';
   course_price:number = 0;
   student_enrolled:number = 10;
@@ -34,26 +36,33 @@ export class AddCourseComponent implements OnInit{
 
   intruc_options:any[] = []
   depart_options:any[] = []
+  cate_options:any[] = []
+
+  // department_id:number = 2;
+  selected_dep:number = 0;
+  selected_cat:number = 0;
+  selected_ins:number = 0;
 
   
 
   constructor(private courseService:CourseService,private fb:FormBuilder,private insSer:InstructorService,
-    private depSer:DepartmentService,private route:ActivatedRoute){
+    private depSer:DepartmentService,private catSer:CategoryService, private route:ActivatedRoute){
     this.courseForm = this.fb.group({
 
-      course_code :['',Validators.required],
-      course_name :['',Validators.required],
+      courseCode :['',Validators.required],
+      courseName :['',Validators.required],
       duration :['',Validators.required],
-      rating :['',Validators.required],
-      image :[null],
-      is_available :[false,Validators.required],
+      rating :[0],
+      image :['',Validators.required],
+      isAvailable :[false,Validators.required],
+      category : ['',Validators.required],
       Instructor : ['',Validators.required],
       department : ['',Validators.required],
       description : [''],
-      course_price : ['',Validators.required],
-      student_enrolled : ['',Validators.required],
-      rating_count: ['',Validators.required],
-      course_language: ['',Validators.required],
+      coursePrice : ['',Validators.required],
+      studentEnrolled : [0],
+      ratingCount: [0],
+      courseLanguage: ['',Validators.required],
 
     });
 
@@ -62,7 +71,8 @@ export class AddCourseComponent implements OnInit{
 
   ngOnInit(): void {
     
-    this.getInstructorName()
+    this.getCategoryName()
+    this.getAllInstructorName()
     this.getDepartmentName()
 
     this.route.queryParams.subscribe((param:any)=>{
@@ -86,17 +96,63 @@ export class AddCourseComponent implements OnInit{
       this.courseForm.patchValue(response)
     })
   }
-  getInstructorName(){
-    this.insSer.getAllInstructor().subscribe((response : any)=>{
-      const instructors = response.results
-      // console.log(instructors)
+  getInstructorName(depart_id:number){
+    this.intruc_options = []
+    this.insSer.getInstructorByDepart(depart_id).subscribe((response : any)=>{
+      const instructors = response
+      console.log(instructors)
 
       instructors.forEach((element:any) => {
         
         // console.log(element.id)
         // console.log(element.name)
        
-        this.intruc_options.push({value:element.id,text:element.name})
+        this.intruc_options.push({value:element.id,text:element.name+",("+element.expertise+"), ("+element.qualification+")"})
+
+      });
+    })
+
+  }
+  getCategoryName(){
+
+    this.catSer.getCategories().subscribe((response: any)=>{
+      const categories = response
+      console.log(categories)
+
+      categories.forEach((element:any) => {
+        this.cate_options.push({value:element.cid,text:element.name})
+      })
+    })
+    
+  }
+  selectedDepart(event:any){
+    this.selected_dep = Number(event.target.value);
+    this.getInstructorName(Number(event.target.value));
+    console.log(this.selected_dep);
+
+  }
+
+  selectedInstr(event:any){
+    this.selected_ins = Number(event.target.value);
+
+    console.log(this.selected_ins);
+  }
+  selectedCategory(event:any){
+    this.selected_cat = Number(event.target.value);
+    console.log(this.selected_cat);
+
+  }
+  getAllInstructorName(){
+    this.insSer.getAllInstructor().subscribe((response : any)=>{
+      const instructors = response
+      console.log(instructors)
+
+      instructors.forEach((element:any) => {
+        
+        // console.log(element.id)
+        // console.log(element.name)
+       
+        this.intruc_options.push({value:element.id,text:element.name+",("+element.expertise+"), ("+element.qualification+")"})
 
       });
     })
@@ -105,7 +161,7 @@ export class AddCourseComponent implements OnInit{
   getDepartmentName(){
 
     this.depSer.getAllDepartment().subscribe((response : any)=>{
-      const departments = response.results
+      const departments = response
       // console.log(departments)
       departments.forEach((element:any) => {
         
@@ -143,11 +199,13 @@ export class AddCourseComponent implements OnInit{
         this.updateCourse(this.current_id,courseData)
       }else{
 
-        this.courseService.createCourse(courseData).subscribe((response)=>{
+
+        console.log(courseData)
+        this.courseService.createCourse(this.selected_dep,this.selected_ins,this.selected_cat,courseData).subscribe((response)=>{
           console.log('Course created successfully:',response)
           alert("Course created successfully")
         },(error)=>{
-          alert("Every field is required")
+          alert(error)
         });
       }
 

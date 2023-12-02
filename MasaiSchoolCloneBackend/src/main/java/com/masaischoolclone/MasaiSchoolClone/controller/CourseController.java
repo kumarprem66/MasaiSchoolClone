@@ -2,6 +2,7 @@ package com.masaischoolclone.MasaiSchoolClone.controller;
 
 import com.masaischoolclone.MasaiSchoolClone.dto.CourseDTO;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
+import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,11 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
-    @PostMapping("/create/{departID}/{categoryId}")
-    public ResponseEntity<Course> createCourse(@PathVariable Integer departID,@PathVariable Integer categoryId,@RequestBody Course course){
+    @PostMapping("/create/{departID}/{ins_id}/{categoryId}")
+    public ResponseEntity<Course> createCourse(@PathVariable Integer departID,@PathVariable Integer ins_id,@PathVariable Integer categoryId,@RequestBody Course course){
         try {
 
-            return ResponseEntity.ok(courseService.createCourse(departID,categoryId,course));
+            return ResponseEntity.ok(courseService.createCourse(departID,ins_id,categoryId,course));
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -92,7 +93,7 @@ public class CourseController {
         }
     }
 
-    @GetMapping("fetch/{id}")
+    @GetMapping("fetch/{courseId}")
     public ResponseEntity<Course> getCourse(@PathVariable Integer courseId){
         try {
 
@@ -149,6 +150,22 @@ public class CourseController {
 
     }
 
+    @GetMapping("/course-by-category-and-instructor")
+    public ResponseEntity<List<Course>> courseByCategory(@RequestParam Integer categoryId,@RequestParam Integer instructorId){
+
+        try {
+
+            return ResponseEntity.ok(courseService.getCourseList(instructorId,categoryId));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
+
     @PutMapping("/assign-to-instructor")
     public ResponseEntity<String> assignCourseToInstructor(@RequestParam Integer instructorId,@RequestParam Integer courseId){
         try {
@@ -163,4 +180,17 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/get-inst/{courseId}")
+    public ResponseEntity<Instructor> getCourseInstructor(@PathVariable Integer courseId){
+        try {
+
+            return ResponseEntity.ok(courseService.getInstructor(courseId));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
 }

@@ -9,6 +9,7 @@ import com.masaischoolclone.MasaiSchoolClone.repository.EnrollmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.StudentRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private StudentRepo studentRepo;
 
 
-    public Enrollment enrollInCourse(Enrollment enrollment, Integer courseId,Integer studentId) {
+    public Enrollment enrollInCourse(Enrollment enrollment, Integer courseId,Integer studentId)  {
 
         Optional<Course> optionalCourse = courseRepo.findById(courseId);
         Optional<Student> optionalStudent = studentRepo.findById(studentId);
@@ -36,6 +37,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
             Course course = optionalCourse.get();
             Student student = optionalStudent.get();
+
+
+            System.out.println(course.getStudents().size());
+
+
             if(course.getStudents().contains(student)){
                 throw new EnrollmentException("Student already enrolled in this course");
             }

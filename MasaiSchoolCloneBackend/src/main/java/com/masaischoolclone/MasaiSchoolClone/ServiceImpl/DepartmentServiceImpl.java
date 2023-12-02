@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -21,14 +22,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentRepo departmentRepo;
 
     @Override
-    public List<Department> getDepartmentList(Integer numberOfRecords) {
+    public List<Department> getDepartmentList() {
 
 
 //       provide  number of record at a time
-        Pageable p = PageRequest.of(0,numberOfRecords, Sort.by("name"));
-
-        Page<Department> departments = departmentRepo.getAllDepartment(p);
-        return departments.toList();
+//        Pageable p = PageRequest.of(0,numberOfRecords, Sort.by("name"));
+//
+//        Page<Department> departments = departmentRepo.getAllDepartment(p);
+        return departmentRepo.getAllDepartment();
     }
 
     @Override
@@ -49,5 +50,15 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     }
 
+    @Override
+    public Department getDepartment(Integer id) {
+        Optional<Department> department1 = departmentRepo.findById(id);
 
+        if(department1.isPresent()){
+            return department1.get();
+        }else{
+
+            throw new DepartmentException("Department does not exist with this id");
+        }
+    }
 }

@@ -22,15 +22,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category categoryCreate(Category category) {
-        Optional<Category> category1 = categoryRepo.findById(category.getCid());
 
-        if(category1.isPresent()){
-            throw new CategoryException("Category already exist with this name");
-
-        }else{
             return categoryRepo.save(category);
 
-        }
+
     }
 
     @Override
@@ -65,4 +60,15 @@ public class CategoryServiceImpl implements CategoryService {
         }
         throw new CategoryException("Category can not be deleted, given id does not exist");
     }
+
+    @Override
+    public Category getCategory(Integer id) {
+        Optional<Category> categoryOptional = categoryRepo.findById(id);
+        if(categoryOptional.isPresent()){
+            return categoryOptional.get();
+        }
+        throw new CategoryException("Category with given id does not exist");
+    }
+
+
 }

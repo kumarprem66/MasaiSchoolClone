@@ -9,12 +9,16 @@ export class DepartmentService {
 
  
 
-  baseUrl = "http://127.0.0.1:8000/sparleom/departments/"
+  baseUrl = "http://127.0.0.1:8088/admin/"
   constructor(private http:HttpClient) { }
 
 
   getAllDepartment(){
-    return this.http.get<any[]>(this.baseUrl)
+    return this.http.get<any[]>(this.baseUrl+"fetch-all")
+  }
+
+  getAllDepartmentById(depart_id:number){
+    return this.http.get<any[]>(this.baseUrl+"get/"+depart_id)
   }
 
   createDepartment(data:any):Observable<any>{

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -23,14 +24,14 @@ public class StudentServiceImpl implements StudentService {
     
     @Override
     public Student createdStudent(Student student) {
-        Optional<Student> student1 = studentRepo.findById(student.getId());
+//        Optional<Student> student1 = studentRepo.findById(student.getId());
 
-        if(student1.isPresent()){
-            throw new StudentException("Student already exist with this name");
-        }else{
+//        if(student1.isPresent()){
+//            throw new StudentException("Student already exist with this name");
+//        }else{
             return studentRepo.save(student);
 
-        }
+//        }
     }
 
     @Override
@@ -71,6 +72,19 @@ public class StudentServiceImpl implements StudentService {
         if(studentOptional.isPresent()){
 
             return studentOptional.get();
+        }
+        throw new StudentException("Student can not be fetched, given id does not exist");
+    }
+
+
+    public List<Student> getStudentByCourse(Integer courseId) {
+        Optional<Course> courseOptional = courseRepo.findById(courseId);
+
+        if(courseOptional.isPresent()){
+
+            Course course = courseOptional.get();
+            return course.getStudents();
+
         }
         throw new StudentException("Student can not be fetched, given id does not exist");
     }

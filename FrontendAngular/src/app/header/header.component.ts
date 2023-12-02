@@ -26,26 +26,26 @@ export class HeaderComponent implements OnInit{
     this.activeItem = itemName;
   }
 
-  @HostListener('window.scroll',[])
-  onWindowScroll(){
+//   @HostListener('window.scroll',[])
+//   onWindowScroll(){
 
-    // console.log("scrolll")
-    this.navbarIsSticky = window.pageYOffset >= 70
-  }
+//     // console.log("scrolll")
+//     this.navbarIsSticky = window.pageYOffset >= 70
+//   }
 
   ngOnInit(): void {
-    // if(this.menuType == 'admin'){
+    if(this.menuType == 'admin'){
 
      
-    // }
+    }
 
   
 
     const local_user = localStorage.getItem("who_is_login")
-    const is_purchase = localStorage.getItem("can_purchase")
-    if(is_purchase != null){
-      this.not_purchase = "Profile"
-    }
+//     const is_purchase = localStorage.getItem("can_purchase")
+//     if(is_purchase != null){
+//       this.not_purchase = "Profile"
+//     }
 
 
     if(local_user != null){
@@ -54,22 +54,23 @@ export class HeaderComponent implements OnInit{
 
         this.menuType = "admin"
         this.router.navigate(['admin-dashboard'])
-      }else if(local_user == "student"){
-        this.menuType = "student"
-        this.router.navigate(['/student_dashboard'])
+        
+//       }else if(local_user == "student"){
+//         this.menuType = "student"
+//         this.router.navigate(['/student_dashboard'])
 
-      }else if(local_user == "instructor"){
+//       }else if(local_user == "instructor"){
 
-        this.menuType = "instructor"
-        this.router.navigate(['/instructor-dashboard'])
+//         this.menuType = "instructor"
+//         this.router.navigate(['/instructor-dashboard'])
 
-      }else{
-        const userobj = localStorage.getItem("current-user")
-        if(userobj != null){
-          const parseduser = JSON.parse(userobj)
-          this.current_user = parseduser.username
-        }
-        this.router.navigate([''])
+//       }else{
+//         const userobj = localStorage.getItem("current-user")
+//         if(userobj != null){
+//           const parseduser = JSON.parse(userobj)
+//           this.current_user = parseduser.username
+//         }
+//         this.router.navigate([''])
         
       }
     }else{
@@ -84,76 +85,76 @@ export class HeaderComponent implements OnInit{
    
     this.setActiveItem("Home")
 
-    if(this.menuType == "admin"){
+    // if(this.menuType == "admin"){
 
    
-      this.router.navigate(['admin-dashboard'])
-    }else if(this.menuType == "student"){
+    //   this.router.navigate(['admin-dashboard'])
+    // }else if(this.menuType == "student"){
   
-      this.router.navigate(['/student_dashboard'])
+    //   this.router.navigate(['/student_dashboard'])
 
-    }else if(this.menuType == "instructor"){
+    // }else if(this.menuType == "instructor"){
 
       
-      this.router.navigate(['/instructor-dashboard'])
+    //   this.router.navigate(['/instructor-dashboard'])
 
-    }else{
+    // }else{
       
       this.menuType = 'default'
       this.router.navigate([''])
       
-    }
+//     }
   
    
     
   }
 
-  logout(){
-    const is_agree = confirm("Are you sure? want to Logout")
-    if(is_agree){
-      this.menuType = 'default'
-      localStorage.removeItem('current-user')
-      localStorage.removeItem('who_is_login')
-      localStorage.removeItem('sparleom-user-token')
-      this.router.navigate(['/login'])
-    }
+//   logout(){
+//     const is_agree = confirm("Are you sure? want to Logout")
+//     if(is_agree){
+//       this.menuType = 'default'
+//       localStorage.removeItem('current-user')
+//       localStorage.removeItem('who_is_login')
+//       localStorage.removeItem('sparleom-user-token')
+//       this.router.navigate(['/login'])
+//     }
    
-  }
+//   }
 
-  adminlogout()
-{
+//   adminlogout()
+// {
 
-  const is_agree = confirm("Are you sure? want to Logout")
-    if(is_agree){
-      this.menuType = 'default'
+//   const is_agree = confirm("Are you sure? want to Logout")
+//     if(is_agree){
+//       this.menuType = 'default'
    
-      localStorage.removeItem('sparleom-admin')
-      localStorage.removeItem('who_is_login')
-      this.router.navigate(['/admin-auth'])
-    }
-}
+//       localStorage.removeItem('sparleom-admin')
+//       localStorage.removeItem('who_is_login')
+//       this.router.navigate(['/admin-auth'])
+//     }
+// }
 
-studentlogout(){
-  const is_agree = confirm("Are you sure? want to Logout")
-  if(is_agree){
-    this.menuType = 'default'
+// studentlogout(){
+//   const is_agree = confirm("Are you sure? want to Logout")
+//   if(is_agree){
+//     this.menuType = 'default'
  
     
-    localStorage.removeItem('who_is_login')
-    this.router.navigate([''])
-  }
-}
-  instructorlogout(){
+//     localStorage.removeItem('who_is_login')
+//     this.router.navigate([''])
+//   }
+// }
+//   instructorlogout(){
 
-    const is_agree = confirm("Are you sure? want to Logout")
-    if(is_agree){
-      this.menuType = 'default'
+//     const is_agree = confirm("Are you sure? want to Logout")
+//     if(is_agree){
+//       this.menuType = 'default'
    
       
-      localStorage.removeItem('who_is_login')
-      this.router.navigate([''])
-    }
-  }
+//       localStorage.removeItem('who_is_login')
+//       this.router.navigate([''])
+//     }
+//   }
 
 
   login(){
@@ -164,14 +165,14 @@ studentlogout(){
 
   }
 
-  canPurchase(){
-    if(this.not_purchase=="Profile"){
-      localStorage.setItem('who_is_login',"student")
-      alert("refresh the page")
-      this.router.navigate(['/student_dashboard'])
-    }else{
-      this.router.navigate(['/profile'])
-    }
-  }
+//   canPurchase(){
+//     if(this.not_purchase=="Profile"){
+//       localStorage.setItem('who_is_login',"student")
+//       alert("refresh the page")
+//       this.router.navigate(['/student_dashboard'])
+//     }else{
+//       this.router.navigate(['/profile'])
+//     }
+//   }
 
 }

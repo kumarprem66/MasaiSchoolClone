@@ -8,12 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class InstructorService {
 
-  baseUrl = "http://127.0.0.1:8000/sparleom/instructors/"
+  baseUrl = "http://127.0.0.1:8088/instructor/"
   constructor(private http:HttpClient) { }
 
 
   getAllInstructor(){
-    return this.http.get<any[]>(this.baseUrl)
+    return this.http.get<any[]>(this.baseUrl+"fetch-all")
+  }
+
+  getInstructorByDepart(depart_id:number){
+    return this.http.get<any[]>(this.baseUrl+"fetch-all-byDept/"+depart_id)
   }
 
   createInstructor(data:any):Observable<any>{

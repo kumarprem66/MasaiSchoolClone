@@ -27,7 +27,7 @@
                 <a (click)="login()" [ngClass]="{'active': activeItem === current_user}" (click)="setActiveItem(current_user)">{{current_user}}</a>
             </li>
             <li>
-                <a (click)="logout()" [ngClass]="{'active': activeItem === 'Logout'}" (click)="setActiveItem('Logout')" *ngIf="current_user != 'Login'">Logout</a>
+                <a  [ngClass]="{'active': activeItem === 'Logout'}" (click)="setActiveItem('Logout')" *ngIf="current_user != 'Login'">Logout</a>
             </li>
             <li>
                 <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Profile')">Profile</a>
@@ -37,7 +37,7 @@
             </li>
         </ul>
 
-        <ul *ngSwitchCase="'instructor'">
+        <!-- <ul *ngSwitchCase="'instructor'">
             <li>
                 <a routerLink="/instructor-dashboard" [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')">Home</a>
             </li>
@@ -62,7 +62,7 @@
             <li>
                 <a (click)="instructorlogout()">Logout</a>
             </li>
-        </ul>
+        </ul> -->
 
         <ul *ngSwitchCase="'admin'">
             <li>
@@ -85,10 +85,10 @@
                 <a routerLink="/instruc-register" [ngClass]="{'active': activeItem === 'Instructors'}" (click)="setActiveItem('Instructors')">Instructors</a>
             </li>
             <li>
-                <a (click)="adminlogout()">Logout</a>
+                <a>Logout</a>
             </li>
         </ul>
-        <ul *ngSwitchCase="'student'">
+        <!-- <ul *ngSwitchCase="'student'">
             <li>
                 <a routerLink="/student_dashboard" [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')">Home</a>
             </li>
@@ -110,8 +110,9 @@
             </li>
            <li>
             <a (click)="studentlogout()">Logout</a>
+          
            </li>
-        </ul>
+        </ul> -->
       </div>
 
         

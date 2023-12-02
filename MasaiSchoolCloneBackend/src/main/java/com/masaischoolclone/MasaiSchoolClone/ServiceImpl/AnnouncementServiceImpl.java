@@ -32,15 +32,12 @@ public class AnnouncementServiceImpl implements AnnounceService {
     @Override
     public Announcement announceCreate(Integer departId, Integer courseId,Announcement announcement) {
 
-        Optional<Announcement> optionalAnnouncement = announementRepo.findById(announcement.getAid());
+
 
         Optional<Department> optionalDepartment = departmentRepo.findById(departId);
         Optional<Course> optionalCourse = courseRepo.findById(courseId);
 
-        if(optionalAnnouncement.isPresent()){
 
-            throw new AnnouncementException("Announcement is already exist with given id");
-        }else{
             if(optionalDepartment.isPresent() && optionalCourse.isPresent()){
 
                 Department department = optionalDepartment.get();
@@ -53,11 +50,11 @@ public class AnnouncementServiceImpl implements AnnounceService {
                 announcement.setCourse(optionalCourse.get());
                 announcement.setDepartment(optionalDepartment.get());
                 return announementRepo.save(announcement);
-            }else{
-                throw new AnnouncementException("Department does not exist with given id");
-            }
 
-        }
+
+        }else{
+                throw new AnnouncementException("Course or department does not exist");
+            }
 
 
 

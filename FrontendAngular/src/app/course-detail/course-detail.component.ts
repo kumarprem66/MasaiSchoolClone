@@ -11,6 +11,7 @@ export class CourseDetailComponent implements OnInit{
 
   current_course_id = 0
   current_course:any = ''
+  instructor_name:string = ''
   all_courses_instructor:any[] = []
   constructor(private cour_ser:CourseService,private route:ActivatedRoute ){
 
@@ -38,9 +39,19 @@ export class CourseDetailComponent implements OnInit{
 
     this.cour_ser.getCourseById(id).subscribe((response:any)=>{
       this.current_course = response;
-      this.getInstructorCourse(response.Instructor)
-      console.log(this.current_course)
+      // this.getInstructorCourse(response.Instructor.id)
+      this.getCourseIns(id);
+      // console.log(this.current_course)
     })
+  }
+
+  getCourseIns(id:number){
+    this.cour_ser.getCourseInstructor(id).subscribe(((response:any)=>{
+      // console.log(response.id)
+      this.instructor_name = response.name;
+      this.getInstructorCourse(response.id);
+    }))
+
   }
 
   getInstructorCourse(ins_id:number){

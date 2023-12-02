@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface LectureService {
 
-    Lecture createLecture(Lecture lecture);
+    Lecture createLecture(Lecture lecture,Integer course_id,Integer instructor_id);
 
     List<Lecture> getLectures();
 

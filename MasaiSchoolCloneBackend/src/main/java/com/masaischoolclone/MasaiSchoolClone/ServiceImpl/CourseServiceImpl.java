@@ -36,17 +36,21 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private DepartmentRepo departmentRepo;
     @Override
-    public Course createCourse(Integer departID,Integer categoryId,Course course) {
+    public Course createCourse(Integer departID,Integer ins_id,Integer categoryId,Course course) {
 
-        Optional<Course> courseOptional = courseRepo.findById(course.getId());
+        Optional<Course> courseOptional = courseRepo.findByCourseName(course.getCourseName());
         Optional<Department> departOptional = departmentRepo.findById(departID);
         Optional<Category> optionalCategory = categoryRepo.findById(categoryId);
+        Optional<Instructor> instructorOptional = instructorRepo.findById(ins_id);
+
+
         if(courseOptional.isPresent()){
-            throw new CourseException("Course already exist with given ID");
+            throw new CourseException("Course already exist with given name");
         }else{
-            if(departOptional.isPresent() && optionalCategory.isPresent()){
+            if(departOptional.isPresent() && optionalCategory.isPresent() && instructorOptional.isPresent()){
                 course.setDepartment(departOptional.get());
                 course.setCategory(optionalCategory.get());
+                course.setInstructor(instructorOptional.get());
                 return courseRepo.save(course);
             }else{
                 throw new CourseException("department is not available");
@@ -169,5 +173,29 @@ public class CourseServiceImpl implements CourseService {
         }
         throw new CourseException("No Course exist of given id");
 
+    }
+
+    @Override
+    public List<Course> getCourseList(Integer instructorId, Integer categoryId) {
+        Optional<Instructor> instructorOptional = instructorRepo.findById(instructorId);
+        Optional<Category> categoryOptional = categoryRepo.findById(categoryId);
+        if (instructorOptional.isPresent() && categoryOptional.isPresent()){
+            Instructor instructor = instructorOptional.get();
+            Category category = categoryOptional.get();
+//            courseRepo.findAllBycategoryAndinstructor(instructor,category);
+
+        }
+        throw new CourseException("No Course exist of given instructor id or category id..");
+    }
+
+    @Override
+    public Instructor getInstructor(Integer courseId){
+        Optional<Course> courseOptional = courseRepo.findById(courseId);
+        if (courseOptional.isPresent()){
+            Instructor instructor = courseOptional.get().getInstructor();
+            return instructor;
+        }
+
+        throw new CourseException("No Course exist of given id");
     }
 }

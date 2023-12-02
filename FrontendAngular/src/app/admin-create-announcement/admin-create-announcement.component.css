@@ -13,7 +13,8 @@
 }
 
 .create_announce_body>div .wrapper .input-box input,
-.create_announce_body>div .wrapper .input-box textarea{
+.create_announce_body>div .wrapper .input-box textarea,
+.create_announce_body>div .wrapper .input-box select{
 
     
     padding: 10px;

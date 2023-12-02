@@ -5,6 +5,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { HttpHeaders } from '@angular/common/http';
+import { InstructorService } from '../services/instructor.service';
 
 @Component({
   selector: 'app-admin-create-lecture',
@@ -15,13 +16,6 @@ export class AdminCreateLectureComponent implements OnInit{
 
   lectureData:FormGroup;
 
-  // hiding leacture create form
-  is_instructor = false
-  is_student = true
-
-  instructor_id:number =0
-
-
 
   course_list:string[] = []
   // Ensure you have this property
@@ -29,19 +23,25 @@ export class AdminCreateLectureComponent implements OnInit{
   isupdate:number = 0;
   options:any[] = [];
   lecture_list:any[] = []
+  course_options:any[] = []
+  instructor_options:any[] = []
+  selected_course_id:number = 0
+  instrcutorId:number = 0
 
 
   constructor(private fb:FormBuilder,private lecSer:LecturesService,
-    private router:Router,private coursesService:CourseService
+    private router:Router,private coursesService:CourseService,
+    private instrucSer:InstructorService
     ,private route:ActivatedRoute){
   
     
     this.lectureData = this.fb.group({
 
-      lecture_course_name:['',Validators.required],
-      topic_title:['',Validators.required],
+      course:['',Validators.required],
+      instructor:['',Validators.required],
+      topicTitle:['',Validators.required],
       timing: [null,Validators.required],
-      meeting_url: ['',Validators.required]
+      meetingUrl: ['',Validators.required]
     })
 
 
@@ -52,24 +52,24 @@ export class AdminCreateLectureComponent implements OnInit{
   ngOnInit(): void {
 
 
-    const ins = localStorage.getItem("who_is_login")
-    if(ins=="instructor"){
-      this.is_instructor = true
-    }
+    // const ins = localStorage.getItem("who_is_login")
+    // if(ins=="instructor"){
+    //   this.is_instructor = true
+    // }
 
-    const  localIns = localStorage.getItem("instructor_data")
-    if(localIns != null){
+    // const  localIns = localStorage.getItem("instructor_data")
+    // if(localIns != null){
 
-      const parseIns = JSON.parse(localIns)
-      this.instructor_id = parseIns.id
+    //   const parseIns = JSON.parse(localIns)
+    //   this.instructor_id = parseIns.id
      
-    }
+    // }
     
-    if(this.instructor_id != 0 && this.instructor_id != undefined){
-      this.getInstructorLecture(this.instructor_id)
-    }else{
-      this.getAllLectures()
-    }
+    // if(this.instructor_id != 0 && this.instructor_id != undefined){
+    //   this.getInstructorLecture(this.instructor_id)
+    // }else{
+    //   this.getAllLectures()
+    // }
    
     this.getcourses()
 
@@ -96,12 +96,13 @@ export class AdminCreateLectureComponent implements OnInit{
       const lecturevalue  = this.lectureData.value
 
       if(this.isupdate == 0 || this.isupdate == undefined){
-        this.lecSer.createLecture(lecturevalue).subscribe((response)=>{
-          // console.log(response)
-          
-         
+        this.lecSer.createLecture(lecturevalue,this.selected_course_id,this.instrcutorId)
+        .subscribe((response)=>{
+          console.log(response)
     
             alert("Lecture created")
+        },(error)=>{
+          alert(error)
         })
        
       }else{
@@ -152,20 +153,37 @@ export class AdminCreateLectureComponent implements OnInit{
 
    getcourses(){
      this.coursesService.getcourses().subscribe((response:any)=>{
-      console.log(response)
+      // console.log(response)
 
-       const cList = response.results;
+       const cList = response;
       cList.forEach((element : any) => {
         
        
-        this.options.push(
+        this.course_options.push(
 
-          {value:element.id,text:element.course_name},
+          {value:element.id,text:element.courseName},
              
           )
       });
     })
   }
+
+  selectedCourse(event:any){
+
+    this.selected_course_id = event.target.value;
+    this.getcourseInstructor(this.selected_course_id)
+  }
+  getcourseInstructor(course_id:number){
+    this.instructor_options = []
+    this.coursesService.getCourseInstructor(course_id).subscribe((response:any)=>{
+
+    //  console.log(response)
+    this.instrcutorId = response.id;
+    this.instructor_options.push({value:response.id,text:response.name})
+
+    
+   })
+ }
 
  
   convertDate(timing_value:any):string{
@@ -191,8 +209,8 @@ export class AdminCreateLectureComponent implements OnInit{
   }
 
 
-  getInstructorLecture(id:number){
-    this.lecSer.getInstructorLectures(id).subscribe((response:any)=>{
+  getInstructorLecture(instrcutorId:number,courseId:number){
+    this.lecSer.getInstructorLectures(instrcutorId,courseId).subscribe((response:any)=>{
 
       this.lecture_list = response
     })

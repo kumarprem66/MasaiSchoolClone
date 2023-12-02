@@ -7,24 +7,24 @@ import { Observable } from 'rxjs';
 })
 export class AnnouncementService {
 
-  private baseUrl = 'http://127.0.0.1:8000/sparleom/announces/';
+  private baseUrl = 'http://127.0.0.1:8088/announce/';
   constructor(private http:HttpClient) { }
 
 
-  createAnnounce(data:any):Observable<any>{
+  createAnnounce(data:any,departId:number,courseId:number):Observable<any>{
 
     const headers = new HttpHeaders({
       "Content-Type":"application/json"
     })
-    return this.http.post(this.baseUrl+'create',JSON.stringify(data),{headers})
+    return this.http.post(this.baseUrl+'create/'+departId+"/"+courseId,JSON.stringify(data),{headers})
   }
 
   getAnnounces(){
-    return this.http.get<any[]>(this.baseUrl)
+    return this.http.get<any[]>(this.baseUrl+"getAnnounce-list")
   }
 
   deleteAnnounce(id:number){
-    return this.http.delete(`${this.baseUrl}${id}/delete`)
+    return this.http.delete(`${this.baseUrl}delete-announce/${id}`)
   }
 
 }
