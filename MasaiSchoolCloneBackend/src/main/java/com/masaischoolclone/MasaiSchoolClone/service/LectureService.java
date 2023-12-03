@@ -21,6 +21,7 @@ public interface LectureService {
 
     List<Lecture> getLectureCourse(Integer courseId);
 
+    List<Lecture> getInstructorLecture(Integer instructorId);
     List<Lecture> getInstructorLecture(Integer instructorId,Integer courseId);
 
 }

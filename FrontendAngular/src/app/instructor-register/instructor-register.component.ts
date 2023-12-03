@@ -4,6 +4,7 @@ import { InstructorService } from '../services/instructor.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DepartmentService } from '../services/department.service';
 
 @Component({
   selector: 'app-instructor-register',
@@ -16,23 +17,26 @@ export class InstructorRegisterComponent implements OnInit{
   instructor_form:FormGroup
   all_instructor:any[] = []
 
+  option_depart:any[] = []
   is_user:boolean = false
 
   is_updating:number = 0
+  selected_depart:number = 0
 
-  constructor(private fb:FormBuilder,private ins_ser:InstructorService,private route:ActivatedRoute,private router:Router){
+  constructor(private fb:FormBuilder,private ins_ser:InstructorService
+    ,private departSer:DepartmentService, private route:ActivatedRoute,private router:Router){
     this.instructor_form = this.fb.group({
       name:['',Validators.required],
       gender:['',Validators.required],
-      data_of_birth:['',Validators.required],
+      dateOfBirth:['',Validators.required],
       email:['',Validators.required],
-      contact_number:['',Validators.required],
+      contactNumber:['',Validators.required],
       password:['',Validators.required],
       experience:['',Validators.required],
       qualification:['',Validators.required],
       expertise:['',Validators.required],
-      biodata:[null],
-      expected_salary:[''],
+      resume:[null],
+      expectedSalary:[''],
       department:['',Validators.required]
 
     })
@@ -55,7 +59,7 @@ instruc_regis() {
        
       })
     }else{
-      this.ins_ser.createInstructor(instructor)
+      this.ins_ser.createInstructor(instructor,this.selected_depart)
       .pipe(
         catchError((error) => {
           if (error.status === 400 && error.error) {
@@ -84,11 +88,11 @@ instruc_regis() {
       .subscribe((response) => {
         // Handle the response here
         alert("Instructor created sucessfully")
-        localStorage.setItem("who_is_login","instructor")
-        localStorage.setItem("instructor_data",JSON.stringify(response))
+        // localStorage.setItem("who_is_login","instructor")
+        // localStorage.setItem("instructor_data",JSON.stringify(response))
         console.log(response)
-        this.router.navigate(['instructor-dashboard'])
-        // this.getAllInstructor();
+        // this.router.navigate(['instructor-dashboard'])
+        this.getAllInstructor();
       });
 
 
@@ -109,26 +113,39 @@ instruc_regis() {
   ngOnInit(): void {
 
 
-    this.route.queryParams.subscribe((param:any)=>{
+    // this.route.queryParams.subscribe((param:any)=>{
 
-      this.is_user = param.hero_ins
-    })
+    //   this.is_user = param.hero_ins
+    // })
 
-    if(!this.is_user){
-      this.getAllInstructor()
-    }
+    // if(!this.is_user){
+    //   this.getAllInstructor()
+    // }
 
+    this.getAllDepartment()
+    this.getAllInstructor()
 
     
   }
 
+  departmentSelect(event:any){
+    this.selected_depart = event.target.value;
+  }
+
   getAllInstructor(){
     this.ins_ser.getAllInstructor().subscribe((response:any)=>{
-      this.all_instructor = response.results;
+      this.all_instructor = response;
+      console.log(response)
       
     })
   }
 
+  getAllDepartment(){
+    this.departSer.getAllDepartment().subscribe((response:any)=>{
+      this.option_depart = response;
+      
+    })
+  }
   edit_instruc(id:number){
 
 

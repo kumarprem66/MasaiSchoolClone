@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../services/course.service';
 import { LecturesService } from '../services/lectures.service';
 import { Router } from '@angular/router';
+import { InstructorService } from '../services/instructor.service';
 // import { DatePipe } from '@angular/common';
 // import { DatePipe } from '@angular/common';
 // import { CommonModule } from '@angular/common';
@@ -19,6 +20,7 @@ export class AdminDashboardComponent implements OnInit{
   letures_data:any[] = []
 
   selectedValue:number = 0
+  option_instruc:any[] =[]
 
   is_instructor:boolean = false
 
@@ -29,7 +31,7 @@ export class AdminDashboardComponent implements OnInit{
 
   
 
-  constructor(private cour_ser:CourseService,private lec_ser:LecturesService,private router:Router
+  constructor(private cour_ser:CourseService,private lec_ser:LecturesService,private insSer:InstructorService,private router:Router
     ){
 
       console.log("called")
@@ -70,6 +72,7 @@ export class AdminDashboardComponent implements OnInit{
       
     // }
 
+    this.getInstructors()
     this.getCourses()
     this.getAllLectures()
 
@@ -94,10 +97,10 @@ export class AdminDashboardComponent implements OnInit{
     // }else{
 
       this.cour_ser.getcourses().subscribe((response:any)=>{
-        const courses = response.results
+        const courses = response
         // console.log(courses)
         courses.forEach((element :any) => {
-          this.option_courses.push({value:element.id,text:element.course_name})
+          this.option_courses.push({value:element.id,text:element.courseName})
         });
       
       })
@@ -110,14 +113,35 @@ export class AdminDashboardComponent implements OnInit{
     
   }
 
+  getInstructors(){
+    this.insSer.getAllInstructor().subscribe((response)=>{
+      const instruc = response
+        // console.log(courses)
+        instruc.forEach((element :any) => {
+          this.option_instruc.push({value:element.id,text:element.name})
+        });
+    })
+  }
   onCourseSelected(event:any){
+    this.letures_data = []
     this.selected_course = event.target.value;
-    this.getLectureOfCourse(this.selected_course)
-
+    if(this.selected_instructor != 0 && this.selected_course !=0 ){
+      this.getAllLecturesOfInstructor(this.selected_instructor,this.selected_course)
+    }else{
+      this.getLectureOfCourse(this.selected_course)
+    }
+   
   }
 
   onInstructorSelected(event:any){
+    this.letures_data = []
     this.selected_instructor = event.target.value;
+    if(this.selected_course != 0 && this.selected_instructor != 0){
+      this.getAllLecturesOfInstructor(this.selected_instructor,this.selected_course)
+    }else{
+      this.getAllLecturesOfInstructorOnly(this.selected_instructor)
+    }
+   
   }
 
   getCourseByinstructor(id:number){
@@ -152,7 +176,16 @@ export class AdminDashboardComponent implements OnInit{
   }
 
   getAllLecturesOfInstructor(instrcutorId:number,courseId:number){
+    this.letures_data = []
     this.lec_ser.getInstructorLectures(instrcutorId,courseId).subscribe((response:any)=>{
+      this.letures_data = response
+     
+    })
+  }
+
+  getAllLecturesOfInstructorOnly(instrcutorId:number){
+    this.letures_data = []
+    this.lec_ser.getInstructorLecturesOnly(instrcutorId).subscribe((response:any)=>{
       this.letures_data = response
      
     })

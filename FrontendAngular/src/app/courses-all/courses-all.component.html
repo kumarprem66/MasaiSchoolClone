@@ -5,8 +5,9 @@
 
    <div class="select_div_filter">
     <div class="category_select_div">
-      <label for="categories">Select Category</label>
+      <!-- <label for="categories">Select Category</label> -->
     <select name="categories" class="course_categories" (change)="onCategoryChange($event) ">
+      <option value="" selected disabled>Select Category</option>
       <option *ngFor="let category of categories" [value]="category.cid">{{category.name}}</option>
      
       
@@ -15,8 +16,9 @@
 
   
     <div class="instructor_select_div">
-      <label for="instructors">Select Instructor</label>
+      <!-- <label for="instructors">Select Instructor</label> -->
       <select name="instructors" class="instructors" (change)="getCourseByInstructor($event) ">
+        <option value="" selected disabled>Select Instructor</option>
         <option *ngFor="let inst of instructors" [value]="inst.id">{{inst.name}}</option>
        
       </select>

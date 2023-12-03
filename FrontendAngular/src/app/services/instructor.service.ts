@@ -20,12 +20,12 @@ export class InstructorService {
     return this.http.get<any[]>(this.baseUrl+"fetch-all-byDept/"+depart_id)
   }
 
-  createInstructor(data:any):Observable<any>{
+  createInstructor(data:any,departId:number):Observable<any>{
 
     const headers = new HttpHeaders({
       "Content-Type":"Application/json"
     })
-    return this.http.post(`${this.baseUrl}create`,JSON.stringify(data),{headers})
+    return this.http.post(`${this.baseUrl}create/${departId}`,JSON.stringify(data),{headers})
   }
 
 
@@ -34,21 +34,21 @@ export class InstructorService {
     const headers = new HttpHeaders({
       "Content-Type":"Application/json"
     })
-    return this.http.put(`${this.baseUrl}${id}/update`,JSON.stringify(data), {headers})
+    return this.http.put(`${this.baseUrl}update/${id}`,JSON.stringify(data), {headers})
   }
 
   deleteInstructor(id:number){
 
-    return this.http.delete(`${this.baseUrl}${id}/delete`)
+    return this.http.delete(`${this.baseUrl}delete/${id}`)
   }
   
   getSingleInstrcutor(id:number){
-    return this.http.get(`${this.baseUrl}${id}/`)
+    return this.http.get(`${this.baseUrl}${id}`)
   }
 
 
   instructorLogin(email: string, password: string): Observable<any> {
     const body = { email, password };
-    return this.http.post(`${this.baseUrl}login/`, body);
+    return this.http.post(`${this.baseUrl}login`, body);
   }
 }

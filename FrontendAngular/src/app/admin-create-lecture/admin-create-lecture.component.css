@@ -7,7 +7,7 @@
   font-family: "Open Sans", sans-serif;
 } */
 
-.login_body {
+/* .login_body {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,7 +94,7 @@
     font-size: 16px;
     color: #fff;
     /* border: 1px solid red; */
-  }
+  /* }
   
   .input-field input:focus~label,
   .input-field input:valid~label {
@@ -156,12 +156,12 @@
     text-align: center;
     margin-top: 30px;
     color: #fff;
-  }
+  } */
 
 
 
   /* ////////////////// list ///////////////////////// */
-
+/*
   .previous_lecture_container{
     margin: 3%;
     background-color: white;
@@ -194,4 +194,39 @@
   .previous_lecture_container .lecture_item>div p{
     color: #0A2647;
     font-weight: 600;
-  }
+  } */
+
+
+
+
+.login_body{
+    margin: 5%;
+}
+
+
+.login_body .wrapper h2{
+
+    
+    text-align: center;
+}
+
+.login_body .wrapper .input-field input,
+.login_body .wrapper .input-field textarea,
+.login_body .wrapper .input-field select{
+
+    
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.login_body .wrapper .create_button{
+
+    padding: 5px 10px;
+    background-color: #0A2647;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    color: white;
+}

@@ -74,6 +74,7 @@ export class AdminCreateLectureComponent implements OnInit{
     this.getcourses()
 
     
+    
 
       
     

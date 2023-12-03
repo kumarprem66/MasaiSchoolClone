@@ -1,81 +1,93 @@
 
 <section class="instructor_register_body">
     <div class="wrapper">
+      <h2 class="form_header">INSTRUCTOR REGISTRATION FORM</h2>
         <form (ngSubmit)="instruc_regis()" [formGroup]="instructor_form">
-          <h2 class="form_header">INSTRUCTOR REGISTRATION FORM</h2>
+          
           <div class="register_form_div">
-            <div>
+            <!-- <div> -->
 
                 <div class="input-field">
+                  <label>Enter Name</label>
                     <input type="text" formControlName="name" required>
-                    <label>Enter Name</label>
+                    
                   </div>
                     <div class="input-field">
                     
                       <select name="gender" id="gender" formControlName="gender" required >
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
+                        <option value="" selected disabled> Gender</option>
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                        <option value="OTHER">OTHER</option>
                       </select>
-                      <label>Enter Gender</label>
+                     
                   </div>
           
                   <div class="input-field">
-                    <input type="number" formControlName="experience" required>
                     <label>Teaching Experience(offline/online)</label>
+                    <input type="number" formControlName="experience" required>
+                    
                   </div>
                   <div class="input-field">
-                    <input type="file" disabled>
                     <label>Attach Resume</label>
+                    <input type="file" disabled>
+                   
                   </div>
                   <div class="input-field">
-                    <input type="date" placeholder="Date of Birth" formControlName="data_of_birth" required>
+                    <input type="date" placeholder="Date of Birth" formControlName="dateOfBirth" required>
                     <!-- <label>Date of Birth</label> -->
                   </div>
                   <div class="input-field">
-                    
-                    <select name="department" id="department" formControlName="department"  required >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
+                    <label>Enter department</label>
+                    <select name="department" id="department" formControlName="department" (change)="departmentSelect($event)" required >
+
+                      <option value="0" selected disabled>1</option>
+                      <option *ngFor = "let item of option_depart" [value]="item.id">{{item.name}}</option>
+                     
                     </select>
 
                     <!-- <input type="number" formControlName="department" required> -->
-                    <label>Enter department</label>
+                  
                 </div>
 
 
-              </div>
+              <!-- </div> -->
               
-              <div>
+              <!-- <div> -->
                 <div class="input-field">
+                  <label>Qualification</label>
                     <input type="text" formControlName="qualification" required>
-                    <label>Qualification</label>
+                   
                   </div>
                   <div class="input-field">
+                    <label>Expertise</label>
                    <input type="text" formControlName="expertise" required>
-                   <label>Expertise</label>
+                  
                   </div>
                   <div class="input-field">
-                    <input type="number" formControlName="expected_salary" required>
                     <label>Expected salary</label>
+                    <input type="number" formControlName="expectedSalary" required>
+                  
                    </div>
                    <div class="input-field">
-                    <input type="email" formControlName="email" required>
                     <label>Enter Email</label>
+                    <input type="email" formControlName="email" required>
+                   
                    </div>
                    <div class="input-field">
-                    <input type="text" formControlName="contact_number" required>
                     <label>Contact Number</label>
+                    <input type="text" formControlName="contactNumber" required>
+                   
                    </div>
                    <div class="input-field">
-                    <input type="password" formControlName="password" required>
                     <label>Set a Password</label>
+                    <input type="password" formControlName="password" required>
+                
                    </div>
                  
-              </div>
+              <!-- </div> -->
           </div>
-          <button type="submit">Save</button>
+          <button type="submit" class="create_button">Save</button>
           
         </form>
       </div>
@@ -91,10 +103,10 @@
             <img src="../../assets/courses{{(i+1)%8}}.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{instruc.name}}</h5>
-              <h6>Qualification: {{instruc.qualification !== '' ? instruc.qualification: 'MBA'}}</h6>
+              <h6>Qualification: {{instruc.qualification !== null ? instruc.qualification : 'Null'}}</h6>
               <h6>Expertise: {{instruc.expertise !== '' ? instruc.expertise : 'JAVA'}}</h6>
               <h6>Gender: {{instruc.gender}}</h6>
-              <h6>Phone: {{instruc.contact_number}}</h6>
+              <h6>Phone: {{instruc.contactNumber}}</h6>
               <h6>Email: {{instruc.email}}</h6>
               <div class="edit_delete_div">
                 <a (click)="edit_instruc(instruc.id)" class="btn btn-primary">Edit</a>

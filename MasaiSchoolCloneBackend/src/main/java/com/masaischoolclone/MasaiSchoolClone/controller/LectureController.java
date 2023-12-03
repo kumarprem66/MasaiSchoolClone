@@ -124,5 +124,20 @@ public class LectureController {
         }
 
     }
+    @GetMapping("/lecture-of-course-instructor/{instructorId}")
+    public ResponseEntity<List<Lecture>> getInstructorLecture(@PathVariable Integer instructorId){
+
+        try {
+
+            return new ResponseEntity<>(lectureService.getInstructorLecture(instructorId),HttpStatus.OK);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
 
 }

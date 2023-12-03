@@ -1,4 +1,4 @@
-
+/* 
 .instructor_register_body {
     display: flex;
     align-items: center;
@@ -6,7 +6,7 @@
     min-height: 100vh;
     width: 100%;
     padding: 0 10px;
-    /* border: 3px solid green; */
+  
   }
   
   .instructor_register_body::before {
@@ -33,9 +33,7 @@
     display: flex;
     flex-direction: column;
   }
-/* .form_header{
-  color: #0A2647;
-} */
+
   .register_form_div{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -52,7 +50,7 @@
     position: relative;
     border-bottom: 2px solid #ccc;
     margin: 15px 0;
-    /* border: 1px solid green; */
+   
   }
   
   .input-field label {
@@ -69,7 +67,7 @@
   .register_form_div>div:first-child .input-field:nth-child(4) label{
 
     right: -250px;
-    /* border: 1px solid red; */
+   
   }
   
   .input-field input {
@@ -80,7 +78,7 @@
     outline: none;
     font-size: 16px;
     color: #fff;
-    /* border: 1px solid red; */
+   
   }
   
   .input-field input:focus~label,
@@ -163,7 +161,50 @@
         grid-template-columns: 1fr;
  
     }
+} */
+
+
+
+.instructor_register_body{
+  margin: 5%;
 }
+
+
+.instructor_register_body .wrapper h2{
+
+  
+  text-align: center;
+}
+
+.instructor_register_body .wrapper .register_form_div .input-field input,
+.instructor_register_body .wrapper .register_form_div .input-field textarea,
+.instructor_register_body .wrapper .register_form_div .input-field select{
+
+  
+  padding: 10px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.instructor_register_body .wrapper .create_button{
+
+  padding: 5px 10px;
+  width: 100%;
+  background-color: #0A2647;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+
+
+
+
+
+
+
 
 
 

@@ -2,12 +2,20 @@
 <div class="admin_dash_container">
     <div>
         <h1 class="text-center text-lg font-semibold">Today's Schedule</h1>
-        <select name="" class="admin_course_select" (change)="onSelectChange($event)">
+        <select name="" class="admin_course_select" (change)="onCourseSelected($event)">
+            <option value="0" selected disabled>Select Course</option>
             <option *ngFor="let item of option_courses" [value]="item.value">{{item.text}}</option>
            
             
         </select>
+        <select name="" class="admin_instruc_select" (change)="onInstructorSelected($event)">
+            <option value="0" selected disabled>Select Instructor</option>
+            <option *ngFor="let item of option_instruc" [value]="item.value">{{item.text}}</option>
+           
+            
+        </select>
     </div>
+   
    
     <div class="w-full rounded-lg shadow-md m-10">
         <table class="content-table border-collapse min-w-min text-lg w-full p-2">

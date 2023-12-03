@@ -1,12 +1,14 @@
 
 <section class="login_body">
     <div class="wrapper">
+      <h2>Create Lecture</h2>
         <form  (ngSubmit)="lectureSubmit()" [formGroup]="lectureData">
-          <h2>Create Lecture</h2>
+         
           <div class="input-field">
-            <label for="">Course</label>
+            <!-- <label for="">Course</label> -->
             <select name="lecture_course_name" id="lecture_course_name" formControlName="course" (change)="selectedCourse($event)" required>
-              
+             
+              <option value="" selected disabled>Select Course</option>
               <option *ngFor="let item of course_options" [value]="item.value">{{item.text}}</option>
               
             </select>
@@ -14,10 +16,10 @@
             
           </div>
           <div class="input-field">
-            <label for="">instructor</label>
+            <!-- <label for="">Instructor</label> -->
             
             <select name="lecture_instructor_name" id="lecture_instructor_name" formControlName="instructor" required>
-              
+              <option value="" selected disabled>Select Instructor</option>
               <option *ngFor="let item of instructor_options" [value]="item.value">{{item.text}}</option>
               
             </select>
@@ -25,8 +27,9 @@
           </div>
 
           <div class="input-field">
-            <input type="text" formControlName="topicTitle" value="prem kmar" required>
             <label>Lecture title</label>
+            <input type="text" formControlName="topicTitle" value="prem kmar" required>
+           
           </div>
             
           <div class="input-field">
@@ -35,13 +38,14 @@
           </div>
          
           <div class="input-field">
-            <input type="url" formControlName="meetingUrl" required>
             <label>Lecture Meeting url</label>
+            <input type="url" formControlName="meetingUrl" required>
+           
           </div>
 
           
          
-          <button type="submit">Save</button>
+          <button type="submit" class="create_button">Save</button>
           
         </form>
       </div>

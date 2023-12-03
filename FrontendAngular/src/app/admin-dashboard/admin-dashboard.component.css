@@ -14,7 +14,8 @@
     
 }
 
-.admin_course_select{
+.admin_course_select,
+.admin_instruc_select{
     font-size: 20px;
 
     margin-bottom: 10px;

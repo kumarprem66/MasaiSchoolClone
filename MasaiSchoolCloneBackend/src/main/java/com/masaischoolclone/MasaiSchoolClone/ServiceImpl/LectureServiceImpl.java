@@ -118,4 +118,18 @@ public class LectureServiceImpl implements LectureService {
         }
 
     }
+    @Override
+    public List<Lecture> getInstructorLecture(Integer instructorId) {
+
+
+        Optional<Instructor> optionalInstructor = instructorRepo.findById(instructorId);
+        if(optionalInstructor.isPresent()){
+
+            return lectureRepo.findAllByInstructor(optionalInstructor.get());
+
+        }else{
+            throw new InstructorException("No Instructor found with this id of instructor");
+        }
+
+    }
 }

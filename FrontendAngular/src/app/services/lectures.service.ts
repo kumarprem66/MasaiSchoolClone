@@ -25,7 +25,7 @@ export class LecturesService {
 
   getLectureOfCourse(courseId:number){
 
-    return this.http.get(`${this.baseUrl}lecture-of-course/${courseId}/`)
+    return this.http.get(`${this.baseUrl}lecture-of-course/${courseId}`)
     
   }
 
@@ -37,17 +37,20 @@ export class LecturesService {
   }
 
   deleteLecture(lectureId:number){
-    return this.http.delete(`${this.baseUrl}/delete/${lectureId}`)
+    return this.http.delete(`${this.baseUrl}delete/${lectureId}`)
   }
 
   getLectureById(id:number){
-    const url = `${this.baseUrl}/fetch/${id}`
+    const url = `${this.baseUrl}fetch/${id}`
     return this.http.get(url)
   }
 
   getInstructorLectures(instrcutorId:number,courseId:number){
-    return this.http.get(`${this.baseUrl}/lecture-of-course-instructor/${instrcutorId}/${courseId}`)
+    return this.http.get(`${this.baseUrl}lecture-of-course-instructor/${instrcutorId}/${courseId}`)
   }
 
+  getInstructorLecturesOnly(instrcutorId:number){
+    return this.http.get(`${this.baseUrl}lecture-of-course-instructor/${instrcutorId}`)
+  }
 
 }
