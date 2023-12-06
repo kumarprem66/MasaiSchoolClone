@@ -13,6 +13,7 @@ import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.InstructorRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -69,13 +70,29 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course updateCourse(Integer updateId, CourseDTO updatedCourse) {
+    public Course updateCourse(Integer updateId, Course updatedCourse) {
 
         Optional<Course> courseOptional = courseRepo.findById(updateId);
         if(courseOptional.isPresent()){
             Course updatableCourse = courseOptional.get();
+
+
             updatableCourse.setCoursePrice(updatableCourse.getCoursePrice());
             updatableCourse.setCourseName(updatableCourse.getCourseName());
+            updatableCourse.setCourseCode(updatedCourse.getCourseCode());
+            updatableCourse.setCourseLanguage(updatedCourse.getCourseLanguage());
+            updatableCourse.setDepartment(updatedCourse.getDepartment());
+            updatableCourse.setInstructor(updatedCourse.getInstructor());
+            updatableCourse.setCategory(updatedCourse.getCategory());
+            updatableCourse.setDescription(updatedCourse.getDescription());
+            updatableCourse.setDuration(updatedCourse.getDuration());
+            updatableCourse.setStudentEnrolled(updatedCourse.getStudentEnrolled());
+            updatableCourse.setImage(updatedCourse.getImage());
+            updatableCourse.setRatingCount(updatedCourse.getRatingCount());
+            updatableCourse.setIsAvailable(updatedCourse.getIsAvailable());
+            updatableCourse.setRating(updatedCourse.getRating());
+
+
             courseRepo.save(updatableCourse);
             return updatableCourse;
         }
@@ -197,5 +214,31 @@ public class CourseServiceImpl implements CourseService {
         }
 
         throw new CourseException("No Course exist of given id");
+    }
+
+    @Override
+    public Department getDepartment(Integer courseId){
+        Optional<Course> courseOptional = courseRepo.findById(courseId);
+        if (courseOptional.isPresent()){
+            Department department = courseOptional.get().getDepartment();
+            if(department != null){
+                return department;
+            }
+
+        }
+
+        throw new CourseException("No Department exist of given id");
+    }
+
+    @Override
+    public Category getCategory(Integer courseId){
+        Optional<Course> courseOptional = courseRepo.findById(courseId);
+        if (courseOptional.isPresent()){
+            Category category = courseOptional.get().getCategory();
+            if(category != null)
+             return category;
+        }
+
+        throw new CourseException("No Category exist of given id");
     }
 }

@@ -13,6 +13,7 @@ public interface LectureService {
 
     List<Lecture> getLectures();
 
+    Course getCourse(Integer lectureId);
     Lecture updateLecture(Integer lectureId,Lecture updatedLecture);
 
     Integer deleteLecture(Integer lectureId);

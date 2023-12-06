@@ -45,6 +45,10 @@ export class LecturesService {
     return this.http.get(url)
   }
 
+  getCourseByLecureId(lec_id:number){
+    const url = `${this.baseUrl}course-of-lecture/${lec_id}`
+    return this.http.get(url)
+  }
   getInstructorLectures(instrcutorId:number,courseId:number){
     return this.http.get(`${this.baseUrl}lecture-of-course-instructor/${instrcutorId}/${courseId}`)
   }

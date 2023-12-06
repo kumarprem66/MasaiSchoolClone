@@ -21,6 +21,7 @@ export class InstructorRegisterComponent implements OnInit{
   is_user:boolean = false
 
   is_updating:number = 0
+  selected_depart_name:string = ''
   selected_depart:number = 0
 
   constructor(private fb:FormBuilder,private ins_ser:InstructorService
@@ -46,7 +47,7 @@ instruc_regis() {
   if (this.instructor_form.valid) {
     const instructor = this.instructor_form.value;
 
-    // console.log(instructor.name);
+    console.log(instructor+"          =========== INSTRUCTOR");
 
     // updating the instructor
     // console.log(this.is_updating)
@@ -55,7 +56,9 @@ instruc_regis() {
     if(this.is_updating != undefined && this.is_updating != 0){
 
       this.ins_ser.updateInstructor(this.is_updating,instructor).subscribe((response)=>{
+        console.log(response+"============================")
         alert("Instructor updated")
+        this.getAllInstructor()
        
       })
     }else{
@@ -148,13 +151,32 @@ instruc_regis() {
   }
   edit_instruc(id:number){
 
+    
 
 
+    this.getDepartmentName(id)
     this.ins_ser.getSingleInstrcutor(id).subscribe((response)=>{
       this.is_updating = id
+      
       this.instructor_form.patchValue(response)
     })
 
+
+
+    
+
+  }
+
+  getDepartmentName(ins_id:number){
+
+    this.ins_ser.getDepartmentByIns(ins_id).subscribe((response:any)=>{
+      
+      
+      this.selected_depart_name = response.name
+      
+      this.instructor_form.get('department')?.setValue(response.id)
+    })
+ 
   }
 
   delete_instruc(id:number){

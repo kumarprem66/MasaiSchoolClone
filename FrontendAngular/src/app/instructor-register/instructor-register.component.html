@@ -41,12 +41,12 @@
                     <label>Enter department</label>
                     <select name="department" id="department" formControlName="department" (change)="departmentSelect($event)" required >
 
-                      <option value="0" selected disabled>1</option>
+                      <!-- <option value="0" selected disabled>Select Department</option> -->
                       <option *ngFor = "let item of option_depart" [value]="item.id">{{item.name}}</option>
                      
                     </select>
 
-                    <!-- <input type="number" formControlName="department" required> -->
+                  
                   
                 </div>
 
@@ -100,7 +100,7 @@
 
     <div class="card_container">
         <div class="card mycard" *ngFor="let instruc of all_instructor; let i = index">
-            <img src="../../assets/courses{{(i+1)%8}}.jpg" class="card-img-top" alt="...">
+            <img src="{{instruc.gender == 'MALE'? '../../assets/placeholder-profile-male.webp':'../../assets/women_placeholder.png'}}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{instruc.name}}</h5>
               <h6>Qualification: {{instruc.qualification !== null ? instruc.qualification : 'Null'}}</h6>
@@ -108,6 +108,7 @@
               <h6>Gender: {{instruc.gender}}</h6>
               <h6>Phone: {{instruc.contactNumber}}</h6>
               <h6>Email: {{instruc.email}}</h6>
+             
               <div class="edit_delete_div">
                 <a (click)="edit_instruc(instruc.id)" class="btn btn-primary">Edit</a>
                 <a (click)="delete_instruc(instruc.id)" class="btn btn-secondary">Delete</a>

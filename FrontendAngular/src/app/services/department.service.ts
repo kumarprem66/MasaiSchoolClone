@@ -17,7 +17,7 @@ export class DepartmentService {
     return this.http.get<any[]>(this.baseUrl+"fetch-all")
   }
 
-  getAllDepartmentById(depart_id:number){
+  getDepartmentById(depart_id:number){
     return this.http.get<any[]>(this.baseUrl+"get/"+depart_id)
   }
 

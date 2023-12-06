@@ -92,10 +92,41 @@ export class AddCourseComponent implements OnInit{
   getCourseFromId(id:number){
     this.courseService.getCourseById(id).subscribe((response)=>{
 
-      console.log(response)
+      // console.log(response)
+      this.getCategoryFromCourse(id);
+      this.getDepartFromCourse(id);
+      this.getInstructorFromCourse(id);
       this.courseForm.patchValue(response)
     })
   }
+
+  getDepartFromCourse(course_id:number){
+
+    this.courseService.getCourseDepartment(course_id).subscribe((response:any)=>{
+      // console.log(response);
+
+      this.courseForm.get('department')?.setValue(response.id)
+    })
+  }
+
+  getCategoryFromCourse(course_id:number){
+    this.courseService.getCourseCategory(course_id).subscribe((response:any)=>{
+      // console.log(response);
+      this.courseForm.get('category')?.setValue(response.cid)
+    })
+  }
+
+
+  getInstructorFromCourse(course_id:number){
+    this.courseService.getCourseInstructor(course_id).subscribe((response:any)=>{
+      // console.log(response);
+      this.courseForm.get('Instructor')?.setValue(response.id)
+    })
+  }
+
+
+
+
   getInstructorName(depart_id:number){
     this.intruc_options = []
     this.insSer.getInstructorByDepart(depart_id).subscribe((response : any)=>{

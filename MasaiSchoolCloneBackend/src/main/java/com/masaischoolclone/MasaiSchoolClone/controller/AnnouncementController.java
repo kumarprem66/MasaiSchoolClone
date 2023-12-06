@@ -65,7 +65,7 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/delete-announce/{announceId}")
-    public ResponseEntity<Integer> announceDelete(Integer announceId) {
+    public ResponseEntity<Integer> announceDelete(@PathVariable Integer announceId) {
 
         try {
 

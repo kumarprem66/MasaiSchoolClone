@@ -1,6 +1,7 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Lecture;
 import com.masaischoolclone.MasaiSchoolClone.service.LectureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,22 @@ public class LectureController {
         try {
 
             return new ResponseEntity<>(lectureService.getInstructorLecture(instructorId,courseId),HttpStatus.OK);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
+
+    @GetMapping("/course-of-lecture/{lectureId}")
+    public ResponseEntity<Course> getCourseFromLecture(@PathVariable Integer lectureId){
+
+        try {
+
+            return new ResponseEntity<>(lectureService.getCourse(lectureId),HttpStatus.OK);
         } catch (Exception e) {
 
             e.printStackTrace();

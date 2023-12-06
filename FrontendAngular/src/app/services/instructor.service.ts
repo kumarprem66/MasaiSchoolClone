@@ -43,12 +43,16 @@ export class InstructorService {
   }
   
   getSingleInstrcutor(id:number){
-    return this.http.get(`${this.baseUrl}${id}`)
+    return this.http.get(`${this.baseUrl}fetch/${id}`)
   }
 
 
   instructorLogin(email: string, password: string): Observable<any> {
     const body = { email, password };
     return this.http.post(`${this.baseUrl}login`, body);
+  }
+
+  getDepartmentByIns(ins_id:number){
+    return  this.http.get(`${this.baseUrl}get_dept/${ins_id}`)
   }
 }

@@ -30,7 +30,7 @@ public class Instructor{
     private String contactNumber;
     private String password;
     private Integer experience;
-    private String Qualification;
+    private String qualification;
     private String expertise;
     private String resume;
     private Integer expectedSalary;

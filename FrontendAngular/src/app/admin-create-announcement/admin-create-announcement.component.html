@@ -1,4 +1,6 @@
 
+
+
 <section class="create_announce_body" *ngIf="!is_inst_is_stu">
    
   <div>
@@ -52,16 +54,19 @@
    
 
   </section>
-  <div class="previous_announcement_container">
-    <div class="announcement_item" *ngFor="let ann of ann_list">
-        <h5>{{ann.title}}</h5>
-        <p>{{ann.description}}</p>
-        <div> 
-          <p>{{ann.publish_date}}</p>
-          <a (click)="deleteAnnoun(ann.id)">Delete</a>
-        </div>
-    </div>
+
+  
+<div class="previous_announcement_container">
+  <div class="announcement_item" *ngFor="let ann of ann_list">
+      <h5>{{ann.title}}</h5>
+      <p>{{ann.description}}</p>
+      <div> 
+        <p>{{ann.publish_date}}</p>
+        <a (click)="deleteAnnoun(ann.aid)">Delete</a>
+      </div>
   </div>
+</div>
+ 
 
   
   

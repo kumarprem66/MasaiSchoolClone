@@ -1,7 +1,9 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
 import com.masaischoolclone.MasaiSchoolClone.dto.CourseDTO;
+import com.masaischoolclone.MasaiSchoolClone.entity.Category;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
+import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,7 @@ public class CourseController {
     }
 
     @PutMapping("/update/{updateId}")
-    ResponseEntity<Course> updateCourse(@PathVariable Integer updateId, @RequestBody CourseDTO updatedCourse){
+    ResponseEntity<Course> updateCourse(@PathVariable Integer updateId, @RequestBody Course updatedCourse){
         try {
 
             return ResponseEntity.ok(courseService.updateCourse(updateId,updatedCourse));
@@ -185,6 +187,34 @@ public class CourseController {
         try {
 
             return ResponseEntity.ok(courseService.getInstructor(courseId));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    @GetMapping("/get-cat/{courseId}")
+    public ResponseEntity<Category> getCourseCategory(@PathVariable Integer courseId){
+        try {
+
+            return ResponseEntity.ok(courseService.getCategory(courseId));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    @GetMapping("/get-dept/{courseId}")
+    public ResponseEntity<Department> getCourseDepartment(@PathVariable Integer courseId){
+        try {
+
+            return ResponseEntity.ok(courseService.getDepartment(courseId));
         } catch (Exception e) {
 
             e.printStackTrace();

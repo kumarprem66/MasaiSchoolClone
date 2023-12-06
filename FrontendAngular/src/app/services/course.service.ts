@@ -41,6 +41,17 @@ export class CourseService {
     return this.http.get(`${this.baseUrl}get-inst/${course_id}`)
   }
 
+  getCourseDepartment(course_id:number){
+    return this.http.get(`${this.baseUrl}get-dept/${course_id}`)
+  }
+
+  getCourseCategory(course_id:number){
+    return this.http.get(`${this.baseUrl}get-cat/${course_id}`)
+  }
+
+
+
+
   getInstructorCourses(ins_id:number){
     return this.http.get(`${this.baseUrl}instructor-course/${ins_id}`)
   }

@@ -52,8 +52,8 @@ public class InstructorController {
         }
     }
 
-    @PutMapping("/update/{updatedInstructor}")
-    public ResponseEntity<Instructor> updateInstructor(@PathVariable Integer instructorId, @RequestBody InstructorDTO updatedInstructor){
+    @PutMapping("/update/{instructorId}")
+    public ResponseEntity<Instructor> updateInstructor(@PathVariable Integer instructorId, @RequestBody Instructor updatedInstructor){
 
         try {
 
@@ -101,6 +101,20 @@ public class InstructorController {
         try {
 
             return ResponseEntity.ok(instructorService.getAllInstructor(departID));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    @GetMapping("/get_dept/{ins_id}")
+    public ResponseEntity<Department> getDepartmentByInsId(@PathVariable Integer ins_id){
+        try {
+
+            return ResponseEntity.ok(instructorService.getDepartment(ins_id));
         } catch (Exception e) {
 
             e.printStackTrace();

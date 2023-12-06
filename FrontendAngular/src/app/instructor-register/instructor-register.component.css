@@ -243,7 +243,9 @@
     width: 17rem;
     cursor: pointer;
 }
-
+.all_Instructor_container .card_container .mycard .card-img-top{
+ height: 10rem;
+}
 .all_Instructor_container .card_container .mycard .card-body .edit_delete_div{
     display: flex;
     flex-direction: row;

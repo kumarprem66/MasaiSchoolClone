@@ -120,7 +120,7 @@ export class AdminCreateLectureComponent implements OnInit{
         // console.log(this.isupdate)
       }
 
-      this.router.navigate(['admin-dashboard'])
+      // this.router.navigate(['admin-dashboard']) 
       
 
     }else{
@@ -133,15 +133,27 @@ export class AdminCreateLectureComponent implements OnInit{
     this.lecSer.getLectureById(id).subscribe((response:any)=>{
 
 
+      
+      this.getCourseFromLecture(id);
       this.lectureData.patchValue(response)
       this.lectureData.patchValue({
         timing: this.convertDate(response.timing),
       }); 
 
       // console.log(response)
+    
 
 
 
+    })
+  }
+
+  getCourseFromLecture(lecture_id:number){
+    this.lecSer.getCourseByLecureId(lecture_id).subscribe((response:any)=>{
+      this.selected_course_id = response.id;
+      this.lectureData.get('course')?.setValue(response.id)
+      this.getcourseInstructor(this.selected_course_id)
+      // console.log(response);
     })
   }
 

@@ -1,6 +1,7 @@
 package com.masaischoolclone.MasaiSchoolClone.service;
 
 import com.masaischoolclone.MasaiSchoolClone.dto.InstructorDTO;
+import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,7 @@ public interface InstructorService {
 
     List<Instructor> getInstructors();
 
-    Instructor updateInstructor(Integer instructorId, InstructorDTO updatedInstructor);
+    Instructor updateInstructor(Integer instructorId, Instructor updatedInstructor);
 
     Integer deleteInstructor(Integer insId);
 
@@ -23,5 +24,7 @@ public interface InstructorService {
     Instructor getInstructorByUser(Integer userID);
 
     Set<Instructor> getAllInstructor(Integer departmentId);
+
+     Department getDepartment(Integer ins_id);
 
 }

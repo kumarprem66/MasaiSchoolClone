@@ -50,6 +50,23 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    public Course getCourse(Integer lectureId) {
+
+        Optional<Lecture> lectureOptional = lectureRepo.findById(lectureId);
+
+        if(lectureOptional.isPresent()){
+
+            Course course = lectureOptional.get().getCourse();
+            if(course != null){
+                return lectureOptional.get().getCourse();
+            }
+
+
+        }
+        throw new LectureException("Course can not be fetched, from given lecture id");
+    }
+
+    @Override
     public Lecture updateLecture(Integer lectureId, Lecture updatedLecture) {
         Optional<Lecture> lectureOptional = lectureRepo.findById(lectureId);
         if(lectureOptional.isPresent()){
@@ -81,6 +98,10 @@ public class LectureServiceImpl implements LectureService {
     public Lecture getLecture(Integer id) {
         Optional<Lecture> lectureOptional = lectureRepo.findById(id);
         if(lectureOptional.isPresent()){
+
+//            System.out.println(lectureOptional.get().getCourse());
+
+
 
             return lectureOptional.get();
         }

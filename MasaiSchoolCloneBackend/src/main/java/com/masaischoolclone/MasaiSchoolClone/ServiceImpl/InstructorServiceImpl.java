@@ -55,16 +55,26 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public Instructor updateInstructor(Integer instructorId, InstructorDTO updatedInstructor) {
+    public Instructor updateInstructor(Integer instructorId, Instructor updatedInstructor) {
         Optional<Instructor> instructorOptional = instructorRepo.findById(instructorId);
         if(instructorOptional.isPresent()){
 
             Instructor updatableInstructor = instructorOptional.get();
+
+            updatableInstructor.setName(updatedInstructor.getName());
+            updatableInstructor.setDepartment(updatedInstructor.getDepartment());
+            updatableInstructor.setDateOfBirth(updatedInstructor.getDateOfBirth());
+            updatableInstructor.setExperience(updatedInstructor.getExperience());
+            updatableInstructor.setExpectedSalary(updatedInstructor.getExpectedSalary());
+            updatableInstructor.setExpertise(updatedInstructor.getExpertise());
+            updatableInstructor.setQualification(updatedInstructor.getQualification());
+            updatableInstructor.setGender(updatedInstructor.getGender());
+
           updatableInstructor.setContactNumber(updatedInstructor.getContactNumber());
           updatableInstructor.setEmail(updatedInstructor.getEmail());
           updatableInstructor.setPassword(updatedInstructor.getPassword());
 
-          return updatableInstructor;
+          return instructorRepo.save(updatableInstructor);
 
 
         }
@@ -86,7 +96,21 @@ public class InstructorServiceImpl implements InstructorService {
         Optional<Instructor> instructorOptional = instructorRepo.findById(id);
         if(instructorOptional.isPresent()){
 
+//            System.out.println("==============="+instructorOptional.get().getDepartment().getName());
+//            System.out.println(instructorOptional.get());
+
             return instructorOptional.get();
+        }
+        throw new InstructorException("Instructor can not be fetched, given id does not exist");
+    }
+
+
+    @Override
+    public Department getDepartment(Integer ins_id) {
+        Optional<Instructor> instructorOptional = instructorRepo.findById(ins_id);
+        if(instructorOptional.isPresent()){
+
+            return instructorOptional.get().getDepartment();
         }
         throw new InstructorException("Instructor can not be fetched, given id does not exist");
     }

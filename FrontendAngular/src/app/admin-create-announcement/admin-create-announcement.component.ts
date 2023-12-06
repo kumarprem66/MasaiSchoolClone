@@ -72,7 +72,7 @@ export class AdminCreateAnnouncementComponent implements OnInit{
     this.ans.getAnnounces().subscribe((response:any)=>{
       
       const responseData = response;
-      // this.ann_list = responseData
+      this.ann_list = responseData
       console.log(responseData)
     })
   }
