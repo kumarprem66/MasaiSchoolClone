@@ -14,7 +14,7 @@
 
 ## Introduction
 
-The **Education System** is a comprehensive web-based platform designed to facilitate various aspects of educational institutions. This system is developed with the goal of streamlining processes related to student management, course administration, and instructor coordination. Built using Django for the backend and Angular for the frontend, it offers a robust solution for educational organizations to manage their resources efficiently.
+The **Education System** is a comprehensive web-based platform designed to facilitate various aspects of educational institutions. This system is developed with the goal of streamlining processes related to student management, course administration, and instructor coordination. Built using SpringBoot for the backend and Angular for the frontend, it offers a robust solution for educational organizations to manage their resources efficiently.
 
 ## Features
 
