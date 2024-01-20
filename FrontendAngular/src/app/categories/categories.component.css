@@ -1,10 +1,18 @@
+
+
 .categories_container{
 
 
     display: flex;
+    background: #0A2647;
     flex-direction: column;
     margin: 60px;
+    padding: 10px;
+  
  
+}
+.categories_container h1{
+    color: white;
 }
 
 .categories_container, .card_container{
@@ -20,6 +28,7 @@
 
     position:relative;
     /* background-color: #205295; */
+    background: transparent;
     width: 250px;
     height: 140px;
     color: white;
@@ -76,8 +85,10 @@ h1{
 
 .categories_container .card_container .category_card h2{
     text-align: center;
-    font-size: 23px;
-
+    font-size: 20px;
+    font-weight: 700;
+    color: #0A2647;
+    
   
 }
 
@@ -100,7 +111,7 @@ h1{
 }
 
 .categories_container .card_container .category_card:hover{
-    background-color: #20539563;
+    background-image: '';
 
 }
 .categories_container .card_container .category_card:hover a{

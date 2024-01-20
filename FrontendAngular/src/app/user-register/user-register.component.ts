@@ -29,13 +29,18 @@ export class UserRegisterComponent implements OnInit{
 
    if(this.userData.valid){
     const uservalue = this.userData.value
-    console.log(uservalue)
 
     
-    this.regSer.userRegister(uservalue).subscribe((response)=>{
-      alert("Registered")
+    this.regSer.userRegister(uservalue).subscribe((response:any)=>{
+    
+     
+      alert("registeration Sucessful")
+   
       this.router.navigate(['login'])
-      console.log(uservalue)
+    },(error)=>{
+
+      alert(error.error.text)
+      console.log(error)
     })
    }else{
     alert("every field need valid data")

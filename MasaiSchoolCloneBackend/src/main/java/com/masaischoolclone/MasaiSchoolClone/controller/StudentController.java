@@ -1,6 +1,7 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
 import com.masaischoolclone.MasaiSchoolClone.entity.Student;
+import com.masaischoolclone.MasaiSchoolClone.exception.StudentException;
 import com.masaischoolclone.MasaiSchoolClone.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,16 +19,26 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping("/create")
-    ResponseEntity<Student> createStudent(@RequestBody Student student){
+    @PostMapping("/create/{email}")
+    ResponseEntity<?> createStudent(@PathVariable String email,@RequestBody Student student){
         try {
 
-            return new ResponseEntity<>(studentService.createdStudent(student), HttpStatus.CREATED);
-        } catch (Exception e) {
+            return new ResponseEntity<>(studentService.createdStudent(email,student), HttpStatus.CREATED);
+        } catch (StudentException e) {
 
-            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/login/{mob}")
+    ResponseEntity<?> loginStudent(@PathVariable String mob){
+        try {
+
+            return new ResponseEntity<>(studentService.loginStudent(mob), HttpStatus.ACCEPTED);
+        } catch (StudentException e) {
+
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
 
         }
     }

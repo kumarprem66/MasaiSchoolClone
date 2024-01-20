@@ -35,15 +35,26 @@ public class InstructorServiceImpl implements InstructorService {
     private DepartmentRepo departmentRepo;
     
     @Override
-    public Instructor createInstructor(Instructor instructor,Integer departId) {
+    public Instructor createInstructor(String email,Instructor instructor,Integer departId) {
 
+        Optional<User> userOptional = userRepo.findByEmail(email);
         Optional<Department> optionalDepartment = departmentRepo.findById(departId);
-            if(optionalDepartment.isPresent()){
+        Optional<Instructor> instructorOptional = instructorRepo.findByContactNumber(instructor.getContactNumber());
+        if(instructorOptional.isPresent()){
+            throw new InstructorException("Instructor Already exist with given number");
+        }
+        if(optionalDepartment.isPresent()){
+            if(userOptional.isPresent()){
                 instructor.setDepartment(optionalDepartment.get());
+                instructor.setUser(userOptional.get());
                 return instructorRepo.save(instructor);
             }else{
-                throw new InstructorException("No Department exist with given id "+departId);
+                throw new InstructorException("No User exist with given email "+email);
             }
+
+        }else{
+            throw new InstructorException("No Department exist with given id "+departId);
+        }
 
     }
 

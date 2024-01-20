@@ -9,7 +9,7 @@ export class DepartmentService {
 
  
 
-  baseUrl = "http://127.0.0.1:8088/admin/"
+  baseUrl = "http://127.0.0.1:8088/depart/"
   constructor(private http:HttpClient) { }
 
 

@@ -3,25 +3,17 @@
     <div class="wrapper">
         <form action="#" (ngSubmit)="adminSubmit()" [formGroup]="adminForm">
           <h2>Admin Panel Login</h2>
-            <div class="input-field">
-            <input type="text" formControlName="admin_id" required>
-            <label>Enter your Id</label>
+          <div class="input-field">
+            <input type="text" formControlName="email" required>
+            <label>Enter your Email</label>
           </div>
-          <!-- <div class="input-field">
-            <input type="password" formControlName="user_password" required>
-            <label>Enter your password</label>
+          <div class="input-field">
+            <input type="text" formControlName="password" required>
+            <label>Enter your Password</label>
           </div>
-          <div class="forget">
-            <label for="remember">
-              <input type="checkbox" id="remember">
-              <p>Remember me</p>
-            </label>
-            <a href="#">Forgot password?</a>
-          </div> -->
+         
           <button type="submit">Login</button>
-          <!-- <div class="register">
-            <p>Don't have an account? <a routerLink="/register">Register</a></p>
-          </div> -->
+         
         </form>
       </div>
 </section>

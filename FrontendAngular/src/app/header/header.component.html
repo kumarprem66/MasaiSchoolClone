@@ -1,6 +1,6 @@
 <header class="shadow-lg p-3 mb-5 bg-white rounded" [class.sticky]="navbarIsSticky" id="nav" >
     <div class="logo">
-        <h2 class="website_logo" (click)="go_home_page()" >SPARLEOM</h2>
+        <h2 class="website_logo" (click)="go_home_page()" >Education</h2>
     </div>
     <input type="checkbox" id="nav_check" hidden>
     <nav>
@@ -27,11 +27,11 @@
                 <a (click)="login()" [ngClass]="{'active': activeItem === current_user}" (click)="setActiveItem(current_user)">{{current_user}}</a>
             </li>
             <li>
-                <a  [ngClass]="{'active': activeItem === 'Logout'}" (click)="setActiveItem('Logout')" *ngIf="current_user != 'Login'">Logout</a>
+                <a  [ngClass]="{'active': activeItem === 'Logout'}" (click)="logout()" *ngIf="current_user != 'Login'">Logout</a>
             </li>
-            <li>
+            <!-- <li>
                 <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Profile')">Profile</a>
-            </li>
+            </li> -->
             <li>
                 <a routerLink="/admin-auth" [ngClass]="{'active': activeItem === 'Admin'}" (click)="setActiveItem('Admin')">Admin</a>
             </li>
@@ -88,7 +88,7 @@
                 <a>Logout</a>
             </li>
         </ul>
-        <!-- <ul *ngSwitchCase="'student'">
+        <ul *ngSwitchCase="'student'">
             <li>
                 <a routerLink="/student_dashboard" [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')">Home</a>
             </li>
@@ -106,13 +106,13 @@
                 <a routerLink="/ticket" [ngClass]="{'active': activeItem === 'Ticket'}" (click)="setActiveItem('Ticket')">Ticket</a>
             </li>
             <li>
-                <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Profile')">Profile</a>
+                <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Profile')">{{Profile}}</a>
             </li>
            <li>
             <a (click)="studentlogout()">Logout</a>
           
            </li>
-        </ul> -->
+        </ul>
       </div>
 
         

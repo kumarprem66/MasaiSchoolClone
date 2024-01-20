@@ -27,8 +27,8 @@ export class CategoriesComponent implements OnInit{
 
     this.cat_service.getCategories().subscribe((response:any)=>{
 
-      this.categories = response.results;
-      console.log(this.categories)
+      this.categories = response;
+   
     })
 
   }

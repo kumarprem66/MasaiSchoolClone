@@ -3,8 +3,8 @@
 
     <div class="card_container">
         <div class="category_card" *ngFor="let cat of categories">
-            <h2>{{cat.cat_name}}</h2>
-            <a (click)="getCategoryCourses(cat.id)" class="">Courses</a>
+            <h2>{{cat.name}}</h2>
+            <a (click)="getCategoryCourses(cat.cid)" class="">Courses</a>
         </div>
        
        

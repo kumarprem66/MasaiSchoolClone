@@ -19,7 +19,7 @@ export class InstructorRegisterComponent implements OnInit{
 
   option_depart:any[] = []
   is_user:boolean = false
-
+  user_email:string =""
   is_updating:number = 0
   selected_depart_name:string = ''
   selected_depart:number = 0
@@ -47,7 +47,7 @@ instruc_regis() {
   if (this.instructor_form.valid) {
     const instructor = this.instructor_form.value;
 
-    console.log(instructor+"          =========== INSTRUCTOR");
+    console.log(instructor);
 
     // updating the instructor
     // console.log(this.is_updating)
@@ -62,41 +62,48 @@ instruc_regis() {
        
       })
     }else{
-      this.ins_ser.createInstructor(instructor,this.selected_depart)
-      .pipe(
-        catchError((error) => {
-          if (error.status === 400 && error.error) {
-            // If the server returns a 400 Bad Request with error details
-            console.error('Validation error:', error.error);
 
-            // You can extract error messages related to specific fields here.
-            const fieldErrors = error.error.fieldErrors;
-            if (fieldErrors) {
-              for (const field in fieldErrors) {
-                if (fieldErrors.hasOwnProperty(field)) {
-                  console.error(`Field: ${field}, Error: ${fieldErrors[field]}`);
-                }
-              }
-            }
+      this.ins_ser.createInstructor(instructor,this.selected_depart,this.user_email).subscribe(response=>{
 
-            // You can also throw a custom error or return a default value if needed.
-            return throwError(error.error);
-          } else {
-            // Handle other types of errors here
-            console.error('An unexpected error occurred:', error);
-            return throwError('An unexpected error occurred.');
-          }
-        })
-      )
-      .subscribe((response) => {
-        // Handle the response here
-        alert("Instructor created sucessfully")
-        // localStorage.setItem("who_is_login","instructor")
-        // localStorage.setItem("instructor_data",JSON.stringify(response))
         console.log(response)
-        // this.router.navigate(['instructor-dashboard'])
-        this.getAllInstructor();
-      });
+      },error=>{
+        console.log(error)
+      })
+      // this.ins_ser.createInstructor(instructor,this.selected_depart,this.user_email)
+      // .pipe(
+      //   catchError((error) => {
+      //     if (error.status === 400 && error.error) {
+      //       // If the server returns a 400 Bad Request with error details
+      //       console.error('Validation error:', error.error);
+
+      //       // You can extract error messages related to specific fields here.
+      //       const fieldErrors = error.error.fieldErrors;
+      //       if (fieldErrors) {
+      //         for (const field in fieldErrors) {
+      //           if (fieldErrors.hasOwnProperty(field)) {
+      //             console.error(`Field: ${field}, Error: ${fieldErrors[field]}`);
+      //           }
+      //         }
+      //       }
+
+      //       // You can also throw a custom error or return a default value if needed.
+      //       return throwError(error.error);
+      //     } else {
+      //       // Handle other types of errors here
+      //       console.error('An unexpected error occurred:', error);
+      //       return throwError('An unexpected error occurred.');
+      //     }
+      //   })
+      // )
+      // .subscribe((response) => {
+      //   // Handle the response here
+      //   alert("Instructor created sucessfully")
+      //   // localStorage.setItem("who_is_login","instructor")
+      //   // localStorage.setItem("instructor_data",JSON.stringify(response))
+      //   console.log(response)
+      //   // this.router.navigate(['instructor-dashboard'])
+      //   this.getAllInstructor();
+      // });
 
 
     }
@@ -124,6 +131,18 @@ instruc_regis() {
     // if(!this.is_user){
     //   this.getAllInstructor()
     // }
+
+    let local_user:any = localStorage.getItem("masaiclone-user-email")
+    if(local_user != null){
+      local_user = JSON.parse(local_user);
+      this.user_email = local_user.email;
+      // this.getLoginUser(this.user_email)
+     
+    }else{
+      alert("Please Login First...")
+      this.router.navigate(['/login'])
+    }
+
 
     this.getAllDepartment()
     this.getAllInstructor()

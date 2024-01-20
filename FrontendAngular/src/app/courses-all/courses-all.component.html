@@ -49,7 +49,7 @@
               <div class="edit_delete_div">
                 <a (click)="edit_course(course.id)" *ngIf="isAdmin" class="btn btn-primary">Edit</a>
                 <a (click)="delete_course(course.id)"   *ngIf="isAdmin"  class="btn btn-secondary">Delete</a>
-                <a (click)="details_course(course.id)"   *ngIf="!isAdmin"  class="btn btn-primary">Details</a>
+                <a (click)="add_to_cart(course.id)"   *ngIf="!isAdmin"  class="btn btn-primary">Add to Cart</a>
                 <a (click)="buy_course(course.id)"   *ngIf="!isAdmin"  class="btn btn-secondary">Buy Now</a>
                 
               </div>

@@ -24,11 +24,11 @@ public class InstructorController {
     @Autowired
     private DepartmentService departmentService;
 
-    @PostMapping("/create/{departId}")
-    public ResponseEntity<Instructor> createInstructor(@RequestBody Instructor instructor,@PathVariable Integer departId){
+    @PostMapping("/create/{departId}/{email}")
+    public ResponseEntity<Instructor> createInstructor(@RequestBody Instructor instructor,@PathVariable Integer departId,@PathVariable String email){
         try {
 
-            return ResponseEntity.ok(instructorService.createInstructor(instructor,departId));
+            return ResponseEntity.ok(instructorService.createInstructor(email,instructor,departId));
         } catch (Exception e) {
 
             e.printStackTrace();

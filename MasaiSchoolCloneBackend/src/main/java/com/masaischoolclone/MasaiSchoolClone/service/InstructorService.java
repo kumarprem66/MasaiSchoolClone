@@ -11,7 +11,7 @@ import java.util.Set;
 
 public interface InstructorService {
 
-    Instructor createInstructor(Instructor instructor,Integer departId);
+    Instructor createInstructor(String email,Instructor instructor,Integer departId);
 
     List<Instructor> getInstructors();
 

@@ -2,9 +2,11 @@ package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Student;
+import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.StudentException;
 import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.StudentRepo;
+import com.masaischoolclone.MasaiSchoolClone.repository.UserRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,17 +23,49 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private CourseRepo courseRepo;
+
+    @Autowired
+    private UserRepo userRepo;
     
     @Override
-    public Student createdStudent(Student student) {
-//        Optional<Student> student1 = studentRepo.findById(student.getId());
+    public Student createdStudent(String email,Student student) {
+        Optional<Student> student1 = studentRepo.findByContactNumber(student.getContactNumber());
 
-//        if(student1.isPresent()){
-//            throw new StudentException("Student already exist with this name");
-//        }else{
-            return studentRepo.save(student);
+        Optional<User> userOptional = userRepo.findByEmail(email);
 
-//        }
+
+        if(student1.isPresent()){
+            throw new StudentException("Student already exist with this number");
+
+        }else if(userOptional.isPresent()){
+            Optional<Student> studentOptional = studentRepo.findByUser(userOptional.get());
+            if(studentOptional.isPresent()){
+                throw new StudentException("User already registered as Student");
+            }else{
+                student.setUser(userOptional.get());
+                return studentRepo.save(student);
+            }
+
+        }else{
+            throw new StudentException("Email does not exist");
+        }
+
+
+    }
+
+    @Override
+    public Student loginStudent(String mob) {
+        Optional<Student> student1 = studentRepo.findByContactNumber(mob);
+
+
+
+
+        if(student1.isPresent()){
+
+            return student1.get();
+        }else{
+            throw new StudentException("Student does not exist with this number");
+        }
     }
 
     @Override

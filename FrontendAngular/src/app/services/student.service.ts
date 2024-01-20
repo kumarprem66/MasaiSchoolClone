@@ -9,14 +9,21 @@ export class StudentService {
 
   constructor(private http:HttpClient) { }
 
-  baseUrl = "http://127.0.0.1:8000/sparleom/student/"
-  baseUrl2 = "http://127.0.0.1:8000/sparleom/students/"
-  createStudent(data:any):Observable<any>{
+  baseUrl = "http://127.0.0.1:8088/student/"
+  
+  createStudent(email:string,data:any):Observable<any>{
 
     const headers = new HttpHeaders({
       "Content-Type":"Application/json"
     })
-    return this.http.post(`${this.baseUrl}create`,JSON.stringify(data),{headers})
+    return this.http.post(`${this.baseUrl}create/${email}`,JSON.stringify(data),{headers})
+  }
+
+  loginStudent(mob:string){
+    const headers = new HttpHeaders({
+      "Content-Type":"Application/json"
+    })
+    return this.http.get(`${this.baseUrl}login/${mob}`,{headers})
   }
 
 
@@ -39,7 +46,7 @@ export class StudentService {
 
 
   addCourseToStudent(studentId: number, courseId: number): Observable<any> {
-    const url = `${this.baseUrl2}${studentId}/add-course/`;
+    const url = `${this.baseUrl}${studentId}/add-course/`;
     const body = { course_id: courseId };
 
     return this.http.post(url, body);
@@ -47,7 +54,7 @@ export class StudentService {
   
 
   getSingleStudent(id:number){
-    return this.http.get(`${this.baseUrl2}${id}`);
+    return this.http.get(`${this.baseUrl}${id}`);
   }
  
 }

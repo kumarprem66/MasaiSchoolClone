@@ -5,14 +5,14 @@
 
     <ul class="cards">
        
-        <li class="card" *ngFor="let course of all_courses; let i = index" (click)="show_course_details(course.id)">
+        <li class="card" *ngFor="let course of all_courses; let i = index">
 
             <div class="mycard" >
-              <img src="../../assets/courses{{(i+1)%8}}.jpg" class="card-img-top" alt="...">
+              <img src="{{course.image}}" class="card-img-top" alt="..." (click)="show_course_details(course.id)" >
               <div class="card-body">
-                <h5 class="card-title">{{course.course_name}}</h5>
+                <h5 class="card-title">{{course.courseName}}</h5>
                 <h6>Duraton: {{course.duration}}</h6>
-                <h6>₨. {{course.course_price}}</h6>
+                <h6>₨. {{course.coursePrice}}</h6>
              
                 <div class="rating">
                   <span class="star {{ course.rating >= 1 ? 'filled' : 'empty' }}">★</span>
@@ -20,12 +20,13 @@
                   <span class="star {{ course.rating >= 3 ? 'filled' : 'empty' }}">★</span>
                   <span class="star {{ course.rating >= 4 ? 'filled' : 'empty' }}">★</span>
                   <span class="star {{ course.rating >= 5 ? 'filled' : 'empty' }}">★</span>
-                  <span class="star_count">({{course.rating_count}})</span>
+                  <span class="star_count">({{course.ratingCount}})</span>
                 </div>
                 <br>
                 
                 <div class="details_buy_div">
-                  <a (click)="details_course(course.id)" class="btn btn-primary">Details</a>
+                  
+                  <a (click)="add_to_cart(course.id)" class="btn btn-primary">Add to Cart</a>
                   <a (click)="buy_course(course.id)" class="btn btn-secondary">Buy Now</a>
                 </div>
   

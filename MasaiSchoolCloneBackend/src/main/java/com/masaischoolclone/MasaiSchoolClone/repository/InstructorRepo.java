@@ -5,6 +5,7 @@ import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface InstructorRepo extends JpaRepository<Instructor,Integer> {
@@ -16,5 +17,5 @@ public interface InstructorRepo extends JpaRepository<Instructor,Integer> {
 
     Instructor findByEmail(String email);
 
-    Instructor findByContactNumber(String number);
+    Optional<Instructor> findByContactNumber(String number);
 }

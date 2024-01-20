@@ -20,12 +20,12 @@ export class InstructorService {
     return this.http.get<any[]>(this.baseUrl+"fetch-all-byDept/"+depart_id)
   }
 
-  createInstructor(data:any,departId:number):Observable<any>{
+  createInstructor(data:any,departId:number,email:string):Observable<any>{
 
     const headers = new HttpHeaders({
       "Content-Type":"Application/json"
     })
-    return this.http.post(`${this.baseUrl}create/${departId}`,JSON.stringify(data),{headers})
+    return this.http.post(`${this.baseUrl}create/${departId}/${email}`,JSON.stringify(data),{headers})
   }
 
 

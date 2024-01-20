@@ -12,6 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CoursesAllComponent implements OnInit{
 
+
   main_heading = "The World's largest selection of courses"
   second_heading = "Choose from 130,000 online video courses with new additions published every month"
 
@@ -31,7 +32,7 @@ export class CoursesAllComponent implements OnInit{
 
   }
 
-  isAdmin:boolean = true;
+  isAdmin:boolean = false;
 
   ngOnInit(): void {
     
@@ -49,6 +50,7 @@ export class CoursesAllComponent implements OnInit{
     this.route.queryParams.subscribe((param:any)=>{
 
       this.is_category_click = param.cat_id
+      // this.selected_category = param.cat_id
       console.log(this.is_category_click)
     })
 
@@ -58,6 +60,7 @@ export class CoursesAllComponent implements OnInit{
 
         
         this.all_courses = response
+        
         // console.log(response)
       })
     }else{
@@ -228,4 +231,8 @@ export class CoursesAllComponent implements OnInit{
   //     this.all_courses = response;
   //   })
   // }
+
+  add_to_cart(course_id: number) {
+    
+  }
 }

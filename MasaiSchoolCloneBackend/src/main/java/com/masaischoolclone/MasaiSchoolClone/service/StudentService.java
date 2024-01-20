@@ -8,7 +8,9 @@ import java.util.List;
 public interface StudentService {
 
 
-    Student createdStudent(Student student);
+    Student createdStudent(String email,Student student);
+
+    Student loginStudent(String mob);
 
     List<Student> getStudentList();
 

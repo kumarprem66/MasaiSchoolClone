@@ -28,7 +28,7 @@ export class BestSellingComponent {
     this.course_ser.getcourses().subscribe((response:any)=>{
       console.log(response)
 
-      this.all_courses = response.results
+      this.all_courses = response
     })
   }
 

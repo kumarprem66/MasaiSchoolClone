@@ -84,6 +84,11 @@ public class GlobalException{
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<String> emailException(EmailException e){
+
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> generalException(RuntimeException e){

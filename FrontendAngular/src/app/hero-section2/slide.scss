@@ -43,7 +43,19 @@ h2 {
     scroll-snap-align: start;
     transition: all 0.2s;
 }
+.card .mycard{
+    // border: 1px solid red;
+    height: 100%;
 
+}
+.card .mycard img{
+   
+    height: 48%;
+    
+}
+.card .mycard .card-body .rating>span{
+    font-size: 25px;
+}
 .card .mycard .card-body>div:last-child{
     // border: 1px solid red;
     display: grid;
@@ -110,6 +122,11 @@ h2 {
     .cards {
         grid-auto-columns: calc(50% - 10px);
         grid-column-gap: 20px;
+    }
+
+    .details_buy_div{
+       
+        margin-top: -25px;
     }
 }
 

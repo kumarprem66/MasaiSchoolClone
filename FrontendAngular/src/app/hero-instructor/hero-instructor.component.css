@@ -84,9 +84,10 @@
     }
     .hero_section_instructor .hero_container_constructor .hero_right_instructor{
     
-        height: 80%;
+        height: 200%;
         padding: 10px;
 
+        border: 1px solid red;
        
 
     }

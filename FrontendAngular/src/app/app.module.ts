@@ -43,6 +43,7 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { AboutComponent } from './about/about.component';
 import { StudentRegsiterComponent } from './student-regsiter/student-regsiter.component';
 import { PaymentComponent } from './payment/payment.component';
+import { StudentLoginComponent } from './student-login/student-login.component';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { PaymentComponent } from './payment/payment.component';
     AboutComponent,
     StudentRegsiterComponent,
     PaymentComponent,
+    StudentLoginComponent,
 
 
 

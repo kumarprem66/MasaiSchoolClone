@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { AdminService } from '../services/admin.service';
 @Component({
   selector: 'app-admin-auth',
   templateUrl: './admin-auth.component.html',
@@ -11,11 +12,12 @@ export class AdminAuthComponent implements OnInit{
 
   adminForm:FormGroup
 
-  admin_ids:string[] = ["admin-prem-kumar","admin-kumar-prem"]
 
-  constructor(private fb:FormBuilder,private router:Router,private location:Location){
+
+  constructor(private fb:FormBuilder,private router:Router,private location:Location,private adminSer:AdminService){
     this.adminForm = this.fb.group({
-      admin_id : ['',Validators.required]
+      email : ['',Validators.required],
+      password : ['',Validators.required],
     })
   }
   ngOnInit(): void {
@@ -24,37 +26,24 @@ export class AdminAuthComponent implements OnInit{
 
   adminSubmit(){
 
-    const admin_id_value = this.adminForm.value
-    console.log(admin_id_value)
-
-    let flag = 0
-    this.admin_ids.forEach(admin=>{
-
-      console.log(admin)
-    
-      if(admin == admin_id_value.admin_id){
-        flag = 1
-        alert("success, refresh the page once")
-
-        const id = admin_id_value.admin_id
-        localStorage.setItem("sparleom-admin",id)
-        localStorage.setItem("who_is_login","admin")
-        
-        this.router.navigate(['admin-dashboard'])
-
-
-        // this.refreshPage()
-
-
-
-      }
-
-    })
-
-
-    if(flag == 0){
-      alert("Wrong credencials")
+    if(this.adminForm.valid){
+      const admin_data = this.adminForm.value
+      console.log(admin_data)
+  
+     
+      this.adminSer.loginAdmin(admin_data.email,admin_data.password).subscribe((res)=>{
+        alert(res)
+      },(error)=>{
+        alert(error.error)
+      })
+    }else{
+      alert("every field is mandatory")
     }
+   
+  
+
+
+  
   }
 
 

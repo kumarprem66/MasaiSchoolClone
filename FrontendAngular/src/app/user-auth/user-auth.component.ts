@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from '../services/register.service';
 import { Route, Router } from '@angular/router';
 import { InstructorService } from '../services/instructor.service';
+import { arLocale } from 'ngx-bootstrap/chronos';
 
 @Component({
   selector: 'app-user-auth',
@@ -18,9 +19,9 @@ export class UserAuthComponent implements OnInit{
   constructor(private fb:FormBuilder,private regSer:RegisterService,
     private router:Router,private insSer:InstructorService){
     this.loginForm = this.fb.group({
-      is_ins:[false],
-      username:['',Validators.required],
-      // email : ['',Validators.required],
+      // is_ins:[false],
+      // username:['',Validators.required],
+      email : ['',Validators.required],
       password: ['',Validators.required]
     
     })
@@ -28,11 +29,11 @@ export class UserAuthComponent implements OnInit{
 
   ngOnInit(): void {
 
-    const local_user = localStorage.getItem("sparleom-user")
-    if(local_user != null){
-      const json_local_user = JSON.parse(local_user)
-      this.current_user = json_local_user.user_name
-    }
+    // const local_user = localStorage.getItem("sparleom-user")
+    // if(local_user != null){
+    //   const json_local_user = JSON.parse(local_user)
+    //   this.current_user = json_local_user.user_name
+    // }
   
   
     
@@ -74,49 +75,57 @@ export class UserAuthComponent implements OnInit{
 
   loginSubmit(){
     if(this.loginForm.valid){
-      const current_user = this.loginForm.value
-         
+      let current_user = this.loginForm.value
+  
       console.log(current_user)
   
 
-      if(current_user.is_ins){
-        localStorage.setItem("who_is_login","instructor")
+      // if(current_user.is_ins){
+      //   localStorage.setItem("who_is_login","instructor")
 
-      }else{
+      // }else{
         
-        this.regSer.login(current_user.username, current_user.password).subscribe((response: any) => {
+        this.regSer.login(current_user).subscribe((response: any) => {
       
+          // let arr = response.split(',');
            
-          alert("Welcome,refresh the page once")
-          localStorage.setItem("sparleom-user-token",response.token)
-      
+          alert("Login Successful");
+          // console.log(response)
+          let local_user:any = localStorage.getItem("masaiclone-user-email")
+          if(local_user != null){
+            local_user = JSON.parse(local_user);
+            local_user.username = response.username;
+            localStorage.setItem("masaiclone-user-email",JSON.stringify(local_user))
+          }else{
+            current_user.username = response.username 
+            current_user.cart  = []
+            localStorage.setItem("masaiclone-user-email",JSON.stringify(current_user))
+          }
+         
+         
 
-          this.regSer.getUserDetails(response.token).subscribe((responseuser:any)=>{
-           
 
-            console.log(responseuser.user.id)
-            const currentUser = {
-              "username":responseuser.user.username,
-              "id":responseuser.user.id,
-              "email":responseuser.user.email
-
-            }
-            localStorage.setItem("current-user",JSON.stringify(currentUser))
-            localStorage.setItem("who_is_login","user")
-          })
          
         
-          this.router.navigate([''])
-       
-      },(error)=>{
-          alert("Incorrect Crediancials, try registering")
-      });
+          
+
+          // this.router.navigate([''])
+
+          location.reload()
+        
+         
+        },(error)=>{
+          alert(error.error.text)
+          // console.log(error)
+        });
     
-      }
+    }else{
+      alert("every field is mandatory")
+    }
 
 
       
-    }
+    // }
 
   }
 
