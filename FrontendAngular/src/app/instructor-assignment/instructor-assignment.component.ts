@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../services/course.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AssignmentService } from '../services/assignment.service';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-instructor-assignment',
@@ -16,8 +17,10 @@ export class InstructorAssignmentComponent implements OnInit{
   all_assignment:any[] = []
   assignmentForm:FormGroup
   instructor_id:number = 0
+  is_instructor:boolean = false;
 
-  constructor(private course_service:CourseService,private fb:FormBuilder,private assign_service:AssignmentService){
+  constructor(private course_service:CourseService,private fb:FormBuilder,
+    private assign_service:AssignmentService,private common:CommonService){
 
     this.assignmentForm = this.fb.group({
       title:['',Validators.required],
@@ -31,23 +34,31 @@ export class InstructorAssignmentComponent implements OnInit{
   ngOnInit(): void {
 
 
+    const  token = localStorage.getItem("masaischoolclone")
+    const userId = localStorage.getItem("current_user_id")
+    if(token != null && userId != null){
+
+     this.getAllAssignmentOfStudent(parseInt(userId),token)
+      
+    //  this.assign_service.getAllAssignment(2,token).subscribe((response:any)=>{
+            
+        
   
+    //   // response.body.forEach((element:any) => {
+    //   //   console.log(element)
+    //   //   this.assignList.push(element)
+    //   // });
+
+    //   console.log(response);
+     
     
+    // })
+    }
+
+   
    
 
-    const  localIns = localStorage.getItem("instructor_data")
-    if(localIns != null){
-
-      const parseIns = JSON.parse(localIns)
-      this.instructor_id = parseIns.id
-      
-    }
-
-    if(this.instructor_id != 0 && this.instructor_id != undefined){
-      this.getCourseByinstructor(this.instructor_id)
-    }
-
-    this.getAllAssignemnt() 
+  
 
   }
 
@@ -70,7 +81,7 @@ export class InstructorAssignmentComponent implements OnInit{
 
       const current_assign = this.assignmentForm.value
       console.log(current_assign)
-      this.assign_service.createAssignment(current_assign).subscribe((response)=>{
+      this.assign_service.createAssignment(current_assign,3,4).subscribe((response)=>{
         console.log(response)
         alert("Created")
       })
@@ -84,16 +95,14 @@ export class InstructorAssignmentComponent implements OnInit{
 
   }
 
-  getAllAssignemnt(){
-    this.assign_service.getAllAssignment().subscribe((response:any)=>{
-      console.log(response)
+  // getAllAssignemnt(){
+  //   this.assign_service.getAllAssignment().subscribe((response:any)=>{
+  //     console.log(response)
 
-      this.all_assignment = response.results
-      // this.all_assignment.forEach((element)=>{
-      //   this.convertDate(element.start_date)
-      // })
-    })
-  }
+  //     this.all_assignment = response.results
+    
+  //   })
+  // }
 
 
   convertDate(timing_value:any):string{
@@ -107,5 +116,18 @@ export class InstructorAssignmentComponent implements OnInit{
   }
 
 
+  getAllAssignmentOfStudent(userId:number,token:string){
+
+    this.common.getALLAssignmentOfStudent(userId,token).subscribe(response => {
+       response.forEach(ele=>{
+        this.all_assignment.push(ele)
+      });
+      console.log(this.all_assignment);
+    })
+
+   
+
+
+  }
 
 }

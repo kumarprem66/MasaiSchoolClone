@@ -85,7 +85,7 @@
                 <a routerLink="/instruc-register" [ngClass]="{'active': activeItem === 'Instructors'}" (click)="setActiveItem('Instructors')">Instructors</a>
             </li>
             <li>
-                <a>Logout</a>
+                <a (click)="logout()">Logout</a>
             </li>
         </ul>
         <ul *ngSwitchCase="'student'">
@@ -93,9 +93,9 @@
                 <a routerLink="/student_dashboard" [ngClass]="{'active': activeItem === 'Home'}" (click)="setActiveItem('Home')">Home</a>
             </li>
            
-            <li>
+            <!-- <li>
                 <a routerLink="/lecture" [ngClass]="{'active': activeItem === 'Lectures'}" (click)="setActiveItem('Lectures')">Lectures</a>
-            </li>
+            </li> -->
             <li>
                 <a routerLink="/assignment" [ngClass]="{'active': activeItem === 'Assignment'}" (click)="setActiveItem('Assignment')">Assignment</a>
             </li>
@@ -109,7 +109,7 @@
                 <a routerLink="/profile" [ngClass]="{'active': activeItem === 'Profile'}" (click)="setActiveItem('Profile')">{{Profile}}</a>
             </li>
            <li>
-            <a (click)="studentlogout()">Logout</a>
+            <a (click)="logout()">Logout</a>
           
            </li>
         </ul>

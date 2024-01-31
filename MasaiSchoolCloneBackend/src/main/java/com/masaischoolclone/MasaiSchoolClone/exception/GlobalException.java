@@ -1,6 +1,5 @@
 package com.masaischoolclone.MasaiSchoolClone.exception;
 
-import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -74,6 +73,12 @@ public class GlobalException{
 
     @ExceptionHandler(StudentException.class)
     public ResponseEntity<String> studentException(StudentException e){
+
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<String> userException(UserException e){
 
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

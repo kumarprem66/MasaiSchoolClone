@@ -1,15 +1,17 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Student;
 import com.masaischoolclone.MasaiSchoolClone.exception.StudentException;
 import com.masaischoolclone.MasaiSchoolClone.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -52,7 +54,36 @@ public class StudentController {
 
             e.printStackTrace();
 
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }
+    }
+
+    @GetMapping("/fetch-all-courses/{stu_id}")
+    ResponseEntity<Set<Course>> getStudentList(@PathVariable Integer stu_id){
+        try {
+
+            Set<Course> courses = new HashSet<>(studentService.getAllCourses(stu_id));
+            return new ResponseEntity<>(courses, HttpStatus.OK);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }
+    }
+
+    @GetMapping("/fetch-by-user-id/{userId}")
+    ResponseEntity<Student> getStudentByUserID(@PathVariable Integer userId){
+        try {
+
+            return new ResponseEntity<>(studentService.getStudentByUser(userId), HttpStatus.OK);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
     }
@@ -93,7 +124,6 @@ public class StudentController {
             return new ResponseEntity<>(studentService.getStudent(studentId), HttpStatus.OK);
         } catch (Exception e) {
 
-            e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 

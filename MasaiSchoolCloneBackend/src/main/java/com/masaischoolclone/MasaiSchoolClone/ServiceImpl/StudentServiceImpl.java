@@ -4,16 +4,17 @@ import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Student;
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.StudentException;
+import com.masaischoolclone.MasaiSchoolClone.exception.UserException;
 import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.StudentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.UserRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -43,6 +44,7 @@ public class StudentServiceImpl implements StudentService {
                 throw new StudentException("User already registered as Student");
             }else{
                 student.setUser(userOptional.get());
+                student.getUser().setRole("ROLE_STUDENT");
                 return studentRepo.save(student);
             }
 
@@ -69,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudentList() {
+    public List<Student> getStudentList() throws StudentException, AuthorizationServiceException {
         return studentRepo.findAll();
     }
 
@@ -119,6 +121,32 @@ public class StudentServiceImpl implements StudentService {
             Course course = courseOptional.get();
             return course.getStudents();
 
+        }
+        throw new StudentException("Student can not be fetched, given id does not exist");
+    }
+
+    @Override
+    public Student getStudentByUser(Integer userId){
+        Optional<User> userOptional = userRepo.findById(userId);
+        if(userOptional.isPresent()){
+            Optional<Student> studentOptional = studentRepo.findByUser(userOptional.get());
+            if (studentOptional.isPresent()){
+                return studentOptional.get();
+            }else {
+                throw new StudentException("You are not registered as a Student");
+            }
+        }else{
+            throw new UserException("User with this id "+userId + " does not exist");
+        }
+
+    }
+
+    @Override
+    public List<Course> getAllCourses(Integer studentId) {
+        Optional<Student> studentOptional = studentRepo.findById(studentId);
+        if(studentOptional.isPresent()){
+
+            return studentOptional.get().getCourses();
         }
         throw new StudentException("Student can not be fetched, given id does not exist");
     }

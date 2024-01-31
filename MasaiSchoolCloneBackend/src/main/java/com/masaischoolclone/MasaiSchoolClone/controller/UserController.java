@@ -1,10 +1,7 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
-import com.masaischoolclone.MasaiSchoolClone.dto.LoginDto;
-import com.masaischoolclone.MasaiSchoolClone.entity.Student;
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.RegisterException;
-import com.masaischoolclone.MasaiSchoolClone.service.StudentService;
 import com.masaischoolclone.MasaiSchoolClone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,17 +17,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @PostMapping("/register")
     ResponseEntity<Map<String,String>> registerUser(@RequestBody User user){
-//        try {
-//
-//            userService.adduser(user);
-//            return new ResponseEntity<>("Registration Successful", HttpStatus.CREATED);
-//        } catch (RegisterException e) {
-//
-//            return new ResponseEntity<>(e.getMessage(),HttpStatus.ALREADY_REPORTED);
-//
-//        }
 
         try {
             userService.adduser(user);
@@ -40,18 +29,22 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
-    ResponseEntity<User> loginUser(@RequestBody LoginDto user){
+    @GetMapping("/login/{email}/{password}")
+    ResponseEntity<Map<String,String>> loginUser(@PathVariable String email,@PathVariable String password){
         try {
 
-            return new ResponseEntity<>(userService.loginUser(user.getEmail(),user.getPassword()), HttpStatus.ACCEPTED);
+            userService.loginUser(email,password);
+            return  ResponseEntity.ok(Map.of("message","Login Successful"));
+
         } catch (RegisterException e) {
 
 
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+
 
         }
+
     }
 
     @GetMapping("/get_user/{email}")
@@ -67,5 +60,7 @@ public class UserController {
 
         }
     }
+
+
 
 }

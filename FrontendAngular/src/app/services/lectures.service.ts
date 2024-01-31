@@ -23,9 +23,14 @@ export class LecturesService {
     return this.http.get<any[]>(this.baseUrl+"fetch-all")
   }
 
-  getLectureOfCourse(courseId:number){
+  getLectureOfCourse(courseId:number,token:string){
 
-    return this.http.get(`${this.baseUrl}lecture-of-course/${courseId}`)
+    const headers = new HttpHeaders( {
+      
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json', // Add other headers as needed
+    });
+    return this.http.get(`${this.baseUrl}lecture-of-course/${courseId}`,{headers:headers,observe:'response'})
     
   }
 

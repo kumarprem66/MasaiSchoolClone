@@ -31,8 +31,13 @@ export class AdminAuthComponent implements OnInit{
       console.log(admin_data)
   
      
-      this.adminSer.loginAdmin(admin_data.email,admin_data.password).subscribe((res)=>{
-        alert(res)
+      this.adminSer.loginAdmin(admin_data.email,admin_data.password).subscribe((res:any)=>{
+        alert(res.message)
+
+        localStorage.setItem("masaischoolclone",admin_data.email);
+        localStorage.setItem("who_is_login","admin");
+  
+        this.router.navigate(['/admin-dashboard']);
       },(error)=>{
         alert(error.error)
       })

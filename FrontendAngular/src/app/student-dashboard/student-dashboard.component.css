@@ -50,7 +50,7 @@
 .student_dash_container .student_dashboard .lectures_section .lecture_item .item_left .course_type_tag span:nth-child(1){
 
 
-    background-color: rgb(136, 86, 86);;
+    background-color: blue;
     padding: 10px;
     border-radius: 10px;
     color: white;
@@ -62,6 +62,18 @@
 
 
     background-color: green;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    margin-left: 20px;
+     
+
+}
+
+.student_dash_container .student_dashboard .lectures_section .lecture_item .item_left .course_type_tag span:nth-child(3){
+
+
+    background-color: red;
     padding: 10px;
     border-radius: 10px;
     color: white;

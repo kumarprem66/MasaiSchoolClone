@@ -1,5 +1,6 @@
 import { Component,HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokendataService } from '../services/tokendata.service';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit{
 
   activeItem:string = "Home"
 
-  constructor(private router:Router){
+  constructor(private router:Router,private tokenSer:TokendataService){
 
     
   }
@@ -37,67 +38,44 @@ export class HeaderComponent implements OnInit{
 //   }
 
   ngOnInit(): void {
-    // if(this.menuType == 'admin'){
+   
+    const JWTtoken = localStorage.getItem("masaischoolclone");
+    
+    if(JWTtoken != null){
+      const logged_in_user_info = this.tokenSer.getUserDetailsFromToken(JWTtoken);
 
-     
-    // }
-
-  
-
-    const local_user = localStorage.getItem("masaiclone-user-email")
-    if(local_user != null){
-      let current_user_data = JSON.parse(local_user)
-      // let cuseruser = JSON.parse(local_user).user
       
 
-      if(current_user_data.username == null && current_user_data.user != null){
-        this.current_user = current_user_data.name;
-       
-        this.menuType = 'student';
-        this.Profile = current_user_data.name;
-        this.router.navigate(['/student_dashboard'])
-      }else if(current_user_data.username != null){
-        
-        this.current_user = current_user_data.username;
-        this.router.navigate([''])
-      }
+          if(this.tokenSer.tokenIsValid(JWTtoken)){
+           
+            this.current_user = logged_in_user_info.username;
+           
+            if(logged_in_user_info.authorities == "ROLE_STUDENT"){
+              this.menuType = "student";
+            
+            }else if(logged_in_user_info.authorities == "ROLE_ADMIN"){
+              this.menuType = "admin";
+            }else if(logged_in_user_info.authorities == "ROLE_INSTRUCTOR"){
+              this.menuType = "instructor";
+            }else{
+              this.menuType = "default";
+            }
+            this.go_home_page();
+          }else{
+            alert("Session Expired try login.....")
+            this.router.navigate(['/login'])
+          }
+    }else{
       
+      this.menuType = "default";
+      this.go_home_page();
+    
     }
-//     const is_purchase = localStorage.getItem("can_purchase")
-//     if(is_purchase != null){
-//       this.not_purchase = "Profile"
-//     }
+      
 
-
-    // if(local_user != null){
-
-    //   if(local_user == "admin"){
-
-    //     this.menuType = "admin"
-        
-        
-//       }else if(local_user == "student"){
-//         this.menuType = "student"
-//         this.router.navigate(['/student_dashboard'])
-
-//       }else if(local_user == "instructor"){
-
-//         this.menuType = "instructor"
-//         this.router.navigate(['/instructor-dashboard'])
-
-//       }else{
-//         const userobj = localStorage.getItem("current-user")
-//         if(userobj != null){
-//           const parseduser = JSON.parse(userobj)
-//           this.current_user = parseduser.username
-//         }
-//         this.router.navigate([''])
-        
-    //   }
-    // }else{
-      // this.menuType = "default"
-      // this.router.navigate([''])
-    // }
+    
+   
+  
 
 
   }
@@ -136,32 +114,34 @@ export class HeaderComponent implements OnInit{
     const is_agree = confirm("Are you sure? want to Logout")
     if(is_agree){
       this.menuType = 'default'
-      localStorage.removeItem("masaiclone-user-email");
+      localStorage.removeItem("masaischoolclone");
+      location.reload();
+      this.router.navigate(['/'])
       // let local_user:any = localStorage.getItem("masaiclone-user-email")
       // local_user = JSON.parse(local_user);
       // local_user.username = null;
       // localStorage.setItem("masaiclone-user-email",JSON.stringify(local_user))
 
-      if(this.menuType == "admin"){
+      // if(this.menuType == "admin"){
 
    
-        this.router.navigate(['admin-dashboard'])
+      //   this.router.navigate(['admin-dashboard'])
         
-      }else if(this.menuType == "student"){
+      // }else if(this.menuType == "student"){
     
-        this.router.navigate(['/stu-login'])
+      //   this.router.navigate(['/stu-login'])
   
-      }else if(this.menuType == "instructor"){
+      // }else if(this.menuType == "instructor"){
   
         
-        this.router.navigate(['/login'])
+      //   this.router.navigate(['/login'])
   
-      }else{
+      // }else{
         
        
-        this.router.navigate(['/login'])
+      //   this.router.navigate(['/login'])
         
-      }
+      // }
       
     }
    
@@ -180,16 +160,16 @@ export class HeaderComponent implements OnInit{
 //     }
 // }
 
-studentlogout(){
-  const is_agree = confirm("Are you sure? want to Logout")
-  if(is_agree){
-    this.menuType = 'default'
+// studentlogout(){
+//   const is_agree = confirm("Are you sure? want to Logout")
+//   if(is_agree){
+//     this.menuType = 'default'
  
     
-    localStorage.removeItem('masaiclone-user-email')
-    this.router.navigate([''])
-  }
-}
+//     localStorage.removeItem('masaiclone-user-email')
+//     this.router.navigate([''])
+//   }
+// }
 //   instructorlogout(){
 
 //     const is_agree = confirm("Are you sure? want to Logout")

@@ -4,20 +4,20 @@
         <form action="#" (ngSubmit)="loginSubmit()" [formGroup]="loginForm">
           <h2>Login</h2>
 
-          <div class="as_a_instructor">
+          <!-- <div class="as_a_instructor">
             <label for="instructor">
-              <input type="checkbox" id="instructor">
-              <!-- <p>As a Instrcutor</p> -->
+              <input type="checkbox" id="instructor" formControlName="isIns">
+             
             </label>
             <a>As a Instrcutor</a>
-          </div>
+          </div> -->
           <!-- <div class="info">
             <p>In case of instructor provide Email in place of Username</p>
           </div> -->
 
           <div class="input-field">
-            <input type="text" formControlName="email" required>
-            <label>Enter Email</label>
+            <input type="text" formControlName="username" required>
+            <label>Enter Username/Email</label>
           </div>
           <!-- <div class="input-field">
             <input type="email" formControlName="email" required>
@@ -27,17 +27,21 @@
             <input type="password" formControlName="password" required>
             <label>Enter your password</label>
           </div>
-          <div class="forget">
+          <!-- <div class="forget">
             <label for="remember">
               <input type="checkbox" id="remember">
               <p>Remember me</p>
             </label>
             <a href="#">Forgot password?</a>
-          </div>
+          </div> -->
           <button type="submit">Log In</button>
           <div class="register">
             <p>Don't have an account? <a routerLink="/register">Register</a></p>
           </div>
+          <div class="stu-login">
+            <p>As a Student? <a routerLink="/stu-login">Login</a></p>
+          </div>
+
           
         </form>
       </div>

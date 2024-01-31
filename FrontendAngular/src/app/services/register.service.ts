@@ -24,13 +24,16 @@ export class RegisterService {
     return this.http.get<any[]>(this.baseUrl)
   }
 
-  login(data:any):Observable<any>{
+  login(username:string,password:string):Observable<any>{
+
+
+    const authHeader = 'Basic ' + btoa(username + ':' + password);
 
     const headers = new HttpHeaders({
-      "Content-Type":"Application/json"
-    })
-    // const body = {email:email,password:password}
-    return this.http.post(this.baseUrl+"login",JSON.stringify(data),{headers})
+      'Authorization': authHeader,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get("http://127.0.0.1:8088/auth/signin", { headers: headers, observe: 'response' });
   }
 
   getUserDetails(email:string){

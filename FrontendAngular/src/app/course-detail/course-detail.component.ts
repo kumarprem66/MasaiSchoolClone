@@ -62,7 +62,7 @@ export class CourseDetailComponent implements OnInit{
       this.all_courses_instructor = this.all_courses_instructor.filter((cou)=>{
         return cou.id != this.current_course_id
       })
-      console.log(response)
+      // console.log(response)
     })
 
   }

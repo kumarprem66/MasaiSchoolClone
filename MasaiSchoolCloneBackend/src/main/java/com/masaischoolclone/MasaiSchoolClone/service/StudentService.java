@@ -1,7 +1,7 @@
 package com.masaischoolclone.MasaiSchoolClone.service;
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Student;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
@@ -21,5 +21,9 @@ public interface StudentService {
     Student getStudent(Integer studentId);
 
     void enrollInCourse(Integer studentId,Integer courseId);
+
+     Student getStudentByUser(Integer userId);
+
+     List<Course> getAllCourses(Integer studentId);
 
 }

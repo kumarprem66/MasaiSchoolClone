@@ -3,6 +3,7 @@ package com.masaischoolclone.MasaiSchoolClone.controller;
 import com.masaischoolclone.MasaiSchoolClone.dto.InstructorDTO;
 import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
+import com.masaischoolclone.MasaiSchoolClone.exception.RegisterException;
 import com.masaischoolclone.MasaiSchoolClone.service.DepartmentService;
 import com.masaischoolclone.MasaiSchoolClone.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -124,4 +126,21 @@ public class InstructorController {
         }
     }
 
+    @GetMapping("/login/{email}/{password}")
+    ResponseEntity<Map<String,String>> loginUser(@PathVariable String email, @PathVariable String password){
+        try {
+
+            instructorService.loginUser(email,password);
+            return  ResponseEntity.ok(Map.of("message","Login Successful"));
+
+        } catch (RegisterException e) {
+
+
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+
+
+        }
+
+    }
 }

@@ -29,7 +29,7 @@ export class AdminDashboardComponent implements OnInit{
   selected_course:number = 0;
   selected_instructor:number = 0
 
-  
+  jwttoken : string = "";
 
   constructor(private cour_ser:CourseService,private lec_ser:LecturesService,private insSer:InstructorService,private router:Router
     ){
@@ -42,7 +42,7 @@ export class AdminDashboardComponent implements OnInit{
     
     this.selectedValue = event.target.value
     
-    this.getLectureOfCourse(Number(this.selectedValue))
+    this.getLectureOfCourse(Number(this.selectedValue),this.jwttoken)
   }
 
 
@@ -50,7 +50,7 @@ export class AdminDashboardComponent implements OnInit{
     
  
 
-    // const ins = localStorage.getItem("who_is_login")
+    const ins = localStorage.getItem("masaischoolclone")
     // if(ins=="instructor"){
     //   this.is_instructor = true
     // }else{
@@ -128,7 +128,7 @@ export class AdminDashboardComponent implements OnInit{
     if(this.selected_instructor != 0 && this.selected_course !=0 ){
       this.getAllLecturesOfInstructor(this.selected_instructor,this.selected_course)
     }else{
-      this.getLectureOfCourse(this.selected_course)
+      this.getLectureOfCourse(this.selected_course,this.jwttoken)
     }
    
   }
@@ -162,11 +162,11 @@ export class AdminDashboardComponent implements OnInit{
     })
   }
 
-  getLectureOfCourse(c_id:number){
+  getLectureOfCourse(c_id:number,token:string){
 
 
 
-    this.lec_ser.getLectureOfCourse(c_id).subscribe((response:any)=>{
+    this.lec_ser.getLectureOfCourse(c_id,token).subscribe((response:any)=>{
 
       this.letures_data = response
 

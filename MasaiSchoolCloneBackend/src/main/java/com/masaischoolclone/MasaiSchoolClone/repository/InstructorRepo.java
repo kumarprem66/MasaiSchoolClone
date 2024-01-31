@@ -15,7 +15,7 @@ public interface InstructorRepo extends JpaRepository<Instructor,Integer> {
 
     Set<Instructor> findAllByDepartment(Department department);
 
-    Instructor findByEmail(String email);
+    Optional<Instructor> findByEmail(String email);
 
     Optional<Instructor> findByContactNumber(String number);
 }

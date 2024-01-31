@@ -109,6 +109,10 @@ h2 {
   margin-top: 15px;
   /* border: 1px solid red; */
 }
+.stu-login{
+  margin-top: -10px;
+  color: #fff;
+}
 
 .wrapper a {
   color: #efefef;

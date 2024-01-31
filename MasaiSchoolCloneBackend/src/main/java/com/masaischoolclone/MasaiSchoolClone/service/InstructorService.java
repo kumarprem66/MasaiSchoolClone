@@ -27,4 +27,5 @@ public interface InstructorService {
 
      Department getDepartment(Integer ins_id);
 
+    Instructor loginUser(String email,String password);
 }

@@ -20,6 +20,9 @@ public class Department {
     private String name;
 
     @JsonIgnore
+    private String role;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "department",cascade = CascadeType.ALL)
     private Set<Course> courses;
     public Department(String name){

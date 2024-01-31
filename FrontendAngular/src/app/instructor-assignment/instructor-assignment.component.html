@@ -1,4 +1,4 @@
-<div class="instructor_assign_container">
+<div class="instructor_assign_container" *ngIf="is_instructor">
     <div>
         <div class="new_assignment_container">
             <h2>Create Assignment</h2>
@@ -36,17 +36,21 @@
             </div>
         </div>
 
-        <div class="previous_assignment_container" *ngFor="let item of all_assignment">
-            <div class="assignment_item">
-                <h4>{{item.title}}</h4>
-               <div>
-                <span>Start date: {{ convertDate(item.start_date)}}</span>
-                <span>End date: {{item.due_date}}</span>
-               </div>
-            </div>
-           
-        </div>
+        
 
 
     </div>
+</div>
+
+<div class="previous_assignment_container" *ngFor="let item of all_assignment">
+  <div class="assignment_item">
+      <h4>{{item.title}}</h4>
+      <h2>{{item.description}}</h2>
+      <h2>{{item.instructon}}</h2>
+     <div>
+      <span>Start date: {{ convertDate(item.startDate)}}</span>
+      <span>End date: {{item.dueDate}}</span>
+     </div>
+  </div>
+ 
 </div>

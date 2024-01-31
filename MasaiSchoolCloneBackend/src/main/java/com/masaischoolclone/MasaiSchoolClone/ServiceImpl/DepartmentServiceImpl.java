@@ -37,9 +37,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 //        Department existing_department = departmentRepo.findByName(department.getName());
 
-        Department department1 = departmentRepo.findByName("department");
+        Department department1 = departmentRepo.findByName(department.getName());
 
         if(department1 == null){
+            department1.setRole("ROLE_ADMIN");
             return departmentRepo.save(department);
         }else{
 

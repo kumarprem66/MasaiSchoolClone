@@ -41,7 +41,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/login/{email}/{password}")
+    @GetMapping("/login/{email}/{password}")
     ResponseEntity<Map<String,String>> loginUser(@PathVariable String email,@PathVariable String password){
         try {
 

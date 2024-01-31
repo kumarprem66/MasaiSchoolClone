@@ -17,6 +17,7 @@ export class AdminCreateLectureComponent implements OnInit{
   lectureData:FormGroup;
 
 
+
   course_list:string[] = []
   // Ensure you have this property
     
@@ -26,7 +27,8 @@ export class AdminCreateLectureComponent implements OnInit{
   course_options:any[] = []
   instructor_options:any[] = []
   selected_course_id:number = 0
-  instrcutorId:number = 0
+  instrcutorId:number = 0;
+  
 
 
   constructor(private fb:FormBuilder,private lecSer:LecturesService,

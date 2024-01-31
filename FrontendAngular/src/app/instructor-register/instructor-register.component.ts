@@ -132,10 +132,10 @@ instruc_regis() {
     //   this.getAllInstructor()
     // }
 
-    let local_user:any = localStorage.getItem("masaiclone-user-email")
+    let local_user:any = localStorage.getItem("masaischoolclone")
     if(local_user != null){
-      local_user = JSON.parse(local_user);
-      this.user_email = local_user.email;
+      // local_user = JSON.parse(local_user);
+      this.user_email = local_user;
       // this.getLoginUser(this.user_email)
      
     }else{

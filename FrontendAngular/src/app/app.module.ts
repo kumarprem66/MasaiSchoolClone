@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -99,6 +99,15 @@ import { StudentLoginComponent } from './student-login/student-login.component';
     BsDatepickerModule.forRoot(),
     // TimepickerModule.forRoot(),
     CommonModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('masaischoolclone');
+        },
+        allowedDomains: ['http://127.0.0.1:8088/'],
+        disallowedRoutes: ['http://127.0.0.1:8088/auth/signin'],
+      },
+    }),
   ],
 
   providers: [],

@@ -7,6 +7,7 @@ import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.exception.CategoryException;
 import com.masaischoolclone.MasaiSchoolClone.exception.InstructorException;
 import com.masaischoolclone.MasaiSchoolClone.exception.InstructorException;
+import com.masaischoolclone.MasaiSchoolClone.exception.RegisterException;
 import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.InstructorRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.UserRepo;
@@ -47,6 +48,7 @@ public class InstructorServiceImpl implements InstructorService {
             if(userOptional.isPresent()){
                 instructor.setDepartment(optionalDepartment.get());
                 instructor.setUser(userOptional.get());
+                instructor.getUser().setRole("ROLE_INSTRUCTOR");
                 return instructorRepo.save(instructor);
             }else{
                 throw new InstructorException("No User exist with given email "+email);
@@ -58,6 +60,24 @@ public class InstructorServiceImpl implements InstructorService {
 
     }
 
+    @Override
+    public Instructor loginUser(String email,String password) {
+        Optional<Instructor> instructorOptional = instructorRepo.findByEmail(email);
+
+        if(instructorOptional.isPresent()){
+            if(instructorOptional.get().getPassword().equals(password)){
+                return instructorOptional.get();
+            }else{
+
+                throw new RegisterException("Wrong Password");
+            }
+
+
+        }else{
+            throw new RegisterException("User with this email does not registered");
+        }
+
+    }
     @Override
     public List<Instructor> getInstructors() {
         

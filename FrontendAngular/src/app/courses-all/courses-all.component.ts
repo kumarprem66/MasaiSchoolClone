@@ -36,11 +36,20 @@ export class CoursesAllComponent implements OnInit{
 
   ngOnInit(): void {
     
-    const current_user = localStorage.getItem('sparleom_user')
-    // console.log(current_user)
-    if(current_user != null){
+    // const current_user = localStorage.getItem('masaischoolclone')
+    // if(current_user != null){
 
-      if(current_user.startsWith('admin')){
+    //   if(current_user.startsWith('admin')){
+    //     this.isAdmin = true
+    //   }
+
+    // }
+
+    const who_is_login = localStorage.getItem('who_is_login');
+
+    if(who_is_login != null){
+
+      if(who_is_login=='admin'){
         this.isAdmin = true
       }
 
@@ -51,7 +60,7 @@ export class CoursesAllComponent implements OnInit{
 
       this.is_category_click = param.cat_id
       // this.selected_category = param.cat_id
-      console.log(this.is_category_click)
+      // console.log(this.is_category_click)
     })
 
     if(this.is_category_click != 0 && this.is_category_click != undefined){
@@ -82,13 +91,13 @@ export class CoursesAllComponent implements OnInit{
     this.selected_instructor = event.target.value;
     this.getInstructorCourse(Number(this.selected_instructor))
     // this.getCourseByinsAndCat(this.selected_instructor,this.selected_category)
-    console.log(event)
+    // console.log(event)
   }
 
 
   getAllCategories(){
     this.catService.getCategories().subscribe((response:any)=>{
-      console.log(response)
+      // console.log(response)
 
       this.categories = response;
     })
@@ -111,7 +120,7 @@ export class CoursesAllComponent implements OnInit{
         console.log(response)
   
         this.all_courses = response
-        console.log(response)
+        // console.log(response)
       })
 
 
@@ -131,7 +140,7 @@ export class CoursesAllComponent implements OnInit{
 
   edit_course(id:number){
 
-    console.log(id)
+    // console.log(id)
     this.course_ser.getCourseById(id).subscribe((resolve)=>{
 
       const datatopass  = {
@@ -150,7 +159,7 @@ export class CoursesAllComponent implements OnInit{
     const aggreed_delete = confirm("are you sure to delete?")
     if(aggreed_delete){
       this.course_ser.deleteCourse(id).subscribe((response)=>{
-        console.log(response)
+        // console.log(response)
         alert("deleted Successfully")
         this.getAllCourses()
       })
@@ -196,7 +205,7 @@ export class CoursesAllComponent implements OnInit{
     this.instructorSer.getAllInstructor().subscribe((response)=>{
 
       this.instructors = response;
-      console.log(response)
+      // console.log(response)
     })
   }
 
@@ -213,7 +222,7 @@ export class CoursesAllComponent implements OnInit{
       // alert(response)
       this.all_courses = response;
 
-      console.log(response);
+      // console.log(response);
 
       
     })

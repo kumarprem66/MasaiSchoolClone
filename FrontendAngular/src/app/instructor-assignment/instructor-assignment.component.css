@@ -35,7 +35,8 @@
     color: white;
 }
 
-.instructor_assign_container>div .previous_assignment_container{
+.previous_assignment_container{
+    margin: 5%;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -43,11 +44,12 @@
     background-color: white;
 
 }
-.instructor_assign_container>div .previous_assignment_container .assignment_item{
+.previous_assignment_container .assignment_item{
 
     display: flex;
     flex-direction: row;
 
+    border: 1px solid red;
     justify-content: space-between;
     padding: 10px;
     background-color: red;
@@ -56,7 +58,7 @@
     font-size: 18px;
 }
 
-.instructor_assign_container>div .previous_assignment_container .assignment_item>div>span{
+.previous_assignment_container .assignment_item>div>span{
 
     margin-left: 10px;
 }

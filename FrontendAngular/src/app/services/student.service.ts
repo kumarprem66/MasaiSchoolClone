@@ -40,8 +40,14 @@ export class StudentService {
     return this.http.delete(`${this.baseUrl}${id}/delete`)
   }
 
-  getAllStudent(){
-    return this.http.get(this.baseUrl)
+  getAllStudent(token:string){
+    
+    const headers = new HttpHeaders( {
+      
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json', // Add other headers as needed
+    });
+    return this.http.get(this.baseUrl+"fetch-all",{headers : headers,observe: 'response'})
   }
 
 
@@ -53,8 +59,33 @@ export class StudentService {
   }
   
 
-  getSingleStudent(id:number){
-    return this.http.get(`${this.baseUrl}${id}`);
+  getSingleStudent(id:number,token:string){
+    const headers = new HttpHeaders( {
+      
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json', // Add other headers as needed
+    });
+    return this.http.get(`${this.baseUrl}fetch/${id}`,{headers : headers,observe: 'response'});
+  }
+
+  fetchStuentByUserId(id:number ,token:string){
+    // fetch-by-user-id
+    const headers = new HttpHeaders( {
+      
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json', // Add other headers as needed
+    });
+    return this.http.get(this.baseUrl+"fetch-by-user-id/"+id,{headers : headers,observe: 'response'})
+  }
+
+  getCoursesOfStudent(id:number ,token:string){
+    // fetch-by-user-id
+    const headers = new HttpHeaders( {
+      
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json', // Add other headers as needed
+    });
+    return this.http.get(this.baseUrl+"fetch-all-courses/"+id,{headers : headers,observe: 'response'})
   }
  
 }
