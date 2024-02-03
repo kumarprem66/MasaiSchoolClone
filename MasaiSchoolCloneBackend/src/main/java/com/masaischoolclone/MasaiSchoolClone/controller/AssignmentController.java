@@ -17,17 +17,16 @@ public class AssignmentController {
     private AssignmentService assignmentService;
 
     @PostMapping("/create/{courseId}/{lectureId}")
-    public ResponseEntity<String> assignmentCreate(@PathVariable Integer courseId,@PathVariable Integer lectureId,@RequestBody Assignment assignment){
+    public ResponseEntity<Assignment> assignmentCreate(@PathVariable Integer courseId, @PathVariable Integer lectureId, @RequestBody Assignment assignment){
         try {
 
-            assignmentService.assignmentCreate(courseId,lectureId,assignment);
-            return ResponseEntity.ok("Assignment created successfully");
+            Assignment assignment1 = assignmentService.assignmentCreate(courseId,lectureId,assignment);
+            return new ResponseEntity<>(assignment1,HttpStatus.CREATED);
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to create assignment");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -79,6 +78,20 @@ public class AssignmentController {
         try {
 
             return ResponseEntity.ok(assignmentService.deleteAssignment(assignmentId));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    @GetMapping("/fetch/{assignmentId}")
+    ResponseEntity<Assignment> getAssignment(@PathVariable Integer assignmentId){
+        try {
+
+            return ResponseEntity.ok(assignmentService.getAssignment(assignmentId));
         } catch (Exception e) {
 
             e.printStackTrace();

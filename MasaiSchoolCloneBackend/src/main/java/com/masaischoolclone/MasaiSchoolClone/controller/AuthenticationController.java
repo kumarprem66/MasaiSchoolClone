@@ -1,6 +1,8 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Admin;
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
+import com.masaischoolclone.MasaiSchoolClone.service.AdminService;
 import com.masaischoolclone.MasaiSchoolClone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,8 @@ public class AuthenticationController {
     private UserService userService;
 
 
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/signin")
     public ResponseEntity<User> getLoggedInCustomerDetailsHandler(Authentication auth){
@@ -29,6 +33,20 @@ public class AuthenticationController {
             User customer= userService.getUserByUsername(auth.getName());
 
             return new ResponseEntity<>(customer, HttpStatus.ACCEPTED);
+
+
+
+    }
+
+    @GetMapping("/signIn")
+    public ResponseEntity<Admin> getLoggedInAdminDetailsHandler(Authentication auth){
+
+
+        System.out.println(auth);
+
+        Admin admin= adminService.getAdmin(auth.getName());
+
+        return new ResponseEntity<>(admin, HttpStatus.ACCEPTED);
 
 
 

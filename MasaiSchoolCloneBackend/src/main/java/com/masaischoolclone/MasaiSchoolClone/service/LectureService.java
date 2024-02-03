@@ -1,11 +1,12 @@
 package com.masaischoolclone.MasaiSchoolClone.service;
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.entity.Lecture;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Set;
 
 public interface LectureService {
 
@@ -20,9 +21,12 @@ public interface LectureService {
 
     Lecture getLecture(Integer id);
 
+    Instructor getInstructor(Integer lectureId);
     List<Lecture> getLectureCourse(Integer courseId);
 
     List<Lecture> getInstructorLecture(Integer instructorId);
     List<Lecture> getInstructorLecture(Integer instructorId,Integer courseId);
+
+    Set<Assignment> getLectureAssignment(Integer lectureId);
 
 }

@@ -5,7 +5,7 @@
         <form  (ngSubmit)="lectureSubmit()" [formGroup]="lectureData">
          
           <div class="input-field">
-            <!-- <label for="">Course</label> -->
+           
             <select name="lecture_course_name" id="lecture_course_name" formControlName="course" (change)="selectedCourse($event)" required>
              
               <option value="" selected disabled>Select Course</option>
@@ -13,12 +13,10 @@
               
             </select>
            
-            
           </div>
           <div class="input-field">
-            <!-- <label for="">Instructor</label> -->
-            
-            <select name="lecture_instructor_name" id="lecture_instructor_name" formControlName="instructor" required>
+           
+            <select name="lecture_instructor_name" id="lecture_instructor_name" formControlName="instructor" (change)="selectedInstructor($event)" required>
               <option value="" selected disabled>Select Instructor</option>
               <option *ngFor="let item of instructor_options" [value]="item.value">{{item.text}}</option>
               
@@ -53,10 +51,10 @@
 
 <div class="previous_lecture_container">
   <div class="lecture_item" *ngFor="let lecture of lecture_list">
-      <h5>{{lecture.topic_title}}</h5>
-      <p>{{lecture.timing}}</p>
+      <h5>{{lecture.topicTitle}}</h5>
+      <p>{{convertDate(lecture.timing)}}</p>
       <div> 
-        <p>{{lecture.meeting_url}}</p>
+        <a>{{lecture.meetingUrl}}</a>
         <a (click)="deleteLecture(lecture.id)">Delete</a>
       </div>
   </div>

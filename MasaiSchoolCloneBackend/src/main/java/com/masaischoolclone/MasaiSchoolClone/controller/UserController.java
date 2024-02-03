@@ -3,6 +3,7 @@ package com.masaischoolclone.MasaiSchoolClone.controller;
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.RegisterException;
 import com.masaischoolclone.MasaiSchoolClone.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,12 @@ public class UserController {
 
 
     @PostMapping("/register")
-    ResponseEntity<Map<String,String>> registerUser(@RequestBody User user){
+    ResponseEntity<Map<String,String>> registerUser(@Valid @RequestBody User user){
 
         try {
+
             userService.adduser(user);
+
             return ResponseEntity.ok(Map.of("message", "Registration Successful"));
         } catch (RegisterException e) {
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(Map.of("error", e.getMessage()));
@@ -52,6 +55,20 @@ public class UserController {
         try {
 
             return new ResponseEntity<>(userService.getUser(email), HttpStatus.ACCEPTED);
+        } catch (RegisterException e) {
+
+
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    @GetMapping("/get_user_id/{uid}")
+    ResponseEntity<User> getUserById(@PathVariable Integer uid){
+        try {
+
+            return new ResponseEntity<>(userService.getUser(uid), HttpStatus.ACCEPTED);
         } catch (RegisterException e) {
 
 

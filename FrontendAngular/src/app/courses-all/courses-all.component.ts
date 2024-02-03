@@ -4,6 +4,7 @@ import { CategoryService } from '../services/category.service';
 import { InstructorService } from '../services/instructor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TokendataService } from '../services/tokendata.service';
 
 @Component({
   selector: 'app-courses-all',
@@ -28,7 +29,8 @@ export class CoursesAllComponent implements OnInit{
   instructors:any[] = []
 
   constructor(private course_ser:CourseService,private router:Router,
-    private route:ActivatedRoute,private http:HttpClient,private catService:CategoryService,private instructorSer:InstructorService){
+    private route:ActivatedRoute,private http:HttpClient,
+    private catService:CategoryService,private instructorSer:InstructorService,private tokenSer:TokendataService){
 
   }
 
@@ -36,52 +38,52 @@ export class CoursesAllComponent implements OnInit{
 
   ngOnInit(): void {
     
-    // const current_user = localStorage.getItem('masaischoolclone')
-    // if(current_user != null){
 
-    //   if(current_user.startsWith('admin')){
-    //     this.isAdmin = true
-    //   }
+    const jwtToken = localStorage.getItem('masaischoolclone');
 
-    // }
+    if(jwtToken != null){
 
-    const who_is_login = localStorage.getItem('who_is_login');
+      const decodedToken = this.tokenSer.getUserDetailsFromToken(jwtToken);
 
-    if(who_is_login != null){
+      if(decodedToken.authorities == "ROLE_ADMIN"){
+        this.isAdmin = true;
+        this.getAllInstructor(jwtToken)
+      }
+     
 
-      if(who_is_login=='admin'){
-        this.isAdmin = true
+    }
+    
+
+
+      this.route.queryParams.subscribe((param:any)=>{
+
+        this.is_category_click = param.cat_id
+    
+      })
+
+      if(this.is_category_click != 0 && this.is_category_click != undefined){
+
+        this.course_ser.getCategoriesCourses(this.is_category_click).subscribe((response)=>{
+
+          
+          this.all_courses = response
+          
+          // console.log(response)
+        })
+      }else{
+
+
+        this.getAllCategories()
+        
+        this.getAllCourses()
+
+
+
       }
 
-    }
-
-
-    this.route.queryParams.subscribe((param:any)=>{
-
-      this.is_category_click = param.cat_id
-      // this.selected_category = param.cat_id
-      // console.log(this.is_category_click)
-    })
-
-    if(this.is_category_click != 0 && this.is_category_click != undefined){
-
-      this.course_ser.getCategoriesCourses(this.is_category_click).subscribe((response)=>{
-
-        
-        this.all_courses = response
-        
-        // console.log(response)
-      })
-    }else{
-
-
-      this.getAllCategories()
-      this.getAllInstructor()
-    this.getAllCourses()
-
-
-
-    }
+    // }else{
+    //   alert("You need to login first as a admin to access");
+    // }
 
 
   }
@@ -117,7 +119,7 @@ export class CoursesAllComponent implements OnInit{
    
   
       this.course_ser.getcourses().subscribe((response:any)=>{
-        console.log(response)
+        // console.log(response)
   
         this.all_courses = response
         // console.log(response)
@@ -174,8 +176,6 @@ export class CoursesAllComponent implements OnInit{
 
   }
   buy_course(id:number){
- 
-    const local_user = localStorage.getItem("can_purchase")
 
     const datatopass = {
 
@@ -183,26 +183,13 @@ export class CoursesAllComponent implements OnInit{
 
     }
 
+    this.router.navigate(['/course-detail'],{queryParams:datatopass})
 
-    if(local_user != null){
-
-    
-        this.router.navigate(['/payment'],{queryParams:datatopass})
-      
- 
-    }else{
-
-       
-        
-        this.router.navigate(['/student-register'],{queryParams:datatopass})
-       
-      }
-    
     
   }
 
-  getAllInstructor(){
-    this.instructorSer.getAllInstructor().subscribe((response)=>{
+  getAllInstructor(token:string){
+    this.instructorSer.getAllInstructor(token).subscribe((response)=>{
 
       this.instructors = response;
       // console.log(response)

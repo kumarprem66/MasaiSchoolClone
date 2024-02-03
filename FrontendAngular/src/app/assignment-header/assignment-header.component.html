@@ -1,21 +1,24 @@
-<div class="assign_head_container">
-    <div class="head_container">
-        <div>
-           <div>
-                <h2>GA201 Interview 3 - Round2</h2>
-                <div>
-                    <span>CODING</span>
-                    <span>EVALUATION</span>
-                </div>
-           </div>
+<section class="assign_header">
+    <div class="assign_head_container">
+        <div class="head_container" *ngFor="let assign of all_assignment">
             <div>
-                <h6>INSTRUCTOR NAME</h6>
-                <h6>enter time</h6>
+               <div>
+                    <h2>{{assign.title}}</h2>
+                    <div>
+                        <span>CODING</span>
+                        <span>EVALUATION</span>
+                    </div>
+               </div>
+                <div>
+                    <h6>Start Date {{assign.startDate}}</h6>
+                    <h6>End Date {{assign.dueDate}}</h6>
+                </div>
+    
             </div>
-
-        </div>
-        <div>
-            <a href="">PROGRESS</a>
+            <div>
+                <a (click)="assignmentDetails(assign.anId)">Submit</a>
+            </div>
         </div>
     </div>
-</div>
+    
+</section>

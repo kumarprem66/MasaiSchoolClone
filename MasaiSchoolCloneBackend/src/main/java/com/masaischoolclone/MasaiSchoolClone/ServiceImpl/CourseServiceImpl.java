@@ -1,6 +1,5 @@
 package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
-import com.masaischoolclone.MasaiSchoolClone.dto.CourseDTO;
 import com.masaischoolclone.MasaiSchoolClone.entity.Category;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Department;
@@ -13,9 +12,7 @@ import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.InstructorRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -175,6 +172,7 @@ public class CourseServiceImpl implements CourseService {
         if (instructorOptional.isPresent() && courseOptional.isPresent()){
             Instructor instructor = instructorOptional.get();
             Course course = courseOptional.get();
+//            System.out.println(course.getInstructor());
             if(!instructor.getCourses().contains(course)){
 
                 instructor.getCourses().add(course);

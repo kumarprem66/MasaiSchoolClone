@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../services/course.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TokendataService } from '../services/tokendata.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -13,7 +14,9 @@ export class CourseDetailComponent implements OnInit{
   current_course:any = ''
   instructor_name:string = ''
   all_courses_instructor:any[] = []
-  constructor(private cour_ser:CourseService,private route:ActivatedRoute ){
+  jwtToken:any = localStorage.getItem("masaischoolclone");
+  constructor(private cour_ser:CourseService,private route:ActivatedRoute,private tokenSer:TokendataService
+    ,private router:Router ){
 
   }
   ngOnInit(): void {
@@ -76,5 +79,36 @@ export class CourseDetailComponent implements OnInit{
 
     // this.router.navigate(['course-detail'],{queryParams:datatopass})
     
+  }
+
+  buyCourse(id:number){
+    console.log(id)
+       if(this.jwtToken != null){
+
+      
+      const decodedToken = this.tokenSer.getUserDetailsFromToken(this.jwtToken)
+      
+      if(decodedToken.authorities == "ROLE_USER"){
+        let userConfirmed = window.confirm("Please Register as a Student first....");
+        // Check the user's choice
+        if (userConfirmed) {
+          this.router.navigate(['/student-register'])
+        }
+      }else if(decodedToken.authorities == "ROLE_STUDENT"){
+        const course_id_pass = {
+          "cid":id
+        }
+        this.router.navigate(['/payment'],{queryParams:course_id_pass})
+      }
+     
+  
+    }else{
+      let userConfirmed = window.confirm("Please Login first....");
+
+      // Check the user's choice
+      if (userConfirmed) {
+        this.router.navigate(['/login'])
+      }
+    }
   }
 }

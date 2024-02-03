@@ -1,7 +1,9 @@
 package com.masaischoolclone.MasaiSchoolClone.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +30,11 @@ public class Instructor{
 
     private String email;
     private String contactNumber;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
+
     private Integer experience;
     private String qualification;
     private String expertise;

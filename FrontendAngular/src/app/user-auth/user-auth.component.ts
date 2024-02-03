@@ -49,15 +49,8 @@ export class UserAuthComponent implements OnInit{
         const authToken = response.headers.get('Authorization');
         localStorage.setItem('masaischoolclone', authToken);
 
-        // const decoded = this.tokenServ.getUserDetailsFromToken(authToken)
-
-        // const role = decoded.authorities;
-        // const currentUser = decoded.username;
-        // // localStorage.setItem('role', authToken);
-        // // localStorage.setItem('username', authToken);
 
         const data = response.body;
-        // console.log(decoded);
 
        
         localStorage.setItem('current_user_id', data.uid);

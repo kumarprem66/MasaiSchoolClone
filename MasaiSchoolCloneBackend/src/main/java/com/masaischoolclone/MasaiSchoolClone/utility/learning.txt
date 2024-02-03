@@ -1,0 +1,12 @@
+// if have restricted a endpoint((/student/fetch-all/**)) with student then below that even if you provide the
+ complete endpoint((/student/**) for other role,you will not be able to access that
+  endpoint(/student/fetch-all/**)
+
+// if authorization header is not coming from frontend in angular,add this with
+the url(url,{header:header, observe: 'response'}) // or for observing the response's header
+
+// if you are getting parse error in response, try modifying the response(send object not string
+
+// for selecting a select tag dynamically
+this.lectureData.get('course')?.setValue(response.id)
+

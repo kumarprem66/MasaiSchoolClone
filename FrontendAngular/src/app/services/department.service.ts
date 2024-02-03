@@ -13,7 +13,11 @@ export class DepartmentService {
   constructor(private http:HttpClient) { }
 
 
-  getAllDepartment(){
+  getAllDepartment(token:string){
+    const headers = new HttpHeaders({
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${token}`
+    })
     return this.http.get<any[]>(this.baseUrl+"fetch-all")
   }
 
@@ -21,11 +25,12 @@ export class DepartmentService {
     return this.http.get<any[]>(this.baseUrl+"get/"+depart_id)
   }
 
-  createDepartment(data:any):Observable<any>{
+  createDepartment(data:any,token:string):Observable<any>{
 
     const headers = new HttpHeaders({
-      "Content-Type":"application/json"
+      "Content-Type":"application/json",
+      "Authorization": `Bearer ${token}`
     })
-    return this.http.post(this.baseUrl+"create",JSON.stringify(data),{headers})
+    return this.http.post(this.baseUrl+"create",JSON.stringify(data),{headers : headers})
   }
 }

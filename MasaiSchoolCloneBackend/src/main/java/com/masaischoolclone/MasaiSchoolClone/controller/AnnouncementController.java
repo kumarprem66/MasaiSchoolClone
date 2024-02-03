@@ -20,16 +20,15 @@ public class AnnouncementController {
 
 
     @PostMapping("/create/{departId}/{courseId}")
-    public ResponseEntity<String> createAnnouncement(@PathVariable Integer departId,@PathVariable Integer courseId,@RequestBody Announcement announcement){
+    public ResponseEntity<Announcement> createAnnouncement(@PathVariable Integer departId,@PathVariable Integer courseId,@RequestBody Announcement announcement){
         try {
-            announceService.announceCreate(departId,courseId,announcement);
-            return ResponseEntity.ok("Announcement created successfully");
+            Announcement announcement1 = announceService.announceCreate(departId,courseId,announcement);
+            return new ResponseEntity<>(announcement1,HttpStatus.CREATED);
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to create announcement");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -38,6 +37,20 @@ public class AnnouncementController {
         try {
 
             return ResponseEntity.ok(announceService.announceList());
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+        }
+    }
+    @GetMapping("/getAnnounce-list-of-course/{courseId}")
+    public ResponseEntity<Set<Announcement>> getAnnounceList(@PathVariable Integer courseId) {
+        try {
+
+            return ResponseEntity.ok(announceService.announceListOfCourse(courseId));
         } catch (Exception e) {
 
             e.printStackTrace();

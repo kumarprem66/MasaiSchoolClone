@@ -12,12 +12,22 @@ export class AdminService {
   }
 
 
-  loginAdmin(email:string,password:string){
-    return this.http.get<any[]>(this.baseUrl+"login/"+email+"/"+password);
+  loginAdmin(username:string,password:string):Observable<any>{
+    const authHeader = 'Basic ' + btoa(username + ':' + password);
+
+    const headers = new HttpHeaders({
+      'Authorization': authHeader,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get("http://127.0.0.1:8088/auth/signIn", { headers: headers, observe: 'response' });
   }
 
-  getAdminByEmail(email:string){
-    return this.http.get<any[]>(this.baseUrl+"getAdmin/"+email);
+  getAdminByEmail(email:string,token:string){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get<any[]>(this.baseUrl+"getAdmin/"+email,{headers:headers});
   }
 
   createAdmin(data:any):Observable<any>{
@@ -25,6 +35,6 @@ export class AdminService {
     const headers = new HttpHeaders({
       "Content-Type":"application/json"
     })
-    return this.http.post(this.baseUrl+"create",JSON.stringify(data),{headers})
+    return this.http.post(this.baseUrl+"create",JSON.stringify(data),{headers:headers})
   }
 }

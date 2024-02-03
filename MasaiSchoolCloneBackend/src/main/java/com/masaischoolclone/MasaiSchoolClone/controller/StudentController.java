@@ -88,11 +88,11 @@ public class StudentController {
         }
     }
 
-    @PutMapping("/update/{studentId}")
-    ResponseEntity<Student> updateStudent(@PathVariable Integer studentId,@PathVariable Student updatedStudent){
+    @PutMapping("/update/{studentId}/{userId}")
+    ResponseEntity<Student> updateStudent(@PathVariable Integer studentId,@PathVariable Integer userId,@RequestBody Student updatedStudent){
         try {
 
-            return new ResponseEntity<>(studentService.updateStudent(studentId,updatedStudent), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(studentService.updateStudent(studentId,userId,updatedStudent), HttpStatus.ACCEPTED);
         } catch (Exception e) {
 
             e.printStackTrace();

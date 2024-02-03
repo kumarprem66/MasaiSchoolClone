@@ -16,6 +16,7 @@
 }
 
 .categories_container, .card_container{
+    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -28,7 +29,8 @@
 
     position:relative;
     /* background-color: #205295; */
-    background: transparent;
+    background-color: aliceblue;
+    /* background: transparent; */
     width: 250px;
     height: 140px;
     color: white;
@@ -42,7 +44,7 @@
     
 }
 
-.categories_container .card_container .category_card:nth-child(1){
+/* .categories_container .card_container .category_card:nth-child(1){
     background-image: url('../../assets/categories1.jpg');
 }
 
@@ -72,7 +74,7 @@
 
 .categories_container .card_container .category_card:nth-child(8){
     background-image: url('../../assets/categories8.jpg');
-}
+} */
 
 h1{
     display: block;

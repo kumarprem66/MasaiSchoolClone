@@ -1,11 +1,8 @@
 package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
-import com.masaischoolclone.MasaiSchoolClone.dto.InstructorDTO;
-import com.masaischoolclone.MasaiSchoolClone.entity.*;
+import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
-import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
-import com.masaischoolclone.MasaiSchoolClone.exception.CategoryException;
-import com.masaischoolclone.MasaiSchoolClone.exception.InstructorException;
+import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.InstructorException;
 import com.masaischoolclone.MasaiSchoolClone.exception.RegisterException;
 import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
@@ -13,10 +10,7 @@ import com.masaischoolclone.MasaiSchoolClone.repository.InstructorRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.UserRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +28,9 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Autowired
     private DepartmentRepo departmentRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @Override
     public Instructor createInstructor(String email,Instructor instructor,Integer departId) {
@@ -49,6 +46,7 @@ public class InstructorServiceImpl implements InstructorService {
                 instructor.setDepartment(optionalDepartment.get());
                 instructor.setUser(userOptional.get());
                 instructor.getUser().setRole("ROLE_INSTRUCTOR");
+                instructor.setPassword(passwordEncoder.encode(instructor.getPassword()));
                 return instructorRepo.save(instructor);
             }else{
                 throw new InstructorException("No User exist with given email "+email);
@@ -153,6 +151,7 @@ public class InstructorServiceImpl implements InstructorService {
         return optionalUser.map(user -> instructorRepo.findByUser(user)).orElse(null);
 
     }
+
 
     @Override
     public Set<Instructor> getAllInstructor(Integer departmentId) {

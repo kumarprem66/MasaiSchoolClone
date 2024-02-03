@@ -22,7 +22,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String jwt = request.getHeader(SecurityConstants.JWT_HEADER);
-//        System.out.println("token is "+ jwt);
+        System.out.println("token is "+ jwt);
         if (jwt != null) {
             try {
                 //extracting the word Bearer
@@ -46,6 +46,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
     //this time this validation filter has to be executed for all the apis except the /signIn api
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return request.getServletPath().equals("/auth/signin");
+        return request.getServletPath().equals("/auth/signin") ;
+//        || request.getServletPath().equals("/auth/signIn");
     }
 }

@@ -18,7 +18,7 @@
        </div>
        <div class="cou_des_right">
         <img class="card-img-top" src="{{ current_course.image }}" alt="">
-        <button>Buy Now</button>
+        <button (click)="buyCourse(current_course.id)">Buy Now</button>
        </div>
 
     </div>
@@ -43,7 +43,7 @@
               </div>
               <br>
               
-              <a href="#" class="btn btn-primary">Enroll Now</a>
+              <a (click)="buyCourse(current_course.id)" class="btn btn-primary">Enroll Now</a>
             </div>
         </div>
 

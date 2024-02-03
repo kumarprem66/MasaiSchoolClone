@@ -27,12 +27,13 @@ export class StudentService {
   }
 
 
-  updateStudent(id:number,data:any){
+  updateStudent(sid:number,uid:number,data:any,token:string){
 
     const headers = new HttpHeaders({
-      "Content-Type":"Application/json"
+      "Content-Type":"Application/json",
+      "Authorization": `Bearer ${token}`
     })
-    return this.http.put(`${this.baseUrl}${id}/update`,JSON.stringify(data), {headers})
+    return this.http.put(`${this.baseUrl}update/${sid}/${uid}`,JSON.stringify(data), {headers:headers})
   }
 
   deleteStudent(id:number){

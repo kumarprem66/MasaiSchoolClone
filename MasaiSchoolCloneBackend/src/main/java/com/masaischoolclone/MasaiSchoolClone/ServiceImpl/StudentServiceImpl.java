@@ -76,20 +76,32 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(Integer studentId, Student updatedStudent) {
+    public Student updateStudent(Integer studentId,Integer userId, Student updatedStudent) {
         Optional<Student> studentOptional = studentRepo.findById(studentId);
-        if(studentOptional.isPresent()){
+        Optional<User> userOptional = userRepo.findById(userId);
+        if(userOptional.isPresent()){
 
-            Student updatableStudent = studentOptional.get();
-            updatableStudent.setContactNumber(updatedStudent.getContactNumber());
-            updatableStudent.setDateOfBirth(updatedStudent.getDateOfBirth());
+            if(studentOptional.isPresent()){
+                Student updatableStudent = studentOptional.get();
+                updatableStudent.setUser(userOptional.get());
+                updatableStudent.setName(updatedStudent.getName());
+                updatableStudent.setContactNumber(updatedStudent.getContactNumber());
+                updatableStudent.setDateOfBirth(updatedStudent.getDateOfBirth());
+
+                studentRepo.save(updatableStudent);
+                return updatedStudent;
+            }else{
+                throw new StudentException("Student can not be updated,given id does not exist");
+            }
 
 
-            return updatableStudent;
 
 
+
+        }else{
+            throw new UserException("You need to register as a user first");
         }
-        throw new StudentException("Student can not be updated,given id does not exist");
+
     }
 
     @Override

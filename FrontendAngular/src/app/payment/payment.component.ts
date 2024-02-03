@@ -32,7 +32,7 @@ export class PaymentComponent implements OnInit{
 
   purchase_confirm(){
 
-    const student_data = localStorage.getItem("student_data")
+    const student_data = localStorage.getItem("masaischoolclone")
     if(this.course_id != 0 && student_data != null){
       const parse_student = JSON.parse(student_data)
       let stu_id  = parse_student.id

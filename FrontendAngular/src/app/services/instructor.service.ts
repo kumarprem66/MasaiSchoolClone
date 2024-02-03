@@ -12,38 +12,60 @@ export class InstructorService {
   constructor(private http:HttpClient) { }
 
 
-  getAllInstructor(){
-    return this.http.get<any[]>(this.baseUrl+"fetch-all")
+  getAllInstructor(token:string){
+    const headers = new HttpHeaders({
+      "Content-Type":"Application/json",
+      "Authorization" : `Bearer ${token}`
+    })
+    return this.http.get<any[]>(this.baseUrl+"fetch-all",{headers : headers})
   }
 
   getInstructorByDepart(depart_id:number){
     return this.http.get<any[]>(this.baseUrl+"fetch-all-byDept/"+depart_id)
   }
 
-  createInstructor(data:any,departId:number,email:string):Observable<any>{
+  createInstructor(data:any,departId:number,email:string,token:string):Observable<any>{
 
     const headers = new HttpHeaders({
-      "Content-Type":"Application/json"
+      "Content-Type":"Application/json",
+      "Authorization" : `Bearer ${token}`
     })
-    return this.http.post(`${this.baseUrl}create/${departId}/${email}`,JSON.stringify(data),{headers})
+    return this.http.post(`${this.baseUrl}create/${departId}/${email}`,JSON.stringify(data),{headers : headers})
   }
 
 
-  updateInstructor(id:number,data:any){
+  updateInstructor(id:number,data:any,token:string){
 
     const headers = new HttpHeaders({
-      "Content-Type":"Application/json"
+      "Content-Type":"Application/json",
+      "Authorization" : `Bearer ${token}`
     })
-    return this.http.put(`${this.baseUrl}update/${id}`,JSON.stringify(data), {headers})
+    return this.http.put(`${this.baseUrl}update/${id}`,JSON.stringify(data), {headers :headers})
   }
 
-  deleteInstructor(id:number){
+  deleteInstructor(id:number,token:string){
 
-    return this.http.delete(`${this.baseUrl}delete/${id}`)
+    const headers = new HttpHeaders({
+      "Content-Type":"Application/json",
+      "Authorization" : `Bearer ${token}`
+    })
+    return this.http.delete(`${this.baseUrl}delete/${id}`,{headers:headers})
   }
   
-  getSingleInstrcutor(id:number){
+  getSingleInstrcutor(id:number,token:string){
+    const headers = new HttpHeaders({
+      "Content-Type":"Application/json",
+      "Authorization" : `Bearer ${token}`
+    })
     return this.http.get(`${this.baseUrl}fetch/${id}`)
+  }
+
+  getInstructorByUserId(uid:number,token:string){
+    const headers = new HttpHeaders({
+      "Content-Type":"application/json",
+      "Authorization":`Bearer ${token}`
+    })
+    return this.http.get(`${this.baseUrl}fetch-by-user/${uid}`,{headers : headers})
   }
 
 

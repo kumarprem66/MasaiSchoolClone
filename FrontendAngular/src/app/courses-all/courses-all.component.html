@@ -3,7 +3,7 @@
     <h1>The world's largest selection of courses</h1>
     <h5>Choose from 130,000 online video courses with new additions published every month</h5>
 
-   <div class="select_div_filter">
+   <div class="select_div_filter" *ngIf="isAdmin">
     <div class="category_select_div">
       <!-- <label for="categories">Select Category</label> -->
     <select name="categories" class="course_categories" (change)="onCategoryChange($event) ">
@@ -15,7 +15,7 @@
     </div>
 
   
-    <div class="instructor_select_div">
+    <div class="instructor_select_div" *ngIf="isAdmin">
       <!-- <label for="instructors">Select Instructor</label> -->
       <select name="instructors" class="instructors" (change)="getCourseByInstructor($event) ">
         <option value="" selected disabled>Select Instructor</option>
@@ -49,7 +49,7 @@
               <div class="edit_delete_div">
                 <a (click)="edit_course(course.id)" *ngIf="isAdmin" class="btn btn-primary">Edit</a>
                 <a (click)="delete_course(course.id)"   *ngIf="isAdmin"  class="btn btn-secondary">Delete</a>
-                <a (click)="add_to_cart(course.id)"   *ngIf="!isAdmin"  class="btn btn-primary">Add to Cart</a>
+                <!-- <a (click)="add_to_cart(course.id)"   *ngIf="!isAdmin"  class="btn btn-primary">Add to Cart</a> -->
                 <a (click)="buy_course(course.id)"   *ngIf="!isAdmin"  class="btn btn-secondary">Buy Now</a>
                 
               </div>

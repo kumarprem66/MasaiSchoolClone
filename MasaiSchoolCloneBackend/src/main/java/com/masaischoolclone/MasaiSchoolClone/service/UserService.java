@@ -2,7 +2,6 @@ package com.masaischoolclone.MasaiSchoolClone.service;
 
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.UserException;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,5 +15,7 @@ public interface UserService {
     User loginUser(String email,String password);
 
     User getUserByUsername(String username) throws UserException;
+
+
 
 }

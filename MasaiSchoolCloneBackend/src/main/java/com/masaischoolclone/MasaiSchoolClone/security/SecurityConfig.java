@@ -51,26 +51,38 @@ public class SecurityConfig {
 
                     auth
                             .requestMatchers(HttpMethod.GET,"/course/**","/course**",
-                                    "/category**","/depart/**","/instructor/**")
+                                    "/category/**","/depart/**","/instructor/**","/user/get_user_id/**")
                             .permitAll()
-//                            .requestMatchers(HttpMethod.GET,"/user/**","/announce/**","/assignment/**",
-//                                    "/lecture/**","/enrollment/**","/submission/fetch-all",
-//                                    "/student/fetch-all").hasAnyRole("STUDENT","INSTRUCTOR")
+                            .requestMatchers(HttpMethod.GET,"/submission/fetch-all",
+                                    "/student/fetch-all","/assignment/fetch/**").hasAnyRole("STUDENT","INSTRUCTOR")
+
                             .requestMatchers("/enrollment/**","/submission/**","/student/update/**",
                                     "/student/fetch/**","/student/enroll/**","/student/fetch-by-user-id/**"
-                                    ,"/student/fetch-all-courses/**","/lecture/lecture-of-course/**",
-                                    "/assignment/fetch-all/**","/assignment/create/**").hasRole("STUDENT")
+                                    ,"/student/fetch-all-courses/**"
+                                    ).hasRole("STUDENT")
 
-                            .requestMatchers("/student/create","/submission/**").hasRole("USER")
+                            .requestMatchers("/lecture/lecture-of-course/**","/announce/getAnnounce-list",
+                                    "/announce/getAnnounce-list-of-course/**","/submission/**")
+                            .hasAnyRole("STUDENT","INSTRUCTOR","ADMIN")
 
-                            .requestMatchers("/enrollment/**","/submission/**","/student/fetch-all")
+                            .requestMatchers(HttpMethod.PUT,"/student/update/**").hasRole("STUDENT")
+
+                            .requestMatchers("/instructor/fetch-by-user/**" ,"/assignment/**").hasRole("INSTRUCTOR")
+
+
+                            .requestMatchers("/instructor/create/**","/student/create").hasAnyRole("USER","ADMIN")
+
+                            .requestMatchers("/enrollment/**","/submission/**","/student/fetch-all","/lecture/**")
                             .hasAnyRole("INSTRUCTOR","ADMIN")
 
 //                            .requestMatchers("/assignment/**","/lecture/**").hasAnyRole("INSTRUCTOR","ADMIN")
-                            .requestMatchers("/user/**","/announce/**","/category/**","/course/**","/depart/**","/instructor/**","/student/**","/lecture/**").hasRole("ADMIN")
-                            .requestMatchers(HttpMethod.GET,"/auth/signin").authenticated()
+                            .requestMatchers("/announce/**","/category/**","/course/**","/depart/**","/instructor/**",
+                                    "/student/**","/lecture/**","/assignment/**","/announce/**","/enrollment/**",
+                                    "/submission/**").hasRole("ADMIN")
+
+                            .requestMatchers(HttpMethod.GET,"/auth/signin","/auth/signIn").authenticated()
 //                            .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                            .requestMatchers("/user/register","/swagger-ui*/**","/v3/api-docs/**")
+                            .requestMatchers("/admin/create","/user/register","/swagger-ui*/**","/v3/api-docs/**")
                             .permitAll()
 
                     ;

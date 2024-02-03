@@ -1,7 +1,9 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
+import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.entity.Lecture;
 import com.masaischoolclone.MasaiSchoolClone.service.LectureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/lecture")
@@ -23,7 +26,8 @@ public class LectureController {
 
         try {
 
-            return new ResponseEntity<>(lectureService.createLecture(lecture,courseId,instructorId),HttpStatus.CREATED);
+            Lecture lecture1 = lectureService.createLecture(lecture,courseId,instructorId);
+            return new ResponseEntity<>(lecture1,HttpStatus.CREATED);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -39,7 +43,8 @@ public class LectureController {
 
         try {
 
-            return new ResponseEntity<>(lectureService.getLectures(),HttpStatus.OK);
+            List<Lecture> lectureList = lectureService.getLectures();
+            return new ResponseEntity<>(lectureList,HttpStatus.OK);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -85,7 +90,8 @@ public class LectureController {
     public ResponseEntity<Lecture> getLecture(@PathVariable Integer id){
         try {
 
-            return new ResponseEntity<>(lectureService.getLecture(id),HttpStatus.OK);
+            Lecture lecture = lectureService.getLecture(id);
+            return new ResponseEntity<>(lecture,HttpStatus.OK);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -100,7 +106,8 @@ public class LectureController {
 
         try {
 
-            return new ResponseEntity<>(lectureService.getLectureCourse(courseId),HttpStatus.OK);
+            List<Lecture> lectures= lectureService.getLectureCourse(courseId);
+            return new ResponseEntity<>(lectures,HttpStatus.OK);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -115,7 +122,8 @@ public class LectureController {
 
         try {
 
-            return new ResponseEntity<>(lectureService.getInstructorLecture(instructorId,courseId),HttpStatus.OK);
+            List<Lecture> lectures = lectureService.getInstructorLecture(instructorId,courseId);
+            return new ResponseEntity<>(lectures,HttpStatus.OK);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -131,7 +139,26 @@ public class LectureController {
 
         try {
 
-            return new ResponseEntity<>(lectureService.getCourse(lectureId),HttpStatus.OK);
+            Course course = lectureService.getCourse(lectureId);
+            return new ResponseEntity<>(course,HttpStatus.OK);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
+
+    @GetMapping("/instructor-of-lecture/{lectureId}")
+    public ResponseEntity<Instructor> getInstructorByLecture(@PathVariable Integer lectureId){
+
+        try {
+
+            Instructor instructor = lectureService.getInstructor(lectureId);
+
+            return new ResponseEntity<>(instructor,HttpStatus.OK);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -146,7 +173,9 @@ public class LectureController {
 
         try {
 
-            return new ResponseEntity<>(lectureService.getInstructorLecture(instructorId),HttpStatus.OK);
+            List<Lecture> lectures = lectureService.getInstructorLecture(instructorId);
+
+            return new ResponseEntity<>(lectures,HttpStatus.OK);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -156,5 +185,24 @@ public class LectureController {
         }
 
     }
+    @GetMapping("/assignment-of-lecture/{lectureId}")
+    public ResponseEntity<Set<Assignment>> getAssignmentsLecture(@PathVariable Integer lectureId){
+
+        try {
+
+            Set<Assignment> assignments = lectureService.getLectureAssignment(lectureId);
+
+            return new ResponseEntity<>(assignments,HttpStatus.OK);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
+    }
+
+
 
 }

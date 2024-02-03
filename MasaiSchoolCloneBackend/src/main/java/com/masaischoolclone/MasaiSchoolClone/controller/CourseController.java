@@ -1,6 +1,5 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
-import com.masaischoolclone.MasaiSchoolClone.dto.CourseDTO;
 import com.masaischoolclone.MasaiSchoolClone.entity.Category;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Department;
@@ -9,7 +8,6 @@ import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -168,8 +166,8 @@ public class CourseController {
 
     }
 
-    @PutMapping("/assign-to-instructor")
-    public ResponseEntity<String> assignCourseToInstructor(@RequestParam Integer instructorId,@RequestParam Integer courseId){
+    @PutMapping("/assign-to-instructor/{instructorId}/{courseId}")
+    public ResponseEntity<String> assignCourseToInstructor(@PathVariable Integer instructorId,@PathVariable Integer courseId){
         try {
 
             return ResponseEntity.ok(courseService.assignCourseToInstructor(instructorId,courseId));

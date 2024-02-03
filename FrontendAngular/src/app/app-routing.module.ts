@@ -21,6 +21,8 @@ import { AboutComponent } from './about/about.component';
 import { StudentRegsiterComponent } from './student-regsiter/student-regsiter.component';
 import { PaymentComponent } from './payment/payment.component';
 import { StudentLoginComponent } from './student-login/student-login.component';
+import { AssignmentHeaderComponent } from './assignment-header/assignment-header.component';
+import { AssignmentDetailsComponent } from './assignment-details/assignment-details.component';
 
 const routes: Routes = [
   {path:'',component:DashboardComponent},
@@ -38,7 +40,8 @@ const routes: Routes = [
   {path:"contact",component:ContactComponent},
   {path:"courses",component:CoursesComponent},
   {path:"instruc-assignment",component:InstructorAssignmentComponent},
-  {path:"assignment",component:InstructorAssignmentComponent},
+  {path:"assignment",component:AssignmentHeaderComponent},
+  {path:"assignment-detail",component:AssignmentDetailsComponent},
   {path:"instruc-register",component:InstructorRegisterComponent},
   {path:"profile",component:ProfileComponent},
   {path:"ticket",component:TicketComponent},
@@ -47,7 +50,6 @@ const routes: Routes = [
   {path:"about",component:AboutComponent},
   {path:"student-register",component:StudentRegsiterComponent},
   {path:"payment",component:PaymentComponent},
-  {path:"assignment-details",component:CoursesAllComponent},
   {path:"stu-login",component:StudentLoginComponent},
 
 

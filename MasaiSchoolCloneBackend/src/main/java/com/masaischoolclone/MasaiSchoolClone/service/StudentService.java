@@ -14,7 +14,7 @@ public interface StudentService {
 
     List<Student> getStudentList();
 
-    Student updateStudent(Integer studentId,Student updatedStudent);
+    Student updateStudent(Integer studentId,Integer userId,Student updatedStudent);
 
     Integer deleteStudent(Integer id);
 

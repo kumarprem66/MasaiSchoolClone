@@ -19,7 +19,14 @@ export class HeroInstructorComponent {
 
     }
 
-    this.router.navigate(['instruc-register'],{queryParams:datatopass})
+    const JWTtoken = localStorage.getItem("masaischoolclone");
+    const current_user_id = localStorage.getItem("current_user_id");
+    if(JWTtoken != null && current_user_id != null){
+      this.router.navigate(['instruc-register'],{queryParams:datatopass})
+    }else{
+      alert("You have to register as a user first")
+    }
+ 
 
 
 

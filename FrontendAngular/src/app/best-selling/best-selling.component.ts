@@ -26,7 +26,7 @@ export class BestSellingComponent {
 
   getAllCourses(){
     this.course_ser.getcourses().subscribe((response:any)=>{
-      console.log(response)
+     
 
       this.all_courses = response
     })

@@ -1,10 +1,9 @@
 package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
-import com.masaischoolclone.MasaiSchoolClone.entity.*;
 import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
+import com.masaischoolclone.MasaiSchoolClone.entity.Course;
+import com.masaischoolclone.MasaiSchoolClone.entity.Lecture;
 import com.masaischoolclone.MasaiSchoolClone.exception.AssignmentException;
-import com.masaischoolclone.MasaiSchoolClone.exception.CourseException;
-import com.masaischoolclone.MasaiSchoolClone.exception.LectureException;
 import com.masaischoolclone.MasaiSchoolClone.repository.AssignmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.LectureRepo;
@@ -12,7 +11,7 @@ import com.masaischoolclone.MasaiSchoolClone.service.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -50,6 +49,7 @@ public class AssignmentServiceImpl implements AssignmentService {
             }
 
 
+            System.out.println("kaha hai bhai..............");
             assignment.setCourse(course);
             assignment.setLecture(lecture);
             return assignmentRepo.save(assignment);
@@ -66,7 +66,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         if(courseOptional.isPresent()){
             return assignmentRepo.findAllByCourse(courseOptional.get());
         }else {
-            throw new CourseException("Course not available with given id "+courseId);
+            return new HashSet<>();
         }
     }
 
@@ -77,8 +77,20 @@ public class AssignmentServiceImpl implements AssignmentService {
         if(courseOptional.isPresent() && lectureOptional.isPresent()){
             return assignmentRepo.findAllByCourseAndLecture(courseOptional.get(),lectureOptional.get());
         }else {
-            throw new CourseException("Course or lecture not available with given id "+courseId);
+//            throw new CourseException("Course or lecture not available with given id "+courseId);
+            return new HashSet<>();
         }
+    }
+
+    @Override
+    public Assignment getAssignment(Integer assignmentId) {
+        Optional<Assignment> optionalAssignment = assignmentRepo.findById(assignmentId);
+        if(optionalAssignment.isPresent()){
+            return optionalAssignment.get();
+        }else{
+            throw new AssignmentException("Assignment with this id does not exist");
+        }
+
     }
 
     @Override

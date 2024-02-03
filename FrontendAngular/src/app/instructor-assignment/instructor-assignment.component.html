@@ -12,7 +12,7 @@
                       <textarea name="message-box" id="" cols="30" rows="10" placeholder="Enter Instruction" formControlName="description" required></textarea>
                     </div>
                     <div class="input-box message-box">
-                        <textarea name="message-box" id="" cols="30" rows="10" placeholder="Enter Assignment details" formControlName="instructon"></textarea>
+                        <textarea name="message-box" id="" cols="30" rows="10" placeholder="Enter Assignment details" formControlName="instruction"></textarea>
                     </div>
                     <div class="input-box">
                         <input type="datetime-local" placeholder="Start date" formControlName="start_date" required>
@@ -20,23 +20,34 @@
                       <div class="input-box">
                         <input type="date" placeholder="End Date" formControlName="due_date" required>
                       </div>
-                      <div class="input-field">
-                        <select name="course" id="course" formControlName="course" required>
+                      
+                      <div class="input-box">
+                        <select name="course" id="course" formControlName="course" (change)="selectedCourse($event)" required>
+                          <option value="0" selected disabled>Select course</option>
                           <option *ngFor="let item of course_options" [value]="item.value">{{item.text}}</option>
                           
                         </select>
-                        <label>Select Course</label>
+                        
                       </div>  
+                      <div class="input-box">
+                        <select name="lecture" id="lecture" formControlName="lecture" (change)="selectedLecture($event)" required>
+                          <option value="0" selected disabled>Select Lecture </option>
+                          <option *ngFor="let item of lecture_options" [value]="item.value">{{item.text}}</option>
+                          
+                        </select>
+                        
+                      </div>  
+
+                     
                     <div class="create_button">
                       <input type="submit" value="Create Assignment" >
                     </div>
-                    
+                 
 
                 </form>
             </div>
         </div>
 
-        
 
 
     </div>
@@ -45,8 +56,8 @@
 <div class="previous_assignment_container" *ngFor="let item of all_assignment">
   <div class="assignment_item">
       <h4>{{item.title}}</h4>
-      <h2>{{item.description}}</h2>
-      <h2>{{item.instructon}}</h2>
+      <p>{{item.description}}</p>
+      <p>{{item.instructon}}</p>
      <div>
       <span>Start date: {{ convertDate(item.startDate)}}</span>
       <span>End date: {{item.dueDate}}</span>
@@ -54,3 +65,14 @@
   </div>
  
 </div>
+
+<!-- <div class="previous_announcement_container">
+  <div class="announcement_item" *ngFor="let ann of ann_list">
+      <h5>{{ann.title}}</h5>
+      <p>{{ann.description}}</p>
+      <div> 
+        <p>{{ann.publish_date}}</p>
+        <a (click)="deleteAnnoun(ann.aid)">Delete</a>
+      </div>
+  </div>
+</div> -->

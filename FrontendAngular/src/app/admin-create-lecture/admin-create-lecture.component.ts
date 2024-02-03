@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { HttpHeaders } from '@angular/common/http';
 import { InstructorService } from '../services/instructor.service';
+import { TokendataService } from '../services/tokendata.service';
 
 @Component({
   selector: 'app-admin-create-lecture',
@@ -28,12 +29,15 @@ export class AdminCreateLectureComponent implements OnInit{
   instructor_options:any[] = []
   selected_course_id:number = 0
   instrcutorId:number = 0;
+  is_instructor:boolean = false
   
+  selected_instructor:number = 0
 
+  jwtToken: any= localStorage.getItem("masaischoolclone")
 
   constructor(private fb:FormBuilder,private lecSer:LecturesService,
     private router:Router,private coursesService:CourseService,
-    private instrucSer:InstructorService
+    private instrucSer:InstructorService,private tokenSer:TokendataService
     ,private route:ActivatedRoute){
   
     
@@ -54,43 +58,54 @@ export class AdminCreateLectureComponent implements OnInit{
   ngOnInit(): void {
 
 
-    // const ins = localStorage.getItem("who_is_login")
-    // if(ins=="instructor"){
-    //   this.is_instructor = true
-    // }
-
-    // const  localIns = localStorage.getItem("instructor_data")
-    // if(localIns != null){
-
-    //   const parseIns = JSON.parse(localIns)
-    //   this.instructor_id = parseIns.id
-     
-    // }
-    
-    // if(this.instructor_id != 0 && this.instructor_id != undefined){
-    //   this.getInstructorLecture(this.instructor_id)
-    // }else{
-    //   this.getAllLectures()
-    // }
-   
-    this.getcourses()
-
-    
-    
-
-      
-    
+  
     this.route.queryParams.subscribe((param:any)=>{
 
-      // console.log(param.lect_id)
       this.isupdate = param.lect_id
       
       if(param.lect_id != undefined){
-          this.getLectureFromId(param.lect_id)
+          this.getLectureFromId(param.lect_id,this.jwtToken)
       }
 
       
     })
+
+
+    const current_user_id = localStorage.getItem("current_user_id")
+  
+
+    if(this.jwtToken != null && current_user_id != null){
+      const decodedToken = this.tokenSer.getUserDetailsFromToken(this.jwtToken);
+      if(decodedToken.authorities == "ROLE_INSTRUCTOR"){
+
+        this.instrucSer.getInstructorByUserId(parseInt(current_user_id),this.jwtToken).subscribe((response : any)=>{
+
+          this.is_instructor = true;
+          
+          this.selected_instructor = response.id;
+          this.instructor_options.push({value:response.id,text:response.name})
+          this.getcourses()
+        
+        },error=>{
+          alert("User id does not exist...")
+        })
+       
+      }else if(decodedToken.authorities == "ROLE_ADMIN"){
+
+        this.getInstructors(this.jwtToken)
+        this.getcourses();
+        this.getAllLectures(this.jwtToken);
+
+    
+      }else{
+        alert("Only instructor or admin can view this page")
+        this.router.navigate(['/login'])
+      }
+     
+      
+     
+  
+    }
 
   }
   lectureSubmit(){
@@ -99,11 +114,13 @@ export class AdminCreateLectureComponent implements OnInit{
       const lecturevalue  = this.lectureData.value
 
       if(this.isupdate == 0 || this.isupdate == undefined){
-        this.lecSer.createLecture(lecturevalue,this.selected_course_id,this.instrcutorId)
+        this.lecSer.createLecture(lecturevalue,this.selected_course_id,this.instrcutorId,this.jwtToken)
         .subscribe((response)=>{
           console.log(response)
     
             alert("Lecture created")
+            this.getAllLectures(this.jwtToken);
+             
         },(error)=>{
           alert(error)
         })
@@ -111,32 +128,42 @@ export class AdminCreateLectureComponent implements OnInit{
       }else{
 
         // lecturevalue.timing = lecturevalue.timing+':00Z';
-        this.lecSer.updateLecture(this.isupdate,lecturevalue).subscribe((response)=>{
+        this.lecSer.updateLecture(this.isupdate,lecturevalue,this.jwtToken).subscribe((response)=>{
           // console.log(response)
           alert("Lecture Updated")
+          
+          this.getAllLectures(this.jwtToken);
+
+          this.router.navigate(['/admin-dashboard']);
            
         })
 
-      
-        // console.log(lecturevalue)
-        // console.log(this.isupdate)
+
       }
 
-      // this.router.navigate(['admin-dashboard']) 
-      
 
     }else{
       alert("provide all field except file")
     }
 
   }
+  getInstructors(token:string){
+    this.instrucSer.getAllInstructor(token).subscribe((response)=>{
+      const instruc = response
+        // console.log(courses)
+        instruc.forEach((element :any) => {
+          this.instructor_options.push({value:element.id,text:element.name})
+        });
+    })
+  }
 
-  getLectureFromId(id:number){
-    this.lecSer.getLectureById(id).subscribe((response:any)=>{
+  getLectureFromId(id:number,token:string){
+    this.lecSer.getLectureById(id,token).subscribe((response:any)=>{
 
 
       
-      this.getCourseFromLecture(id);
+      this.getCourseFromLecture(id,token);
+      this.getInstructorByLecture(id,token);
       this.lectureData.patchValue(response)
       this.lectureData.patchValue({
         timing: this.convertDate(response.timing),
@@ -150,23 +177,29 @@ export class AdminCreateLectureComponent implements OnInit{
     })
   }
 
-  getCourseFromLecture(lecture_id:number){
-    this.lecSer.getCourseByLecureId(lecture_id).subscribe((response:any)=>{
+  getCourseFromLecture(lecture_id:number,token:string){
+    this.lecSer.getCourseByLecureId(lecture_id,token).subscribe((response:any)=>{
       this.selected_course_id = response.id;
       this.lectureData.get('course')?.setValue(response.id)
-      this.getcourseInstructor(this.selected_course_id)
-      // console.log(response);
+     
     })
   }
 
-  getAllLectures(){
-    this.lecSer.getAllLectures().subscribe((response:any)=>{
-      this.lecture_list = response.results;
-      // console.log(response.results)
+  getAllLectures(token:string){
+    this.lecSer.getAllLectures(token).subscribe((response:any)=>{
+      this.lecture_list = response;
+      console.log(response)
     })
   }
 
    getcourses(){
+    if(this.is_instructor){
+    
+
+      this.getCourseByinstructor(this.selected_instructor)
+  
+    }else{
+
      this.coursesService.getcourses().subscribe((response:any)=>{
       // console.log(response)
 
@@ -182,22 +215,37 @@ export class AdminCreateLectureComponent implements OnInit{
       });
     })
   }
+  }
 
   selectedCourse(event:any){
 
     this.selected_course_id = event.target.value;
     this.getcourseInstructor(this.selected_course_id)
   }
+
+  selectedInstructor(event:any){
+
+    this.selected_instructor = event.target.value;
+  
+    this.getCourseByinstructor(this.selected_instructor)
+  }
   getcourseInstructor(course_id:number){
     this.instructor_options = []
     this.coursesService.getCourseInstructor(course_id).subscribe((response:any)=>{
-
-    //  console.log(response)
     this.instrcutorId = response.id;
     this.instructor_options.push({value:response.id,text:response.name})
 
     
    })
+ }
+
+ getInstructorByLecture(lectureId:number,token:string){
+  this.lecSer.getInstructorByLecture(lectureId,token).subscribe((response:any)=>{
+
+    this.lectureData.get('instructor')?.setValue(response.id)
+    // console.log(response)
+  })
+
  }
 
  
@@ -207,7 +255,7 @@ export class AdminCreateLectureComponent implements OnInit{
       let formattedTiming = lectureTiming.toISOString(); // "yyyy-MM-ddThh:mm:ss.SSSZ"
 
       // Remove seconds and milliseconds
-      formattedTiming = formattedTiming.slice(0, 16); // "yyyy-MM-ddThh:mm"
+      formattedTiming = formattedTiming.slice(0, 19); // "yyyy-MM-ddThh:mm"
       return formattedTiming;
   }
 
@@ -216,16 +264,32 @@ export class AdminCreateLectureComponent implements OnInit{
     const is_agreed = confirm("Are you sure want to delete this lecture")
    
     if(is_agreed){
-      this.lecSer.deleteLecture(id).subscribe((response)=>{
+      this.lecSer.deleteLecture(id,this.jwtToken).subscribe((response)=>{
         alert("Lecture deleted");
-        this.getAllLectures()
+        this.getAllLectures(this.jwtToken)
       })
     }
   }
 
+  getCourseByinstructor(id:number){
 
-  getInstructorLecture(instrcutorId:number,courseId:number){
-    this.lecSer.getInstructorLectures(instrcutorId,courseId).subscribe((response:any)=>{
+    this.course_options = []
+    this.coursesService.getInstructorCourses(id).subscribe((response:any)=>{
+     
+      const intrcu_name = response
+
+      intrcu_name.forEach((element:any) => {
+
+        
+        this.course_options.push({value:element.id,text:element.courseName})
+        this.getInstructorLecture(this.selected_instructor,element.id,this.jwtToken)
+
+
+      });
+    })
+  }
+  getInstructorLecture(instrcutorId:number,courseId:number,token:string){
+    this.lecSer.getInstructorLectures(instrcutorId,courseId,token).subscribe((response:any)=>{
 
       this.lecture_list = response
     })

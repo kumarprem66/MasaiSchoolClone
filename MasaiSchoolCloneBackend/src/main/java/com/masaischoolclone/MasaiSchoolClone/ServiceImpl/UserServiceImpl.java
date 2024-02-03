@@ -2,7 +2,6 @@ package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.RegisterException;
-import com.masaischoolclone.MasaiSchoolClone.exception.StudentException;
 import com.masaischoolclone.MasaiSchoolClone.exception.UserException;
 import com.masaischoolclone.MasaiSchoolClone.repository.UserRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.UserService;
@@ -55,6 +54,8 @@ public class UserServiceImpl implements UserService {
         }
         throw new RegisterException("User with this email does not registered");
     }
+
+
 
     @Override
     public User loginUser(String email,String password) {

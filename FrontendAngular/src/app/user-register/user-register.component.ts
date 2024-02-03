@@ -39,8 +39,17 @@ export class UserRegisterComponent implements OnInit{
       this.router.navigate(['login'])
     },(error)=>{
 
-      alert(error.error.text)
-      console.log(error)
+      if (error.status === 400) {
+        // Handle validation errors
+        alert("Make sure password and username must be greater than 5");
+        // console.log(error)
+    } else {
+        // Handle other errors
+        alert(error.error.text);
+        // console.log(error)
+    }
+     
+      
     })
    }else{
     alert("every field need valid data")

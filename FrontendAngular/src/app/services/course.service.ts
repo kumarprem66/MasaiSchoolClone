@@ -10,13 +10,14 @@ export class CourseService {
   private baseUrl = 'http://localhost:8088/course/';
   constructor(private http: HttpClient) { }
 
-  createCourse(departID: number, ins_id: number, categoryId: number,courseData:any):Observable<any>{
+  createCourse(departID: number, ins_id: number, categoryId: number,courseData:any,token:string):Observable<any>{
     const headers = new HttpHeaders({
-      'Content-Type':'application/json'
+      'Content-Type':'application/json',
+      'Authorization' : `Bearer ${token}`
     });
 
     const url = `${this.baseUrl}create/${departID}/${ins_id}/${categoryId}`;
-    return this.http.post(url,JSON.stringify(courseData),{headers});
+    return this.http.post(url,JSON.stringify(courseData),{headers:headers});
   }
 
  
@@ -53,6 +54,7 @@ export class CourseService {
 
 
   getInstructorCourses(ins_id:number){
+    
     return this.http.get(`${this.baseUrl}instructor-course/${ins_id}`)
   }
 
@@ -61,13 +63,14 @@ export class CourseService {
   }
 
 
-  updateCourseById(id:number,data:any){
+  updateCourseById(id:number,data:any,token:string){
 
    
     const headers = new HttpHeaders({
-      "Content-Type":"Application/json"
+      "Content-Type":"Application/json",
+      'Authorization':`Bearer ${token}`
     })
-    return this.http.put(`${this.baseUrl}update/${id}`,JSON.stringify(data),{headers})
+    return this.http.put(`${this.baseUrl}update/${id}`,JSON.stringify(data),{headers:headers})
   }
 
 

@@ -4,6 +4,8 @@ import { AnnouncementService } from '../services/announcement.service';
 import { Router } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { DepartmentService } from '../services/department.service';
+import { TokendataService } from '../services/tokendata.service';
+import { InstructorService } from '../services/instructor.service';
 
 @Component({
   selector: 'app-admin-create-announcement',
@@ -26,8 +28,17 @@ export class AdminCreateAnnouncementComponent implements OnInit{
   publishDate:Date = new Date()
   course:number = 0;
   department:number = 0
+  // token:string = "";
+  instructor_id:number = 0;
+  is_instructor = false;
+  
 
-  constructor(private fb:FormBuilder,private ans:AnnouncementService,private courseSer:CourseService,private departSer:DepartmentService, private router:Router){
+  tokenJWT:any = localStorage.getItem("masaischoolclone")
+  current_user_id = localStorage.getItem("current_user_id")
+
+  constructor(private fb:FormBuilder,private ans:AnnouncementService,
+    private courseSer:CourseService,private departSer:DepartmentService,
+     private router:Router,private tokenSer:TokendataService,private inSer:InstructorService){
     this.announceForm = this.fb.group({
       title : ['',Validators.required],
       description: ['', Validators.required],
@@ -37,16 +48,69 @@ export class AdminCreateAnnouncementComponent implements OnInit{
     })
   }
 
+
+
   ngOnInit(): void {
 
-    const is_not_admin = localStorage.getItem("who_is_login")
-    if(is_not_admin != "admin"){
-      this.is_inst_is_stu = true
-    }
+    const current_user_id = localStorage.getItem("current_user_id")
+  
+
+    if(this.tokenJWT != null && current_user_id != null){
+      const decodedToken = this.tokenSer.getUserDetailsFromToken(this.tokenJWT);
+      if(decodedToken.authorities == "ROLE_INSTRUCTOR"){
+
+        this.inSer.getInstructorByUserId(parseInt(current_user_id),this.tokenJWT).subscribe((response : any)=>{
+
+          this.is_instructor = true;
+          
+          this.instructor_id = response.id;
+          this.getCourseByinstructor(this.instructor_id,this.tokenJWT);
+          
+         
+        
+        },error=>{
+          alert("User id does not exist...")
+        })
+       
+      }else if(decodedToken.authorities == "ROLE_ADMIN"){
+
+        this.showAnnounces(this.tokenJWT)
+        this.getAllCourses()
+        this.getAllDepartment(this.tokenJWT);
+        
     
-    this.showAnnounces()
-    this.getAllCourses()
-    this.getAllDepartment();
+      }else{
+        alert("Only instructor or admin can view this page")
+        this.router.navigate(['/login'])
+      }
+     
+      
+     
+  
+    }
+
+   
+   
+
+  
+
+  }
+
+  getCourseByinstructor(id:number,token:string){
+    this.courseSer.getInstructorCourses(id).subscribe((response:any)=>{
+     
+      const intrcu_name = response
+      // console.log(intrcu_name)
+      intrcu_name.forEach((element:any) => {
+        
+        this.course_options.push({value:element.id,text:element.courseName})
+
+       
+        this.showAnnouncesByCourse(element.id,token)
+
+
+      });
+    })
   }
 
   createAnnounce(){
@@ -54,11 +118,13 @@ export class AdminCreateAnnouncementComponent implements OnInit{
 
       const annData = this.announceForm.value
 
-      this.ans.createAnnounce(annData,this.department_id,this.course_id).subscribe((response)=>{
+      this.ans.createAnnounce(annData,this.department_id,this.course_id,this.tokenJWT).subscribe((response)=>{
         alert("Announcement created")
-        this.showAnnounces();
-        this.router.navigate(['admin-dashboard'])
-        console.log(response)
+        this.showAnnounces(this.tokenJWT);
+        
+        
+      },error=>{
+        console.log(error);
       })
       // console.log(annData)
 
@@ -68,8 +134,8 @@ export class AdminCreateAnnouncementComponent implements OnInit{
   }
 
 
-  showAnnounces(){
-    this.ans.getAnnounces().subscribe((response:any)=>{
+  showAnnounces(token:string){
+    this.ans.getAnnounces(token).subscribe((response:any)=>{
       
       const responseData = response;
       this.ann_list = responseData
@@ -77,16 +143,24 @@ export class AdminCreateAnnouncementComponent implements OnInit{
     })
   }
 
+  showAnnouncesByCourse(course_id:number,token:string){
+    this.ans.getAnnouncesByCourse(course_id,token).subscribe((response:any)=>{
+      
+      const responseData = response;
+      this.ann_list = responseData
+      console.log(responseData)
+    })
+  }
   deleteAnnoun(id:number){
 
     console.log(id)
     const take_confirmation = confirm("Are you sure?")
     if(take_confirmation){
 
-      this.ans.deleteAnnounce(id).subscribe((response)=>{
+      this.ans.deleteAnnounce(id,this.tokenJWT).subscribe((response)=>{
 
         alert("deleted")
-        this.showAnnounces()
+        this.showAnnounces(this.tokenJWT)
       })
     }
   
@@ -115,9 +189,9 @@ export class AdminCreateAnnouncementComponent implements OnInit{
     })
   }
 
-  getAllDepartment(){
+  getAllDepartment(token : string){
 
-    this.departSer.getAllDepartment().subscribe((response)=>{
+    this.departSer.getAllDepartment(token).subscribe((response)=>{
       const departs = response;
       departs.forEach((ele:any) => {
         this.depart_options.push({value:ele.id,text:ele.name})

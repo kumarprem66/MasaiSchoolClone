@@ -30,12 +30,7 @@ export class TicketComponent implements OnInit{
 
   ngOnInit(): void {
     
-    const who = localStorage.getItem("who_is_login")
-    if(who == "student"){
-
-      this.is_instructor = false
-    }
-   this.getAllTicketOfInstructor(1)
+    
   }
 
   createTickets(){

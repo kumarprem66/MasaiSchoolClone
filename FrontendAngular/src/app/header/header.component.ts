@@ -71,12 +71,7 @@ export class HeaderComponent implements OnInit{
       this.go_home_page();
     
     }
-      
-
     
-   
-  
-
 
   }
 
@@ -115,92 +110,22 @@ export class HeaderComponent implements OnInit{
     if(is_agree){
       this.menuType = 'default'
       localStorage.removeItem("masaischoolclone");
+      localStorage.removeItem("current_user_id");
       location.reload();
       this.router.navigate(['/'])
-      // let local_user:any = localStorage.getItem("masaiclone-user-email")
-      // local_user = JSON.parse(local_user);
-      // local_user.username = null;
-      // localStorage.setItem("masaiclone-user-email",JSON.stringify(local_user))
-
-      // if(this.menuType == "admin"){
-
-   
-      //   this.router.navigate(['admin-dashboard'])
-        
-      // }else if(this.menuType == "student"){
-    
-      //   this.router.navigate(['/stu-login'])
-  
-      // }else if(this.menuType == "instructor"){
-  
-        
-      //   this.router.navigate(['/login'])
-  
-      // }else{
-        
-       
-      //   this.router.navigate(['/login'])
-        
-      // }
       
     }
    
   }
-
-//   adminlogout()
-// {
-
-//   const is_agree = confirm("Are you sure? want to Logout")
-//     if(is_agree){
-//       this.menuType = 'default'
-   
-//       localStorage.removeItem('sparleom-admin')
-//       localStorage.removeItem('who_is_login')
-//       this.router.navigate(['/admin-auth'])
-//     }
-// }
-
-// studentlogout(){
-//   const is_agree = confirm("Are you sure? want to Logout")
-//   if(is_agree){
-//     this.menuType = 'default'
- 
-    
-//     localStorage.removeItem('masaiclone-user-email')
-//     this.router.navigate([''])
-//   }
-// }
-//   instructorlogout(){
-
-//     const is_agree = confirm("Are you sure? want to Logout")
-//     if(is_agree){
-//       this.menuType = 'default'
-   
-      
-//       localStorage.removeItem('who_is_login')
-//       this.router.navigate([''])
-//     }
-//   }
 
 
   login(){
 
     if(this.current_user=="Login"){
       this.router.navigate(['/login'])
-    }else{
-      this.router.navigate(["/profile"])
     }
+    
 
   }
-
-//   canPurchase(){
-//     if(this.not_purchase=="Profile"){
-//       localStorage.setItem('who_is_login',"student")
-//       alert("refresh the page")
-//       this.router.navigate(['/student_dashboard'])
-//     }else{
-//       this.router.navigate(['/profile'])
-//     }
-//   }
 
 }

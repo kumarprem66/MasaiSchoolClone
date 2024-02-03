@@ -35,7 +35,7 @@
     color: white;
 }
 
-.previous_assignment_container{
+/* .previous_assignment_container{
     margin: 5%;
     display: flex;
     flex-direction: column;
@@ -61,4 +61,41 @@
 .previous_assignment_container .assignment_item>div>span{
 
     margin-left: 10px;
-}
+} */
+
+ /*   ====================================     list  ================================ */
+
+ .previous_assignment_container{
+    margin: 3%;
+    background-color: white;
+  }
+
+  .previous_assignment_container .assignment_item{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid #0A2647;
+    height: 105px;
+    overflow: auto;
+    margin-bottom: 10px;
+    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+
+  }
+  .previous_assignment_container .assignment_item h5{
+    color: #0A2647;
+    font-weight: 700;
+  }
+  .previous_assignment_container .assignment_item>div{
+    display: flex;
+  }
+  .previous_assignment_container .assignment_item>div a{
+    margin-left: 20px;
+    color: red;
+    cursor: pointer;
+  }
+
+  .previous_assignment_container .assignment_item>div p{
+    color: #0A2647;
+    font-weight: 600;
+    padding-bottom: 5px;
+  }

@@ -59,7 +59,7 @@ h2 {
 .card .mycard .card-body>div:last-child{
     // border: 1px solid red;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     column-gap: 10px;
     // flex-direction: row;
 }
@@ -118,6 +118,14 @@ h2 {
     background: $primary-color4;
 }
 
+// .details_buy_div>a{
+//     width: 100%;
+//     border: 1px solid red;
+// }
+.details_buy_div{
+    border: 1px solid black;
+    border-radius: 5px;
+}
 @media (min-width: 500px) {
     .cards {
         grid-auto-columns: calc(50% - 10px);

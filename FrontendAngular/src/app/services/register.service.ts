@@ -36,14 +36,23 @@ export class RegisterService {
     return this.http.get("http://127.0.0.1:8088/auth/signin", { headers: headers, observe: 'response' });
   }
 
-  getUserDetails(email:string){
-    const httpOptions = {
-      headers: new HttpHeaders({
+  getUserDetails(email:string,token:string){
+ 
+    const headers =  new HttpHeaders({
         'Content-Type': 'application/json',
-        // 'Authorization': `Token ${yourTokenVariable}`
+        'Authorization': `Bearer ${token}`
       })
-    };
-    return this.http.get(this.baseUrl+"get_user/"+email,httpOptions)
+ 
+    return this.http.get(this.baseUrl+"get_user/"+email,{headers : headers})
+  }
+
+  
+  getUserById(uid:number,token:string){
+    const headers =  new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.get(this.baseUrl+"get_user_id/"+uid,{headers : headers})
   }
 
 

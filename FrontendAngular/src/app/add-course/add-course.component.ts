@@ -3,7 +3,7 @@ import { CourseService } from '../services/course.service';
 import { FormBuilder, FormGroup, Validators,FormsModule } from '@angular/forms';
 import { InstructorService } from '../services/instructor.service';
 import { DepartmentService } from '../services/department.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 
 @Component({
@@ -43,10 +43,11 @@ export class AddCourseComponent implements OnInit{
   selected_cat:number = 0;
   selected_ins:number = 0;
 
+  JWTtoken:any= localStorage.getItem("masaischoolclone");
   
 
   constructor(private courseService:CourseService,private fb:FormBuilder,private insSer:InstructorService,
-    private depSer:DepartmentService,private catSer:CategoryService, private route:ActivatedRoute){
+    private depSer:DepartmentService,private catSer:CategoryService, private route:ActivatedRoute,private router:Router){
     this.courseForm = this.fb.group({
 
       courseCode :['',Validators.required],
@@ -71,9 +72,10 @@ export class AddCourseComponent implements OnInit{
 
   ngOnInit(): void {
     
+   if(this.JWTtoken != null){
     this.getCategoryName()
-    this.getAllInstructorName()
-    this.getDepartmentName()
+    this.getAllInstructorName(this.JWTtoken)
+    this.getDepartmentName(this.JWTtoken)
 
     this.route.queryParams.subscribe((param:any)=>{
       this.current_id = param.course_id;
@@ -84,6 +86,10 @@ export class AddCourseComponent implements OnInit{
         this.getCourseFromId(this.current_id)
       }
     })
+   }else{
+    alert("Please Login First...")
+    this.router.navigate(['/login'])
+  }
   
     
   }
@@ -148,7 +154,7 @@ export class AddCourseComponent implements OnInit{
 
     this.catSer.getCategories().subscribe((response: any)=>{
       const categories = response
-      console.log(categories)
+      // console.log(categories)
 
       categories.forEach((element:any) => {
         this.cate_options.push({value:element.cid,text:element.name})
@@ -159,7 +165,7 @@ export class AddCourseComponent implements OnInit{
   selectedDepart(event:any){
     this.selected_dep = Number(event.target.value);
     this.getInstructorName(Number(event.target.value));
-    console.log(this.selected_dep);
+    // console.log(this.selected_dep);
 
   }
 
@@ -173,8 +179,8 @@ export class AddCourseComponent implements OnInit{
     console.log(this.selected_cat);
 
   }
-  getAllInstructorName(){
-    this.insSer.getAllInstructor().subscribe((response : any)=>{
+  getAllInstructorName(token :string){
+    this.insSer.getAllInstructor(token).subscribe((response : any)=>{
       const instructors = response
       console.log(instructors)
 
@@ -189,9 +195,9 @@ export class AddCourseComponent implements OnInit{
     })
 
   }
-  getDepartmentName(){
+  getDepartmentName(token:string){
 
-    this.depSer.getAllDepartment().subscribe((response : any)=>{
+    this.depSer.getAllDepartment(token).subscribe((response : any)=>{
       const departments = response
       // console.log(departments)
       departments.forEach((element:any) => {
@@ -206,12 +212,12 @@ export class AddCourseComponent implements OnInit{
 
   }
 
-  updateCourse(id:number,data:any){
+  updateCourse(id:number,data:any,token:string){
 
     //  console.log(data.image)
     //  data.image = null
     //  console.log(data)
-    this.courseService.updateCourseById(id,data).subscribe((response)=>{
+    this.courseService.updateCourseById(id,data,token).subscribe((response)=>{
       console.log('Course updated successfully:')
       alert("Course updated successfully")
       console.log(response)
@@ -227,12 +233,12 @@ export class AddCourseComponent implements OnInit{
       const courseData = this.courseForm.value;
 
       if(this.current_id != 0 && this.current_id != undefined){
-        this.updateCourse(this.current_id,courseData)
+        this.updateCourse(this.current_id,courseData,this.JWTtoken)
       }else{
 
 
         console.log(courseData)
-        this.courseService.createCourse(this.selected_dep,this.selected_ins,this.selected_cat,courseData).subscribe((response)=>{
+        this.courseService.createCourse(this.selected_dep,this.selected_ins,this.selected_cat,courseData,this.JWTtoken).subscribe((response)=>{
           console.log('Course created successfully:',response)
           alert("Course created successfully")
         },(error)=>{

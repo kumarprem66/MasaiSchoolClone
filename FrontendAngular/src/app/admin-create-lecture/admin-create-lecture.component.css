@@ -160,41 +160,7 @@
 
 
 
-  /* ////////////////// list ///////////////////////// */
-/*
-  .previous_lecture_container{
-    margin: 3%;
-    background-color: white;
-  }
 
-  .previous_lecture_container .lecture_item{
-    display: flex;
-    flex-direction: column;
-    padding: 5px 20px;
-    border-bottom: 1px solid #0A2647;
-    height: 105px;
-    overflow: auto;
-    margin-bottom: 10px;
-    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
-
-  }
-  .previous_lecture_container .lecture_item h5{
-    color: #0A2647;
-    font-weight: 700;
-  }
-  .previous_lecture_container .lecture_item>div{
-    display: flex;
-  }
-  .previous_lecture_container .lecture_item>div a{
-    margin-left: 20px;
-    color: red;
-    cursor: pointer;
-  }
-
-  .previous_lecture_container .lecture_item>div p{
-    color: #0A2647;
-    font-weight: 600;
-  } */
 
 
 
@@ -230,3 +196,46 @@
     outline: none;
     color: white;
 }
+
+  /* ////////////////// list ///////////////////////// */
+
+  .previous_lecture_container{
+    margin: 3%;
+    background-color: white;
+  }
+
+  .previous_lecture_container .lecture_item{
+    display: flex;
+    flex-direction: column;
+    padding: 5px 20px;
+    border-bottom: 1px solid #0A2647;
+    height: 105px;
+    overflow: auto;
+    margin-bottom: 10px;
+    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+
+  }
+  .previous_lecture_container .lecture_item h5{
+    color: #0A2647;
+    font-weight: 700;
+  }
+  .previous_lecture_container .lecture_item>div{
+    display: flex;
+  }
+  .previous_lecture_container .lecture_item>div>a:nth-child(2){
+    margin-left: 20px;
+    color: red;
+    cursor: pointer;
+    margin-top: -6px;
+  }
+  .previous_lecture_container .lecture_item>div>a:nth-child(1){
+    font-size: 18px;
+    color: blue;
+    cursor: pointer;
+    margin-top: -10px;
+  }
+
+  .previous_lecture_container .lecture_item>div p{
+    color: #0A2647;
+    font-weight: 600;
+  } 

@@ -1,10 +1,7 @@
 package com.masaischoolclone.MasaiSchoolClone.service;
 
 import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
-import com.masaischoolclone.MasaiSchoolClone.entity.Category;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Set;
 
 public interface AssignmentService {
@@ -18,6 +15,8 @@ public interface AssignmentService {
     Integer deleteAssignment(Integer assignmentId);
 
     Set<Assignment> getAssignmentList(Integer courseId,Integer lectureId);
+
+    Assignment getAssignment(Integer assignmentId);
 
 
 }

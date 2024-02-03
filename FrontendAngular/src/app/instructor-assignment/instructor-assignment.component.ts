@@ -3,6 +3,12 @@ import { CourseService } from '../services/course.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AssignmentService } from '../services/assignment.service';
 import { CommonService } from '../common.service';
+import { LecturesService } from '../services/lectures.service';
+import { TokendataService } from '../services/tokendata.service';
+import { InstructorService } from '../services/instructor.service';
+import { Router } from '@angular/router';
+// import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-instructor-assignment',
@@ -13,46 +19,66 @@ export class InstructorAssignmentComponent implements OnInit{
 
 
   course_options:any[] = []
+  lecture_options:any[] = []
 
   all_assignment:any[] = []
   assignmentForm:FormGroup
   instructor_id:number = 0
   is_instructor:boolean = false;
+  selected_course: number = 0;
+  selected_lecture: number = 0;
+  
+  jwtToken: any= localStorage.getItem("masaischoolclone")
 
-  constructor(private course_service:CourseService,private fb:FormBuilder,
-    private assign_service:AssignmentService,private common:CommonService){
+  constructor(private course_service:CourseService,private fb:FormBuilder,private lecService:LecturesService,
+    private assign_service:AssignmentService,private common:CommonService,private tokenSer:TokendataService,
+    private insSer:InstructorService,private router:Router){
 
     this.assignmentForm = this.fb.group({
       title:['',Validators.required],
       description:['',Validators.required],
-      instructon:[''],
+      instruction:['',Validators.required],
       start_date:[null,Validators.required],
       due_date:[null,Validators.required],
-      course:[null,Validators.required]
+
+      course:[null,Validators.required],
+      lecture:[null,Validators.required],
     })
   }
   ngOnInit(): void {
 
-
-    const  token = localStorage.getItem("masaischoolclone")
-    const userId = localStorage.getItem("current_user_id")
-    if(token != null && userId != null){
-
-     this.getAllAssignmentOfStudent(parseInt(userId),token)
-      
-    //  this.assign_service.getAllAssignment(2,token).subscribe((response:any)=>{
-            
-        
+    const current_user_id = localStorage.getItem("current_user_id")
   
-    //   // response.body.forEach((element:any) => {
-    //   //   console.log(element)
-    //   //   this.assignList.push(element)
-    //   // });
 
-    //   console.log(response);
-     
+    if(this.jwtToken != null && current_user_id != null){
+      const decodedToken = this.tokenSer.getUserDetailsFromToken(this.jwtToken);
+      if(decodedToken.authorities == "ROLE_INSTRUCTOR"){
+
+        this.insSer.getInstructorByUserId(parseInt(current_user_id),this.jwtToken).subscribe((response : any)=>{
+
+          this.is_instructor = true;
+          
+          this.instructor_id = response.id;
+          this.getCourseByinstructor(this.instructor_id,this.jwtToken);
+          
+         
+        
+        },error=>{
+          alert("User id does not exist...")
+        })
+       
+      }else if(decodedToken.authorities == "ROLE_ADMIN"){
+
+        
     
-    // })
+      }else{
+        alert("Only instructor or admin can view this page")
+        this.router.navigate(['/login'])
+      }
+     
+      
+     
+  
     }
 
    
@@ -62,14 +88,16 @@ export class InstructorAssignmentComponent implements OnInit{
 
   }
 
-  getCourseByinstructor(id:number){
+  getCourseByinstructor(id:number,token:string){
     this.course_service.getInstructorCourses(id).subscribe((response:any)=>{
      
       const intrcu_name = response
+      // console.log(intrcu_name)
       intrcu_name.forEach((element:any) => {
         
-        this.course_options.push({value:element.id,text:element.course_name})
+        this.course_options.push({value:element.id,text:element.courseName})
 
+        this.getInstructorLecture(this.instructor_id,element.id,token)
 
       });
     })
@@ -80,10 +108,27 @@ export class InstructorAssignmentComponent implements OnInit{
     if(this.assignmentForm.valid){
 
       const current_assign = this.assignmentForm.value
-      console.log(current_assign)
-      this.assign_service.createAssignment(current_assign,3,4).subscribe((response)=>{
-        console.log(response)
+
+      const assignmentObj = {
+
+        
+          "title": current_assign.title,
+          "description": current_assign.description,
+
+          "instruction": current_assign.instruction,
+
+          "startDate": current_assign.start_date,
+          "dueDate": current_assign.due_date
+        
+      }
+     
+ 
+     
+      this.assign_service.createAssignment(assignmentObj,current_assign.course,current_assign.lecture,this.jwtToken).subscribe((response)=>{
+        // console.log(response)
         alert("Created")
+      },error =>{
+        console.log(error)
       })
      
     }else{
@@ -129,5 +174,98 @@ export class InstructorAssignmentComponent implements OnInit{
 
 
   }
+
+  getInstructorLecture(instrcutorId:number,courseId:number,token:string){
+    this.lecService.getInstructorLectures(instrcutorId,courseId,token).subscribe((response:any)=>{
+
+      
+      response.forEach((ele :any )=>{
+
+        this.lecture_options.push({value:ele.id,text:ele.topicTitle})
+
+        
+      })
+    })
+  }
+
+  getAllAssignmentOfLecture(lectureId:number,token:string){
+
+    // console.log(lectureId)
+    
+    this.lecService.getAssignmentLecture(lectureId,token).subscribe((response:any)=>{
+
+      // console.log(response)
+
+      response.forEach((element:any) => {
+       
+        this.all_assignment.push(element)
+      });;
+      
+    })
+    
+  }
+
+  getAllAssignment(courseId:number,lectureId:number,token:string){
+
+    
+    this.all_assignment = []
+    this.assign_service.getAllAssignmentCAL(courseId,lectureId,token).subscribe((response:any)=>{
+
+      // console.log(response)
+
+      response.forEach((element:any) => {
+       
+        this.all_assignment.push(element)
+      });;
+      
+    })
+    
+  }
+
+
+
+
+  getAllAssignmentOfCourse(id:number,token:string){
+    this.all_assignment = []
+    this.assign_service.getAllAssignment(id,token).subscribe((response:any)=>{
+      this.all_assignment = response;
+    })
+  }
+  
+
+  selectedCourse(event:any){
+    this.selected_course = event.target.value;
+    
+    if((this.selected_course != 0 && this.selected_course != undefined) && (this.selected_lecture != 0 && this.selected_lecture != undefined) ){
+
+      this.getAllAssignment(this.selected_course,this.selected_lecture,this.jwtToken)
+    }else if((this.selected_course != 0 && this.selected_course != undefined)){
+      this.getAllAssignmentOfCourse(this.selected_course,this.jwtToken)
+    }
+   
+
+  }
+
+
+  selectedLecture(event:any){
+    this.selected_lecture = event.target.value;
+    if((this.selected_course != 0 && this.selected_course != undefined) && (this.selected_lecture != 0 && this.selected_lecture != undefined) ){
+
+      this.getAllAssignment(this.selected_course,this.selected_lecture,this.jwtToken)
+    }else if((this.selected_lecture != 0 && this.selected_course != undefined)){
+      this.getAllAssignmentOfLecture(this.selected_lecture,this.jwtToken);
+    }
+   
+
+  }
+
+
+
+
+
+  
+  
+
+
 
 }

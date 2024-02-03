@@ -5,7 +5,6 @@ import com.masaischoolclone.MasaiSchoolClone.entity.Announcement;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.exception.AnnouncementException;
-import com.masaischoolclone.MasaiSchoolClone.exception.CourseException;
 import com.masaischoolclone.MasaiSchoolClone.repository.AnnounementRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.CourseRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
@@ -62,7 +61,13 @@ public class AnnouncementServiceImpl implements AnnounceService {
 
     @Override
     public Set<Announcement> announceListOfCourse(Integer courseId) {
-        return null;
+        Optional<Course> optionalCourse = courseRepo.findById(courseId);
+        if(optionalCourse.isPresent()){
+            Set<Announcement> announcements = announementRepo.findAllByCourse(optionalCourse.get());
+            return announcements;
+        }else{
+            throw new AnnouncementException("Announcement with this id does not exist");
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.masaischoolclone.MasaiSchoolClone.ServiceImpl;
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
 import com.masaischoolclone.MasaiSchoolClone.entity.Lecture;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
+import java.util.Set;
 
 @Service
 public class LectureServiceImpl implements LectureService {
@@ -99,11 +100,17 @@ public class LectureServiceImpl implements LectureService {
         Optional<Lecture> lectureOptional = lectureRepo.findById(id);
         if(lectureOptional.isPresent()){
 
-//            System.out.println(lectureOptional.get().getCourse());
-
-
-
             return lectureOptional.get();
+        }
+        throw new LectureException("Lecture can not be fetched, given id does not exist");
+    }
+
+    @Override
+    public Instructor getInstructor(Integer lectureId) {
+        Optional<Lecture> lectureOptional = lectureRepo.findById(lectureId);
+        if(lectureOptional.isPresent()){
+
+            return lectureOptional.get().getInstructor();
         }
         throw new LectureException("Instructor can not be fetched, given id does not exist");
     }
@@ -150,6 +157,24 @@ public class LectureServiceImpl implements LectureService {
 
         }else{
             throw new InstructorException("No Instructor found with this id of instructor");
+        }
+
+    }
+
+    @Override
+    public Set<Assignment> getLectureAssignment(Integer lectureId) {
+
+
+        Optional<Lecture> optionalLecture = lectureRepo.findById(lectureId);
+        if(optionalLecture.isPresent()){
+
+            System.out.println("===================================================================");
+            System.out.println(optionalLecture.get());
+            System.out.println("===================================================================");
+            return optionalLecture.get().getAssignments();
+
+        }else{
+            throw new InstructorException("No Lecture found with this id of lecture");
         }
 
     }
