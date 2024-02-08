@@ -144,7 +144,22 @@ The **Education System** is a comprehensive web-based platform designed to facil
 
 
 ## HighLights
-![Database Entity](https://github.com/kumarprem66/sparleom/blob/main/images/splendors.png)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/database-schema.png)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/login.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/profile.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/dashboard.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/dash-courses.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/courses.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/course-details.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/add-course.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/admin-dashboard.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/announce.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/feedback.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/instructor.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/lecture.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/rating.jpg)
+![Database Entity](https://github.com/kumarprem66/MasaiSchoolClone/blob/main/submission.jpg)
+
 
 ## Demo
 
