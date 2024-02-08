@@ -23,11 +23,11 @@
 The **Education System** is a comprehensive web-based platform designed to facilitate various aspects of educational institutions. This system is developed to streamline student management, course administration, and instructor coordination processes. Built using SpringBoot for the backend and Angular for the front end, it offers a robust solution for educational organizations to manage their resources efficiently.
 
 ## Tech Stacks
-Front-End: Angular
-Back-End: Spring Boot (Java)
-Database: MySQL
-Generative AI
-Deployment: Netlify (Frontend)
+- Front-End: Angular
+- Back-End: Spring Boot (Java)
+- Database: MySQL
+- Generative AI
+- Deployment: Netlify (Frontend)
 
 ## Features
 
