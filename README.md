@@ -24,7 +24,7 @@ Front-End: Angular
 Back-End: Spring Boot (Java)
 Database: MySQL
 Generative AI
-Deployment: Vercel (Frontend)
+Deployment: Netlify (Frontend)
 
 ## Features
 
@@ -145,7 +145,7 @@ Deployment: Vercel (Frontend)
 
 ## Demo
 
-Explore our **[live demo](#)** to see the Education System in action. You can experience user registration, course enrollment, and other key features.
+Explore our **[live demo](https://65c52340426c29007446b801--frabjous-griffin-33f102.netlify.app/)** to see the Education System in action. You can experience user registration, course enrollment, and other key features.
 
 ## Getting Started
 
