@@ -20,7 +20,7 @@ public interface StudentService {
 
     Student getStudent(Integer studentId);
 
-    void enrollInCourse(Integer studentId,Integer courseId);
+    String enrollInCourse(Integer studentId,Integer courseId);
 
      Student getStudentByUser(Integer userId);
 

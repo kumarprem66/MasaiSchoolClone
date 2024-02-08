@@ -18,8 +18,8 @@
        </div>
 
        <div>
-        <input type="url" placeholder="please provide your github link" required>
-        <button>Submit</button>
+        <input type="url" placeholder="please provide your github link" [(ngModel)]="submissionLink" required>
+        <button (click)="submitAssignment(currentAssign.anId)">Submit</button>
        </div>
 
     </div>

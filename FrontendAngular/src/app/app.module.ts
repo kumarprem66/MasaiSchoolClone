@@ -44,7 +44,14 @@ import { AboutComponent } from './about/about.component';
 import { StudentRegsiterComponent } from './student-regsiter/student-regsiter.component';
 import { PaymentComponent } from './payment/payment.component';
 import { StudentLoginComponent } from './student-login/student-login.component';
-
+import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +90,8 @@ import { StudentLoginComponent } from './student-login/student-login.component';
     StudentRegsiterComponent,
     PaymentComponent,
     StudentLoginComponent,
+    RatingDialogComponent,
+    ChatbotComponent,
 
 
 
@@ -96,6 +105,11 @@ import { StudentLoginComponent } from './student-login/student-login.component';
     ReactiveFormsModule,
     IonicModule.forRoot(),
     FormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
     BsDatepickerModule.forRoot(),
     // TimepickerModule.forRoot(),
     CommonModule,
@@ -108,6 +122,7 @@ import { StudentLoginComponent } from './student-login/student-login.component';
         disallowedRoutes: ['http://127.0.0.1:8088/auth/signin'],
       },
     }),
+    BrowserAnimationsModule,
   ],
 
   providers: [],

@@ -1,7 +1,13 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
+import com.masaischoolclone.MasaiSchoolClone.entity.Student;
 import com.masaischoolclone.MasaiSchoolClone.entity.Submission;
+import com.masaischoolclone.MasaiSchoolClone.security.JwtTokenProvider;
+import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
+import com.masaischoolclone.MasaiSchoolClone.service.StudentService;
 import com.masaischoolclone.MasaiSchoolClone.service.SubmissionService;
+import com.masaischoolclone.MasaiSchoolClone.utility.Common;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +23,30 @@ public class SubmissionController {
     @Autowired
     private SubmissionService submissionService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Submission> createSubmission(@RequestParam Integer studentId,@RequestParam Integer courseId, @RequestParam Integer lectureId, @RequestParam Integer assignmentId,@RequestBody Submission submission){
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @PostMapping("/create/{studentId}/{assignmentId}")
+    public ResponseEntity<Submission> createSubmission(@PathVariable Integer studentId,
+                                                       @PathVariable Integer assignmentId,
+                                                       @RequestBody Submission submission,
+                                                       HttpServletRequest request){
 
         try {
 
-            return new ResponseEntity<>(submissionService.createSubmission(studentId,courseId,lectureId,assignmentId,submission), HttpStatus.CREATED);
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            Student student = studentService.getStudent(studentId);
+            if(student.getUser().getEmail().equals(userName) || student.getUser().getUsername().equals(userName)){
+                return new ResponseEntity<>(submissionService.createSubmission(studentId,assignmentId,submission), HttpStatus.CREATED);
+
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -34,12 +58,20 @@ public class SubmissionController {
     }
 
 
-    @GetMapping("/fetch-all")
-    public ResponseEntity<List<Submission>> getSubmissionList(Integer studentId){
+    @GetMapping("/fetch-all/{studentId}")
+    public ResponseEntity<List<Submission>> getSubmissionList(@PathVariable Integer studentId,HttpServletRequest request){
 
         try {
 
-            return new ResponseEntity<>(submissionService.getSubmissionList(studentId), HttpStatus.OK);
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            Student student = studentService.getStudent(studentId);
+            if(student.getUser().getEmail().equals(userName) || student.getUser().getUsername().equals(userName)){
+                return new ResponseEntity<>(submissionService.getSubmissionList(studentId), HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -50,12 +82,22 @@ public class SubmissionController {
     }
 
 
-    @GetMapping("/fetch-all-assignment")
-    public ResponseEntity<List<Submission>> getSubmissionList(Integer studentId,Integer assignmentId){
+    @GetMapping("/fetch-all-assignment/{studentId}/{assignmentId}")
+    public ResponseEntity<List<Submission>> getSubmissionList(@PathVariable Integer studentId,@PathVariable Integer assignmentId,HttpServletRequest request){
 
         try {
 
-            return new ResponseEntity<>(submissionService.getSubmissionList(studentId,assignmentId), HttpStatus.OK);
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            Student student = studentService.getStudent(studentId);
+            if(student.getUser().getEmail().equals(userName) || student.getUser().getUsername().equals(userName)){
+                return new ResponseEntity<>(submissionService.getSubmissionList(studentId,assignmentId), HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
+
+
         } catch (Exception e) {
 
             e.printStackTrace();

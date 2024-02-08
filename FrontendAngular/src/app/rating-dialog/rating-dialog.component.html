@@ -1,0 +1,22 @@
+
+<div id="dialog-container">
+    <div class="dialog-inside-container">
+    <h2 mat-dialog-title>Rate this item</h2>
+
+    <mat-dialog-content class="center-dailog">
+      <mat-form-field>
+        <mat-label>Your Rating</mat-label>
+        <mat-select [(ngModel)]="selectedRating" required>
+          <mat-option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions class="center-dailog">
+      <button mat-button [mat-dialog-close]="selectedRating" cdkFocusInitial>Submit</button>
+      <button mat-button (click)="onCancelClick()">Cancel</button>
+    </mat-dialog-actions>
+   </div>
+</div>
+<!-- </mat-dialog-container> -->
+
+

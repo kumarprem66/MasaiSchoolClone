@@ -1,7 +1,7 @@
 
 
 
-<section class="create_announce_body" *ngIf="!is_instructor">
+<section class="create_announce_body" *ngIf="is_admin">
    
   <div>
     <div class="wrapper">
@@ -55,14 +55,21 @@
 
   </section>
 
-  
+<div class="input-box-courses" *ngIf="!is_admin">
+  <label>Course</label>
+  <select name="course" id="course" (change)="selectedCourse($event)">
+    <option *ngFor="let item of course_options" [value]="item.id">{{item.courseName}}</option>
+    
+  </select>
+
+</div>
 <div class="previous_announcement_container">
   <div class="announcement_item" *ngFor="let ann of ann_list">
       <h5>{{ann.title}}</h5>
       <p>{{ann.description}}</p>
       <div> 
         <p>{{ann.publish_date}}</p>
-        <a (click)="deleteAnnoun(ann.aid)">Delete</a>
+        <a (click)="deleteAnnoun(ann.aid)"  *ngIf="is_admin">Delete</a>
       </div>
   </div>
 </div>

@@ -29,6 +29,7 @@ export class InstructorAssignmentComponent implements OnInit{
   selected_lecture: number = 0;
   
   jwtToken: any= localStorage.getItem("masaischoolclone")
+  current_user_id: any = 0;
 
   constructor(private course_service:CourseService,private fb:FormBuilder,private lecService:LecturesService,
     private assign_service:AssignmentService,private common:CommonService,private tokenSer:TokendataService,
@@ -47,14 +48,14 @@ export class InstructorAssignmentComponent implements OnInit{
   }
   ngOnInit(): void {
 
-    const current_user_id = localStorage.getItem("current_user_id")
+    this.current_user_id = localStorage.getItem("current_user_id")
   
 
-    if(this.jwtToken != null && current_user_id != null){
+    if(this.jwtToken != null && this.current_user_id != null){
       const decodedToken = this.tokenSer.getUserDetailsFromToken(this.jwtToken);
       if(decodedToken.authorities == "ROLE_INSTRUCTOR"){
 
-        this.insSer.getInstructorByUserId(parseInt(current_user_id),this.jwtToken).subscribe((response : any)=>{
+        this.insSer.getInstructorByUserId(parseInt(this.current_user_id),this.jwtToken).subscribe((response : any)=>{
 
           this.is_instructor = true;
           
@@ -124,7 +125,7 @@ export class InstructorAssignmentComponent implements OnInit{
      
  
      
-      this.assign_service.createAssignment(assignmentObj,current_assign.course,current_assign.lecture,this.jwtToken).subscribe((response)=>{
+      this.assign_service.createAssignment(this.current_user_id,assignmentObj,current_assign.course,current_assign.lecture,this.jwtToken).subscribe((response)=>{
         // console.log(response)
         alert("Created")
       },error =>{
@@ -205,11 +206,11 @@ export class InstructorAssignmentComponent implements OnInit{
     
   }
 
-  getAllAssignment(courseId:number,lectureId:number,token:string){
+  getAllAssignment(userId:number,courseId:number,lectureId:number,token:string){
 
     
     this.all_assignment = []
-    this.assign_service.getAllAssignmentCAL(courseId,lectureId,token).subscribe((response:any)=>{
+    this.assign_service.getAllAssignmentCAL(userId,courseId,lectureId,token).subscribe((response:any)=>{
 
       // console.log(response)
 
@@ -225,9 +226,9 @@ export class InstructorAssignmentComponent implements OnInit{
 
 
 
-  getAllAssignmentOfCourse(id:number,token:string){
+  getAllAssignmentOfCourse(userId:number,id:number,token:string){
     this.all_assignment = []
-    this.assign_service.getAllAssignment(id,token).subscribe((response:any)=>{
+    this.assign_service.getAllAssignment(userId,id,token).subscribe((response:any)=>{
       this.all_assignment = response;
     })
   }
@@ -238,9 +239,9 @@ export class InstructorAssignmentComponent implements OnInit{
     
     if((this.selected_course != 0 && this.selected_course != undefined) && (this.selected_lecture != 0 && this.selected_lecture != undefined) ){
 
-      this.getAllAssignment(this.selected_course,this.selected_lecture,this.jwtToken)
+      this.getAllAssignment(this.current_user_id,this.selected_course,this.selected_lecture,this.jwtToken)
     }else if((this.selected_course != 0 && this.selected_course != undefined)){
-      this.getAllAssignmentOfCourse(this.selected_course,this.jwtToken)
+      this.getAllAssignmentOfCourse(this.current_user_id,this.selected_course,this.jwtToken)
     }
    
 
@@ -251,7 +252,7 @@ export class InstructorAssignmentComponent implements OnInit{
     this.selected_lecture = event.target.value;
     if((this.selected_course != 0 && this.selected_course != undefined) && (this.selected_lecture != 0 && this.selected_lecture != undefined) ){
 
-      this.getAllAssignment(this.selected_course,this.selected_lecture,this.jwtToken)
+      this.getAllAssignment(this.current_user_id,this.selected_course,this.selected_lecture,this.jwtToken)
     }else if((this.selected_lecture != 0 && this.selected_course != undefined)){
       this.getAllAssignmentOfLecture(this.selected_lecture,this.jwtToken);
     }

@@ -25,8 +25,12 @@ export class CoursesAllComponent implements OnInit{
 
   selected_category:number = 1
   selected_instructor:number = 1
-
+  selectedSorting: string = 'rating'; // Variable to store the selected gender
+  selectedDirec: string = 'desc';
   instructors:any[] = []
+  currentPage: number = 1;
+  totalPages: number = 0; // Total number of pages
+
 
   constructor(private course_ser:CourseService,private router:Router,
     private route:ActivatedRoute,private http:HttpClient,
@@ -75,7 +79,9 @@ export class CoursesAllComponent implements OnInit{
 
         this.getAllCategories()
         
-        this.getAllCourses()
+        // this.getAllCourses()
+
+        this.getAllSortedCourses(this.currentPage,this.selectedSorting,this.selectedDirec)
 
 
 
@@ -86,6 +92,35 @@ export class CoursesAllComponent implements OnInit{
     // }
 
 
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getAllSortedCourses(this.currentPage,this.selectedSorting,this.selectedDirec)
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getAllSortedCourses(this.currentPage,this.selectedSorting,this.selectedDirec)
+    }
+  }
+
+  // Function to handle form submission
+  radioCourseClicked() {
+    console.log("Selected gender:", this.selectedSorting);
+    this.getAllSortedCourses(0,this.selectedSorting,this.selectedDirec)
+    // Add any other logic here based on the selected gender
+  }
+
+  radioDirecClicked() {
+
+    // this.
+    console.log("Selected gender:", this.selectedDirec);
+    this.getAllSortedCourses(0,this.selectedSorting,this.selectedDirec)
+    // Add any other logic here based on the selected gender
   }
 
   getCourseByInstructor(event:any){
@@ -129,6 +164,22 @@ export class CoursesAllComponent implements OnInit{
 
    
   }
+
+  getAllSortedCourses(pageNumber:number,sortedString:string,direction:string){
+
+    this.course_ser.getcoursesSorted(pageNumber,sortedString,direction).subscribe((response:any)=>{
+     
+
+      this.all_courses = response
+    
+      this.totalPages = Math.floor(this.all_courses.length/10)+1;
+
+    })
+
+
+
+ 
+}
 
   show_course_details(id:number){
 

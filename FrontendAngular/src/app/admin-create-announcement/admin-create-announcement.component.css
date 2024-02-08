@@ -2,9 +2,12 @@
 
     
 .create_announce_body{
-    margin: 5%;
+  margin-left: 5%;
 }
+.input-box-courses{
 
+  margin-left: 5%;
+}
 
 .create_announce_body>div .wrapper h2{
 

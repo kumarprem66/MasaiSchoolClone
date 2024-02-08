@@ -1,3 +1,14 @@
+<div class="assign_header">
+    <h1 class="text-center text-lg font-semibold">Today's Schedule</h1>
+    <select name="" class="admin_course_select" (change)="onCourseSelected($event)">
+        <option value="0" selected disabled>Select Course</option>
+        <option *ngFor="let item of option_courses" [value]="item.id">{{item.courseName}}</option>
+       
+        
+    </select>
+   
+</div>
+
 <section class="assign_header">
     <div class="assign_head_container">
         <div class="head_container" *ngFor="let assign of all_assignment">

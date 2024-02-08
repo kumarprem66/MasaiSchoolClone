@@ -58,7 +58,7 @@ export class UserAuthComponent implements OnInit{
         location.reload();
       },
       (error) => {
-        console.error('HTTP error:', error);
+        alert("Username and password did not matched");
       }
     );
   }else{

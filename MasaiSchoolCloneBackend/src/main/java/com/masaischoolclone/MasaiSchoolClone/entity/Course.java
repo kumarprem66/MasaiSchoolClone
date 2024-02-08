@@ -44,7 +44,7 @@ public class Course {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "instructor_id")
+    @JoinColumn(name = "instructor_id",nullable = true)
     private Instructor instructor;
 
     @JsonIgnore

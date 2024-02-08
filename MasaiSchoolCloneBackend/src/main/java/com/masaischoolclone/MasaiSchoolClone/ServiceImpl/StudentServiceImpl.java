@@ -164,8 +164,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void enrollInCourse(Integer studentId, Integer courseId) {
+    public String enrollInCourse(Integer studentId, Integer courseId) {
 
+        System.out.println("enrolled");
 
             Optional<Student> optionalStudent = studentRepo.findById(studentId);
             Optional<Course> optionalCourse = courseRepo.findById(courseId);
@@ -176,13 +177,16 @@ public class StudentServiceImpl implements StudentService {
 
                 // Check if the student is not already enrolled in the course
                 if (!student.getCourses().contains(course)) {
+
                     // Enroll the student for the course
                     student.getCourses().add(course);
                     studentRepo.save(student);
 
                     // Ensure that the course also knows about the student
                     course.getStudents().add(student);
+                    course.setStudentEnrolled(course.getStudentEnrolled()+1);
                     courseRepo.save(course);
+                    return "You Successfully enrolled in the course";
                 } else {
                     // Handle case where the student is already enrolled in the course
                     throw new RuntimeException("Student is already enrolled in the course");

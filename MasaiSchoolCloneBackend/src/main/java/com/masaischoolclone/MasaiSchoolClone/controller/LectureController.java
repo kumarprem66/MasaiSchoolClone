@@ -1,11 +1,13 @@
 package com.masaischoolclone.MasaiSchoolClone.controller;
 
 
-import com.masaischoolclone.MasaiSchoolClone.entity.Assignment;
-import com.masaischoolclone.MasaiSchoolClone.entity.Course;
-import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
-import com.masaischoolclone.MasaiSchoolClone.entity.Lecture;
+import com.masaischoolclone.MasaiSchoolClone.entity.*;
+import com.masaischoolclone.MasaiSchoolClone.security.JwtTokenProvider;
+import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
+import com.masaischoolclone.MasaiSchoolClone.service.InstructorService;
 import com.masaischoolclone.MasaiSchoolClone.service.LectureService;
+import com.masaischoolclone.MasaiSchoolClone.utility.Common;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +23,31 @@ public class LectureController {
     @Autowired
     private LectureService lectureService;
 
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private InstructorService instructorService;
     @PostMapping("/create/{courseId}/{instructorId}")
-    public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture,@PathVariable Integer courseId,@PathVariable Integer instructorId){
+    public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture,
+                                                 @PathVariable Integer courseId,
+                                                 @PathVariable Integer instructorId,
+                                                 HttpServletRequest request){
 
         try {
 
-            Lecture lecture1 = lectureService.createLecture(lecture,courseId,instructorId);
-            return new ResponseEntity<>(lecture1,HttpStatus.CREATED);
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            Instructor instructor = instructorService.getInstructor(instructorId);
+            if(instructor.getUser().getEmail().equals(userName) || instructor.getUser().getUsername().equals(userName)){
+                Lecture lecture1 = lectureService.createLecture(lecture,courseId,instructorId);
+                return new ResponseEntity<>(lecture1,HttpStatus.CREATED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -55,10 +75,26 @@ public class LectureController {
     }
 
     @PutMapping("/update/{lectureId}")
-    public ResponseEntity<Lecture> updateLecture(@PathVariable Integer lectureId,@RequestBody Lecture updatedLecture){
+    public ResponseEntity<Lecture> updateLecture(@PathVariable Integer lectureId,@RequestBody Lecture updatedLecture,HttpServletRequest request){
         try {
 
-            return new ResponseEntity<>(lectureService.updateLecture(lectureId,updatedLecture),HttpStatus.ACCEPTED);
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            Instructor instructor = lectureService.getInstructor(lectureId);
+            User user = instructor.getUser();
+            if(user.getRole().equals("ROLE_INSTRUCTOR")){
+                if(instructor.getUser().getEmail().equals(userName) || instructor.getUser().getUsername().equals(userName)){
+                    return new ResponseEntity<>(lectureService.updateLecture(lectureId,updatedLecture),HttpStatus.ACCEPTED);
+
+                }else{
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+            }else{
+                return new ResponseEntity<>(lectureService.updateLecture(lectureId,updatedLecture),HttpStatus.ACCEPTED);
+
+            }
+
+
+
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -70,11 +106,25 @@ public class LectureController {
 
 
     @DeleteMapping("/delete/{lectureId}")
-    public ResponseEntity<Integer> deleteLecture(@PathVariable Integer lectureId){
+    public ResponseEntity<Integer> deleteLecture(@PathVariable Integer lectureId,HttpServletRequest request){
 
         try {
 
-            return new ResponseEntity<>(lectureService.deleteLecture(lectureId),HttpStatus.OK);
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            Instructor instructor = lectureService.getInstructor(lectureId);
+            User user = instructor.getUser();
+            if(user.getRole().equals("ROLE_INSTRUCTOR")){
+                if(instructor.getUser().getEmail().equals(userName) || instructor.getUser().getUsername().equals(userName)){
+                    return new ResponseEntity<>(lectureService.deleteLecture(lectureId),HttpStatus.OK);
+
+                }else{
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+            }else{
+
+                return new ResponseEntity<>(lectureService.deleteLecture(lectureId),HttpStatus.OK);
+            }
+
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -106,6 +156,8 @@ public class LectureController {
 
         try {
 
+//
+
             List<Lecture> lectures= lectureService.getLectureCourse(courseId);
             return new ResponseEntity<>(lectures,HttpStatus.OK);
         } catch (Exception e) {
@@ -118,13 +170,41 @@ public class LectureController {
     }
 
     @GetMapping("/lecture-of-course-instructor/{instructorId}/{courseId}")
-    public ResponseEntity<List<Lecture>> getInstructorLecture(@PathVariable Integer instructorId,@PathVariable Integer courseId){
+    public ResponseEntity<List<Lecture>> getInstructorLecture(@PathVariable Integer instructorId,
+                                                              @PathVariable Integer courseId, HttpServletRequest request){
 
         try {
 
+//            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+//            Instructor instructor = instructorService.getInstructor(instructorId);
+//            User user = instructor.getUser();
+//            System.out.println(user.getRole());
+//            System.out.println(user.getUsername());
+//            if(user.getRole().equals("ROLE_INSTRUCTOR")){
+//                System.out.println("===================================================================================");
+//                if(instructor.getUser().getEmail().equals(userName) || instructor.getUser().getUsername().equals(userName)){
+//                    List<Lecture> lectures = lectureService.getInstructorLecture(instructorId,courseId);
+//                    System.out.println("1==================================================================================");
+//
+//                    return new ResponseEntity<>(lectures,HttpStatus.OK);
+//
+//                }else{
+//                    System.out.println("2==================================================================================");
+//
+//                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//                }
+//            }else{
+//
+//                System.out.println("3==================================================================================");
+//
+//
+//            }
             List<Lecture> lectures = lectureService.getInstructorLecture(instructorId,courseId);
             return new ResponseEntity<>(lectures,HttpStatus.OK);
+
         } catch (Exception e) {
+
+            System.out.println("4==================================================================================");
 
             e.printStackTrace();
 

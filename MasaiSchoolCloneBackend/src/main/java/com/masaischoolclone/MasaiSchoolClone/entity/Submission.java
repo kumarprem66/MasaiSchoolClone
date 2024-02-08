@@ -2,6 +2,8 @@ package com.masaischoolclone.MasaiSchoolClone.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,9 @@ public class Submission {
 
     @Enumerated(EnumType.STRING)
     private Status statusChoices;
+
+    @NotNull
+    @NotEmpty
     private String remarks;
 
     @JsonIgnore
@@ -35,10 +40,10 @@ public class Submission {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "lecture_id")
-    private Lecture lecture;
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name = "lecture_id")
+//    private Lecture lecture;
 
 
 }

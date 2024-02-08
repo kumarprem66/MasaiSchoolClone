@@ -1,3 +1,5 @@
+
+
 .student_dash_container .student_dashboard{
     display: flex;
     flex-direction: column;
@@ -119,4 +121,50 @@
    
 }
 
+@media (max-width: 850px) {
+
+    .student_dash_container .student_dashboard .lectures_section .lecture_item{
+
+        display: flex;
+      
+        gap: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: white;
+        margin-bottom: 20px;
+    
+    }
+   
+    .lectures_section .lecture_item .item_left .course_type_tag{
+
+     
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+
+       max-width: 90%;
+      
+    }
+
+    .lectures_section .lecture_item .item_left .course_type_tag>span:nth-child(2){
+        margin-left: -20;
+    }
+
+    .student_dash_container .student_dashboard .lectures_section .lecture_item .item_right{
+        display: flex;
+        flex-direction: row;
+       
+
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        background: #0A2647;
+    }
+    .student_dash_container .student_dashboard .lectures_section .lecture_item .item_right>p{
+       
+        color: aliceblue;
+        margin-top: 5px;
+    }
+
+}
 

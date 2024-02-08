@@ -1,11 +1,9 @@
 package com.masaischoolclone.MasaiSchoolClone.service;
 
-import com.masaischoolclone.MasaiSchoolClone.dto.CourseDTO;
 import com.masaischoolclone.MasaiSchoolClone.entity.Category;
 import com.masaischoolclone.MasaiSchoolClone.entity.Course;
 import com.masaischoolclone.MasaiSchoolClone.entity.Department;
 import com.masaischoolclone.MasaiSchoolClone.entity.Instructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Set;
@@ -19,6 +17,8 @@ public interface CourseService {
 
     List<Course> getCourseList();
 
+    List<Course> getSortedCourseList(String sortString,Integer pageNumber,String sortDir);
+    String rateCourse(Integer courseId,Integer rating);
     Course updateCourse(Integer updateId, Course updatedCourse);
     Integer deleteCourse(Integer courseId);
 

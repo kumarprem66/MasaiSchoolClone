@@ -89,7 +89,7 @@ export class CommonService {
             const assignList: any[] = [];
   
             const assignmentObservables = courses.map(element => {
-              return this.assign_ser.getAllAssignment(element, token);
+              return this.assign_ser.getAllAssignment(id,element, token);
             });
   
             return forkJoin(assignmentObservables).pipe(

@@ -1,9 +1,9 @@
 <section class="student_dash_container">
     <div class="student_dashboard">
-        <h1>Today's Schedule</h1>
-        <div class="announcement_section">
+        <!-- <h1>Today's Schedule</h1> -->
+        <!-- <div class="announcement_section">
            
-            <!-- <div class="ann_item">
+            <div class="ann_item">
                <div>
                 <p>
 
@@ -33,7 +33,17 @@
                 <p>8/30/23 - 2:27 PM</p>
                </div>
                
-            </div> -->
+            </div> 
+        </div> -->
+        <div>
+            <h1 class="text-center text-lg font-semibold">Today's Schedule</h1>
+            <select name="" class="admin_course_select" (change)="onCourseSelected($event)">
+                <option value="0" selected disabled>Select Course</option>
+                <option *ngFor="let item of option_courses" [value]="item.value">{{item.text}}</option>
+               
+                
+            </select>
+           
         </div>
         <div class="lectures_section" *ngFor="let lecture of lecture_list">
             <div class="lecture_item">
@@ -62,3 +72,4 @@
         </div>
     </div>
 </section>
+<app-chatbot></app-chatbot>

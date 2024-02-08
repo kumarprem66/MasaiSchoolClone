@@ -15,11 +15,11 @@
                 <h6>₨. {{course.coursePrice}}</h6>
              
                 <div class="rating">
-                  <span class="star {{ course.rating >= 1 ? 'filled' : 'empty' }}">★</span>
-                  <span class="star {{ course.rating >= 2 ? 'filled' : 'empty' }}">★</span>
-                  <span class="star {{ course.rating >= 3 ? 'filled' : 'empty' }}">★</span>
-                  <span class="star {{ course.rating >= 4 ? 'filled' : 'empty' }}">★</span>
-                  <span class="star {{ course.rating >= 5 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ (course.rating/course.ratingCount) >= 1 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ (course.rating/course.ratingCount) >= 2 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ (course.rating/course.ratingCount) >= 3 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ (course.rating/course.ratingCount) >= 4 ? 'filled' : 'empty' }}">★</span>
+                  <span class="star {{ (course.rating/course.ratingCount) >= 5 ? 'filled' : 'empty' }}">★</span>
                   <span class="star_count">({{course.ratingCount}})</span>
                 </div>
                 <br>

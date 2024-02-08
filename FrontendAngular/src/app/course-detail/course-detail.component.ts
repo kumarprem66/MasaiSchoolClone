@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokendataService } from '../services/tokendata.service';
+import { StudentService } from '../services/student.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -14,9 +15,11 @@ export class CourseDetailComponent implements OnInit{
   current_course:any = ''
   instructor_name:string = ''
   all_courses_instructor:any[] = []
+  current_student_id:number = 0
   jwtToken:any = localStorage.getItem("masaischoolclone");
+  current_user_id:any = localStorage.getItem("current_user_id");
   constructor(private cour_ser:CourseService,private route:ActivatedRoute,private tokenSer:TokendataService
-    ,private router:Router ){
+    ,private router:Router ,private stuSer:StudentService){
 
   }
   ngOnInit(): void {
@@ -34,6 +37,8 @@ export class CourseDetailComponent implements OnInit{
       }
       
     })
+
+   
    
    
   }
@@ -95,10 +100,20 @@ export class CourseDetailComponent implements OnInit{
           this.router.navigate(['/student-register'])
         }
       }else if(decodedToken.authorities == "ROLE_STUDENT"){
-        const course_id_pass = {
-          "cid":id
-        }
-        this.router.navigate(['/payment'],{queryParams:course_id_pass})
+       
+
+        this.stuSer.fetchStuentByUserId(parseInt(this.current_user_id),this.jwtToken).subscribe((response:any)=>{
+      
+          this.current_student_id = response.body.id;
+
+          const course_id_pass = {
+            "cid":id,
+            "sid":this.current_student_id
+          }
+          
+          this.router.navigate(['/payment'],{queryParams:course_id_pass})
+        })
+     
       }
      
   
@@ -111,4 +126,6 @@ export class CourseDetailComponent implements OnInit{
       }
     }
   }
+
+  
 }

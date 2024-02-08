@@ -1,0 +1,17 @@
+<div class="chatbot-container" *ngIf="showChatbot">
+    <div class="chatbot-header">
+      <span class="chatbot-title">Chatbot</span>
+      <button class="close-button" (click)="toggleChatbot()">X</button>
+    </div>
+    <div class="chatbot-messages">
+      <div *ngFor="let message of messages" class="message" [ngClass]="{'user-message': message.from === 'user', 'bot-message': message.from === 'bot'}">
+        {{ message.text }}
+      </div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" [(ngModel)]="inputMessage" placeholder="Type your message...">
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+  <div class="chatbot-icon" (click)="toggleChatbot()">?</div>
+  

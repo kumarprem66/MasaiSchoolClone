@@ -25,35 +25,33 @@ export class AdminAuthComponent implements OnInit{
   }
 
  
-  adminSubmit(){
-    if(this.adminForm.valid){
-      const current_user = this.adminForm.value;
-
-    // const username = current_user.username;
-    // const password = current_user.password;
-
-    this.adminSer.loginAdmin(current_user.email,current_user.password)
-    .subscribe(
-      (response) => {
-        const authToken = response.headers.get('Authorization');
-        localStorage.setItem('masaischoolclone', authToken);
+  // adminSubmit(){
+  //   if(this.adminForm.valid){
+  //     const current_user = this.adminForm.value;
 
 
-        const data = response.body;
+  //   this.adminSer.loginAdmin(current_user.email,current_user.password)
+  //   .subscribe(
+  //     (response) => {
+  //       const authToken = response.headers.get('Authorization');
+  //       localStorage.setItem('masaischoolclone', authToken);
+
+
+  //       const data = response.body;
 
        
-        localStorage.setItem('current_user_id', data.uid);
-        alert("login successfully "+ current_user.email)
-        location.reload();
-      },
-      (error) => {
-        console.error('HTTP error:', error);
-      }
-    );
-  }else{
-      alert("Every field is mandatory..")
-  }
-  }
+  //       localStorage.setItem('current_user_id', data.uid);
+  //       alert("login successfully "+ current_user.email)
+  //       location.reload();
+  //     },
+  //     (error) => {
+  //       console.error('HTTP error:', error);
+  //     }
+  //   );
+  // }else{
+  //     alert("Every field is mandatory..")
+  // }
+  // }
 
 
   refreshPage(){

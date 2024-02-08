@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 
 import java.util.Date;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -41,9 +40,9 @@ public class Lecture {
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
-    private Set<Submission> submissions;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)
+//    private Set<Submission> submissions;
 
     @JsonIgnore
     @OneToMany(mappedBy = "lecture",cascade = CascadeType.ALL)

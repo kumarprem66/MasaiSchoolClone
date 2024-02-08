@@ -25,15 +25,14 @@ $primary-color5: #88aac9;
 .select_div_filter>div>select{
     font-size: 25px;
 }
-.all_courses_container{
-    margin-bottom: 50px;
-    // margin-left: 100px;
-    // margin-right: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+// .all_courses_container{
+//     margin-bottom: 50px;
+    
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+// }
 
 .all_courses_container h1,.all_courses_container h5{
 
@@ -42,28 +41,78 @@ $primary-color5: #88aac9;
     font-weight: 700;
 }
 
-
-
 .all_courses_container .card_container{
+
+    // border: 1px solid blue;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    // gap: 30px;
+}
+
+// .all_courses_container .card_container .sorting{
+
+//     border: 1px solid red;
+// }
+
+.sorting {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+  }
+  
+  .sorting form {
+    display: flex;
+    flex-direction: column;
+    // display: inline-block;
+    // margin-right: 20px;
+  }
+  
+  .sorting input[type="radio"] {
+    display: none; /* Hide the default radio button */
+  }
+  
+  .sorting label {
+    display: block;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .sorting label:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+  }
+  
+  .sorting input[type="radio"]:checked + label {
+    background-color: $primary-color1; /* Change background color when radio button is checked */
+    color: #fff; /* Change text color when radio button is checked */
+  }
+  
+
+.all_courses_container .card_container .card_container2{
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 30px;
+    gap: 10px;
 }
 
-.all_courses_container .card_container .mycard{
-    width: 17rem;
+
+.all_courses_container .card_container .card_container2 .mycard{
+    width: 15rem;
     cursor: pointer;
 }
 
-.all_courses_container .card_container .mycard .card-body .edit_delete_div{
+.all_courses_container .card_container .card_container2 .mycard .card-body .edit_delete_div{
     display: flex;
     flex-direction: row;
 
     justify-content: space-between;
     // border: 1px solid red;
 }
-.all_courses_container .card_container .mycard .card-body .edit_delete_div a{
+.all_courses_container .card_container  .card_container2 .mycard .card-body .edit_delete_div a{
    flex: 1;
    margin: 10px;
 }
@@ -90,9 +139,50 @@ color: gold; /* Colored star */
     height: 200px;
     
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+  }
+  
+  .pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
   
 @media screen and (max-width: 650px) {
+    .sorting form {
+        
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
     .all_courses_container .card_container{
+
+        border: 1px solid blue;
+        display: grid;
+        grid-template-columns: 1fr;
+     
+    }
+   
+   
+    .all_courses_container .card_container .card_container2{
 
         grid-template-columns: 1fr;
         gap: 30px;
@@ -100,18 +190,18 @@ color: gold; /* Colored star */
         
     }
 
-    .all_courses_container .card_container .mycard{
+    .all_courses_container .card_container .card_container2 .mycard{
         width: 95%;
         display: flex;
         flex-direction: row;
     }
 
-    .all_courses_container .card_container .mycard img{
+    .all_courses_container .card_container .card_container2 .mycard img{
         width: 50%;
         height: auto;
     }
 
-    .all_courses_container .card_container .mycard .card-body .edit_delete_div a{
+    .all_courses_container .card_container .card_container2 .mycard .card-body .edit_delete_div a{
         flex: 1;
         margin: 0px;
      }
@@ -119,19 +209,47 @@ color: gold; /* Colored star */
 
 }
 
-@media (min-width:651px) and (max-width: 850px) {
-   
+@media (min-width:651px) and (max-width: 830px) {
+    .sorting form {
+        
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
     .all_courses_container .card_container{
 
+        border: 1px solid blue;
+        display: grid;
+        grid-template-columns: 1fr;
+     
+    }
+   
+    .all_courses_container .card_container .card_container2{
+
         grid-template-columns: 1fr 1fr;
-        gap: 30px;
+        gap: 10px;
+        justify-content: center;
+
+       
     }
 
 
 }
 
-@media (min-width:851px) and (max-width: 1100px) {
+@media (min-width:831px) and (max-width: 1000px) {
+    .sorting form {
+        
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
     .all_courses_container .card_container{
+
+        border: 1px solid blue;
+        display: grid;
+        grid-template-columns: 1fr;
+     
+    }
+   
+    .all_courses_container .card_container .card_container2{
 
         grid-template-columns: 1fr 1fr 1fr;
         gap: 30px;
@@ -139,3 +257,37 @@ color: gold; /* Colored star */
 
 
 }
+
+@media (min-width:1000px) and (max-width: 1270px) {
+    .sorting form {
+        
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+    
+    .all_courses_container .card_container{
+
+        border: 1px solid blue;
+        display: grid;
+        grid-template-columns: 1fr;
+     
+    }
+   
+    .all_courses_container .card_container .card_container2{
+
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 10px;
+    }
+
+
+}
+
+// @media (min-width:951px) {
+//     .all_courses_container .card_container .card_container2{
+
+//         grid-template-columns: 1fr 1fr 1fr;
+//         gap: 30px;
+//     }
+
+
+// }

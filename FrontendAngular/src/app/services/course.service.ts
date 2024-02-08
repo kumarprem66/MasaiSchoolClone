@@ -29,6 +29,11 @@ export class CourseService {
     return this.http.get<any[]>(this.baseUrl+'fetch-all')
   }
 
+  getcoursesSorted(pageNumber:number,sortedString:string,direction:string){
+
+    return this.http.get<any[]>(`${this.baseUrl}fetch-all-sorted/${pageNumber}/${sortedString}/${direction}`)
+  }
+
   getCourses(department_id:number){
     return this.http.get<any[]>(this.baseUrl+"fetch-all/"+department_id)
   }
@@ -82,6 +87,15 @@ export class CourseService {
   getCourseByCategoryAndInstructor(cat_id:number,ins_id:number){
 
     return this.http.get<any[]>(`${this.baseUrl}course-by-category-and-instructor`)
+  }
+
+  rateTheCourse(course_id:number,rating:number,token:string){
+
+    const headers = new HttpHeaders({
+      "Content-Type":"Application/json",
+      'Authorization':`Bearer ${token}`
+    })
+    return this.http.get(`${this.baseUrl}rate/${course_id}/${rating}`,{headers:headers});
   }
 }
 

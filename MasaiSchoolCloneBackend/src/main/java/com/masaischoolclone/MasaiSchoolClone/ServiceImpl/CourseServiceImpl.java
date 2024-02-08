@@ -13,6 +13,10 @@ import com.masaischoolclone.MasaiSchoolClone.repository.DepartmentRepo;
 import com.masaischoolclone.MasaiSchoolClone.repository.InstructorRepo;
 import com.masaischoolclone.MasaiSchoolClone.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,7 +52,10 @@ public class CourseServiceImpl implements CourseService {
             if(departOptional.isPresent() && optionalCategory.isPresent() && instructorOptional.isPresent()){
                 course.setDepartment(departOptional.get());
                 course.setCategory(optionalCategory.get());
-                course.setInstructor(instructorOptional.get());
+
+                    course.setInstructor(instructorOptional.get());
+
+
                 return courseRepo.save(course);
             }else{
                 throw new CourseException("department is not available");
@@ -64,6 +71,26 @@ public class CourseServiceImpl implements CourseService {
 
 
         return courseRepo.findAll();
+    }
+
+    @Override
+    public List<Course> getSortedCourseList(String sortString,Integer pageNumber,String sortDir){
+        Pageable pageable;
+        if(sortString == null || sortString.equals("")){
+            pageable = PageRequest.of(pageNumber-1,10);
+
+        }else{
+
+
+            Sort sort = Sort.by(sortString).ascending();
+
+//            pageable = PageRequest.of(pageNumber,10,sort);
+            pageable = PageRequest.of(pageNumber-1,10, sortDir.equals("asc") ? Sort.by(sortString). ascending() : Sort.by(sortString).descending());
+
+        }
+        Page<Course> page = courseRepo.findAll(pageable);
+
+        return page.getContent();
     }
 
     @Override
@@ -239,4 +266,21 @@ public class CourseServiceImpl implements CourseService {
 
         throw new CourseException("No Category exist of given id");
     }
+
+    @Override
+    public String rateCourse(Integer courseId,Integer rating){
+        Optional<Course> courseOptional = courseRepo.findById(courseId);
+        if(courseOptional.isPresent()){
+            Course course = courseOptional.get();
+            course.setRating(course.getRating()+rating);
+            course.setRatingCount(course.getRatingCount()+1);
+            courseRepo.save(course);
+            return course.getRatingCount()+"Thank you for the rating";
+        }else{
+
+          throw new CourseException("No Course exist of given id");
+        }
+
+    }
+
 }

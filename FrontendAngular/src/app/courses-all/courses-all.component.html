@@ -27,36 +27,80 @@
     </div>
    </div>
 
-    <div class="card_container">
+    <div class="card_container"> 
 
+      
+      <div class="sorting">
+        <form>
+          <input type="radio" id="courseName" name="course" value="courseName" [(ngModel)]="selectedSorting" (change)="radioCourseClicked()">
+          <label for="courseName">courseName</label><br>
+        
+          <input type="radio" id="duration" name="course" value="duration" [(ngModel)]="selectedSorting" (change)="radioCourseClicked()">
+          <label for="duration">duration</label><br>
+        
+          <input type="radio" id="rating" name="course" value="rating" [(ngModel)]="selectedSorting" (change)="radioCourseClicked()">
+          <label for="rating">Rating</label><br>
+  
+          <input type="radio" id="coursePrice" name="course" value="coursePrice" [(ngModel)]="selectedSorting" (change)="radioCourseClicked()">
+          <label for="coursePrice">CoursePrice</label><br>
+  
+          <input type="radio" id="ratingCount" name="course" value="ratingCount" [(ngModel)]="selectedSorting" (change)="radioCourseClicked()">
+          <label for="other">RatingCount</label><br>
+  
+          <input type="radio" id="courseLanguage" name="course" value="courseLanguage" [(ngModel)]="selectedSorting" (change)="radioCourseClicked()">
+          <label for="courseLanguage">CourseLanguage</label><br>
+  
+          <input type="radio" id="studentEnrolled" name="course" value="studentEnrolled" [(ngModel)]="selectedSorting" (change)="radioCourseClicked()">
+          <label for="studentEnrolled">StudentEnrolled</label><br>
+        </form>
+        
+        <form>
+          <input type="radio" id="asc" name="direction" value="asc" [(ngModel)]="selectedDirec" (change)="radioDirecClicked()">
+          <label for="asc">Ascending</label><br>
+        
+          <input type="radio" id="desc" name="direction" value="desc" [(ngModel)]="selectedDirec" (change)="radioDirecClicked()">
+          <label for="desc">Descending</label><br>
+        
+         
+        </form>
+      </div>
+      
+   
+      <div class="card_container2">
         <div class="card mycard" *ngFor="let course of all_courses; let i = index" (click)="show_course_details(course.id)">
-            <img src="{{course.image}}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{course.courseName}}</h5>
-              <h6>Duraton: {{course.duration}}</h6>
-              <h6>₨. {{course.coursePrice}}</h6>
-              <h6>Language: {{course.courseLanguage}}</h6>
-              <div class="rating">
-                <span class="star {{ course.rating >= 1 ? 'filled' : 'empty' }}">★</span>
-                <span class="star {{ course.rating >= 2 ? 'filled' : 'empty' }}">★</span>
-                <span class="star {{ course.rating >= 3 ? 'filled' : 'empty' }}">★</span>
-                <span class="star {{ course.rating >= 4 ? 'filled' : 'empty' }}">★</span>
-                <span class="star {{ course.rating >= 5 ? 'filled' : 'empty' }}">★</span>
-                <span class="star_count">({{course.ratingCount}})</span>
-              </div>
-              <br>
-              
-              <div class="edit_delete_div">
-                <a (click)="edit_course(course.id)" *ngIf="isAdmin" class="btn btn-primary">Edit</a>
-                <a (click)="delete_course(course.id)"   *ngIf="isAdmin"  class="btn btn-secondary">Delete</a>
-                <!-- <a (click)="add_to_cart(course.id)"   *ngIf="!isAdmin"  class="btn btn-primary">Add to Cart</a> -->
-                <a (click)="buy_course(course.id)"   *ngIf="!isAdmin"  class="btn btn-secondary">Buy Now</a>
-                
-              </div>
-
+          <img src="{{course.image}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">{{course.courseName}}</h3>
+            <h4>Duraton: {{course.duration}}</h4>
+            <h4>₨. {{course.coursePrice}}</h4>
+            <h4>Language: {{course.courseLanguage}}</h4>
+            <div class="rating">
+              <span class="star {{ (course.rating/course.ratingCount) >= 1 ? 'filled' : 'empty' }}">★</span>
+              <span class="star {{ (course.rating/course.ratingCount) >= 2 ? 'filled' : 'empty' }}">★</span>
+              <span class="star {{ (course.rating/course.ratingCount) >= 3 ? 'filled' : 'empty' }}">★</span>
+              <span class="star {{ (course.rating/course.ratingCount) >= 4 ? 'filled' : 'empty' }}">★</span>
+              <span class="star {{ (course.rating/course.ratingCount) >= 5 ? 'filled' : 'empty' }}">★</span>
+              <span class="star_count">({{course.ratingCount}})</span>
             </div>
-        </div>
+            <br>
+            
+            <div class="edit_delete_div">
+              <a (click)="edit_course(course.id)" *ngIf="isAdmin" class="btn btn-primary">Edit</a>
+              <a (click)="delete_course(course.id)"   *ngIf="isAdmin"  class="btn btn-secondary">Delete</a>
+              <!-- <a (click)="add_to_cart(course.id)"   *ngIf="!isAdmin"  class="btn btn-primary">Add to Cart</a> -->
+              <a (click)="buy_course(course.id)"   *ngIf="!isAdmin"  class="btn btn-secondary">Buy Now</a>
+              
+            </div>
+
+          </div>
+      </div>
+      </div>
 
        
     </div>
+</div>
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <span>{{ currentPage }} / {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
 </div>

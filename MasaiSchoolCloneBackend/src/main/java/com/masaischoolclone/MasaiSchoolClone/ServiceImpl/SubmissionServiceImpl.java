@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 @Service
 public class SubmissionServiceImpl  implements SubmissionService {
@@ -31,23 +29,22 @@ public class SubmissionServiceImpl  implements SubmissionService {
     private LectureRepo lectureRepo;
 
     @Override
-    public Submission createSubmission(Integer studentId, Integer courseId, Integer lectureId,Integer assignmentId, Submission submission) {
+    public Submission createSubmission(Integer studentId,Integer assignmentId, Submission submission) {
         // Fetch entities from repositories
         Optional<Student> optionalStudent = studentRepo.findById(studentId);
-        Optional<Course> optionalCourse = courseRepo.findById(courseId);
-        Optional<Lecture> optionalLecture = lectureRepo.findById(lectureId);
+//        Optional<Course> optionalCourse = courseRepo.findById(courseId);
+//        Optional<Lecture> optionalLecture = lectureRepo.findById(lectureId);
         Optional<Assignment> optionalAssignment = assignmentRepo.findById(assignmentId);
 
-        if (optionalStudent.isPresent() && optionalCourse.isPresent() && optionalLecture.isPresent() && optionalAssignment.isPresent()) {
+        if (optionalStudent.isPresent()  && optionalAssignment.isPresent()) {
             Student student = optionalStudent.get();
-            Course course = optionalCourse.get();
-            Lecture lecture = optionalLecture.get();
+
             Assignment assignment = optionalAssignment.get();
 
             // Validate that the student belongs to the course
-            if (!course.getStudents().contains(student)) {
-                throw new RuntimeException("Student does not belong to the course");
-            }
+//            if (!course.getStudents().contains(student)) {
+//                throw new RuntimeException("Student does not belong to the course");
+//            }
 
             // Validate that the lecture is associated with the course
 //            if (!course.getLectures().contains(lecture)) {
@@ -55,13 +52,13 @@ public class SubmissionServiceImpl  implements SubmissionService {
 //            }
 
             // Validate that the assignment is associated with the course and lecture
-            if (!assignmentRepo.findAllByCourseAndLecture(course,lecture).contains(assignment)) {
-                throw new RuntimeException("assignment is not associated with the lecture");
-            }
+//            if (!assignmentRepo.findAllByCourseAndLecture(course,lecture).contains(assignment)) {
+//                throw new RuntimeException("assignment is not associated with the lecture");
+//            }
             // Set associations
             submission.setStudent(student);
             submission.setAssignment(assignment);
-            submission.setLecture(lecture);
+
 
             // Save the submission
 

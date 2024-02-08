@@ -51,6 +51,7 @@ const routes: Routes = [
   {path:"student-register",component:StudentRegsiterComponent},
   {path:"payment",component:PaymentComponent},
   {path:"stu-login",component:StudentLoginComponent},
+  
 
 
 

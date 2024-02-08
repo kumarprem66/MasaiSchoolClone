@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -39,6 +40,24 @@ public class CourseController {
         try {
 
             return ResponseEntity.ok(courseService.getCourseList());
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
+    @GetMapping("/fetch-all-sorted/{pageNumber}/{sortingStr}/{sortDir}")
+    public ResponseEntity<List<Course>> getCourseListPage(@PathVariable Integer pageNumber,
+                                                          @PathVariable String sortingStr,
+                                                          @PathVariable String sortDir){
+
+        try {
+
+            System.out.println("called bro");
+            return ResponseEntity.ok(courseService.getSortedCourseList(sortingStr,pageNumber,sortDir));
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -218,6 +237,21 @@ public class CourseController {
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    @GetMapping("/rate/{courseId}/{rating}")
+    public ResponseEntity<Map<String,String>> rateCourse(@PathVariable Integer courseId,@PathVariable Integer rating){
+        try {
+
+
+            return ResponseEntity.ok(Map.of("message",courseService.rateCourse(courseId,rating)));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error",e.getMessage()));
 
         }
     }

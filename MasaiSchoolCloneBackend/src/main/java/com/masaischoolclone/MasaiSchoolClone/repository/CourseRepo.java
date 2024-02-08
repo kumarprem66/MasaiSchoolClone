@@ -22,6 +22,9 @@ public interface CourseRepo extends JpaRepository<Course,Integer> {
     Course findByCourseCode(String courseCode);
     Optional<Course> findByCourseName(String courseCode);
 
+
+
+
 //    List<Course> findAllBycategoryAndinstructor(Instructor instructor,Category category);
 
 

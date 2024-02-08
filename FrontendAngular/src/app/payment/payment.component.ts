@@ -11,6 +11,8 @@ import { RegisterService } from '../services/register.service';
 export class PaymentComponent implements OnInit{
 
   course_id:number = 0
+  student_id:number = 0
+  jwttoken:any = localStorage.getItem("masaischoolclone")
   
   constructor(private route:ActivatedRoute,private router:Router,private stu_ser:StudentService){
 
@@ -21,8 +23,9 @@ export class PaymentComponent implements OnInit{
     
     this.route.queryParams.subscribe((param:any)=>{
 
-      console.log(param.cid)
+    
       this.course_id = param.cid
+      this.student_id = param.sid;
     })
 
    
@@ -32,28 +35,25 @@ export class PaymentComponent implements OnInit{
 
   purchase_confirm(){
 
-    const student_data = localStorage.getItem("masaischoolclone")
-    if(this.course_id != 0 && student_data != null){
-      const parse_student = JSON.parse(student_data)
-      let stu_id  = parse_student.id
-
+   
+    if(this.course_id != 0 && this.jwttoken != null && this.student_id != 0){
       
-      this.stu_ser.addCourseToStudent(stu_id,this.course_id).subscribe((response)=>{
-        alert("success")
-        localStorage.setItem("who_is_login","student")
-        // localStorage.setItem("student_data",JSON.stringify())
-        console.log(response)
+      this.stu_ser.addCourseToStudent(this.student_id,this.course_id,this.jwttoken).subscribe((response:any)=>{
+        alert(response.message)
+       
+        this.router.navigate(['/courses-all'])
       },(error)=>{
         alert(error.error.error)
+        this.router.navigate(['/courses-all'])
+        // console.log(error)
       }
       )
 
-
-
-
      
-    }else{
-      alert("you have to register to purchase course")
+     
+    }
+    else{
+      alert("you are not a student  or course_id is not valid")
       this.router.navigate(['student-register'])
     }
    

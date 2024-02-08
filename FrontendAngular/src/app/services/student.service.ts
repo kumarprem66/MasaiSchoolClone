@@ -36,27 +36,36 @@ export class StudentService {
     return this.http.put(`${this.baseUrl}update/${sid}/${uid}`,JSON.stringify(data), {headers:headers})
   }
 
-  deleteStudent(id:number){
+  deleteStudent(id:number,token:string){
 
-    return this.http.delete(`${this.baseUrl}${id}/delete`)
+    const headers = new HttpHeaders( {
+      
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json', // Add other headers as needed
+    });
+    return this.http.delete(`${this.baseUrl}${id}/delete`,{headers:headers})
   }
 
-  getAllStudent(token:string){
+  getAllStudent(token:string,user_id:number){
     
     const headers = new HttpHeaders( {
       
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json', // Add other headers as needed
     });
-    return this.http.get(this.baseUrl+"fetch-all",{headers : headers,observe: 'response'})
+    return this.http.get(this.baseUrl+"fetch-all/"+user_id,{headers : headers,observe: 'response'})
   }
 
 
-  addCourseToStudent(studentId: number, courseId: number): Observable<any> {
-    const url = `${this.baseUrl}${studentId}/add-course/`;
-    const body = { course_id: courseId };
+  addCourseToStudent(studentId: number, courseId: number,token:string) {
+    const headers = new HttpHeaders( {
+      
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json', // Add other headers as needed
+    });
+    
 
-    return this.http.post(url, body);
+    return this.http.get(`${this.baseUrl}enroll/${studentId}/${courseId}`,{headers:headers});
   }
   
 

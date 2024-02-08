@@ -16,15 +16,18 @@ export class StudentDashboardComponent implements OnInit{
 
   lecture_list:any[] = []
 
+  option_courses:any[] = []
+  JWTtoken:any = localStorage.getItem("masaischoolclone");
+    
+
   ngOnInit(): void {
     
     const student_data = localStorage.getItem("current_user_id")
-    const JWTtoken = localStorage.getItem("masaischoolclone");
-    
+ 
   
-    if(student_data != null && JWTtoken != null){
+    if(student_data != null && this.JWTtoken != null){
       
-      this.getStudentByUserId(parseInt(student_data),JWTtoken);
+      this.getStudentByUserId(parseInt(student_data),this.JWTtoken);
 
       
     }
@@ -42,18 +45,9 @@ export class StudentDashboardComponent implements OnInit{
 
         courses.forEach(element => {
           
+
         
-          this.lec_ser.getLectureOfCourse(element,token).subscribe((lec:any)=>{
-            
-        
-  
-            lec.body.forEach((element:any) => {
-              // console.log(element)
-              this.lecture_list.push(element)
-            });
-           
-          
-          })
+          this.getLectureOfCourse(element,this.JWTtoken)
   
         });
       });
@@ -70,7 +64,7 @@ export class StudentDashboardComponent implements OnInit{
         let courses: number[] = [];
         if (response.body.length > 0) {
           response.body.forEach((element: any) => {
-            
+            this.option_courses.push({"value":element.id,"text":element.courseName})
             courses.push(element.id);
           });
         }
@@ -80,62 +74,30 @@ export class StudentDashboardComponent implements OnInit{
   
   }
 
-  // getStudentByStudentId(id:number,token:string){
-  //   this.stu_ser.getSingleStudent(id,token).subscribe((response:any)=>{
-  //     console.log(response)
+  onCourseSelected(event:any){
+    this.lecture_list = []
+    const selected_course = event.target.value;
+   
+    this.getLectureOfCourse(selected_course,this.JWTtoken)
+    
+  }
 
+  getLectureOfCourse(course_id:number,token:string){
 
-  //     let courseIds:number[] = response.course_ids;
+    this.lec_ser.getLectureOfCourse(course_id,token).subscribe((lec:any)=>{
+            
+      // console.log(lec)
+  
 
-  //     courseIds.forEach(element => {
-        
-  //       console.log(element)
-  //       this.lec_ser.getLectureOfCourse(element).subscribe((lec:any)=>{
-          
-  //         console.log(lec)
-
-  //         lec.forEach((element:any) => {
-  //           this.lecture_list.push(element)
-  //         });
-         
-        
-  //       })
-
-  //     });
-
+      lec.forEach((element:any) => {
+        // console.log(element)
+        this.lecture_list.push(element)
+      });
      
+    
+    })
+  }
 
-  //   })
-  // }
-
-  // getSingleSingle2(id: number): void {
-  //   this.stu_ser.getSingleStudent(id).subscribe((response: any) => {
-  //     const courseIds: number[] = response.course_ids;
-      
-  //     // Create an array of observables for fetching lectures
-  //     const lectureObservables = courseIds.map((element: number) => {
-  //       return this.lec_ser.getLectureOfCourse(element);
-  //     });
-  
-  //     // Use forkJoin to wait for all lectureObservables to complete
-  //     forkJoin(lectureObservables).subscribe((lectureData: any[]) => {
-  //       // Process the data
-  //       lectureData.forEach((lectures: any[]) => {
-  //         this.lecture_list = this.lecture_list.concat(lectures);
-  //       });
-  
-  //       // Now, lecture_list has been updated with all lecture data
-  //       console.log(this.lecture_list.length);
-
-  //       this.lecture_list.forEach(ele=>{
-  //         console.log(ele)
-  //       })
-  //     });
-  //   });
-  // }
-  
-  
-  
   
   convertDate(timing_value:any):string{
 

@@ -2,7 +2,10 @@ package com.masaischoolclone.MasaiSchoolClone.controller;
 
 import com.masaischoolclone.MasaiSchoolClone.entity.User;
 import com.masaischoolclone.MasaiSchoolClone.exception.RegisterException;
+import com.masaischoolclone.MasaiSchoolClone.security.JwtTokenProvider;
 import com.masaischoolclone.MasaiSchoolClone.service.UserService;
+import com.masaischoolclone.MasaiSchoolClone.utility.Common;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/register")
     ResponseEntity<Map<String,String>> registerUser(@Valid @RequestBody User user){
@@ -32,51 +37,53 @@ public class UserController {
         }
     }
 
-    @GetMapping("/login/{email}/{password}")
-    ResponseEntity<Map<String,String>> loginUser(@PathVariable String email,@PathVariable String password){
-        try {
-
-            userService.loginUser(email,password);
-            return  ResponseEntity.ok(Map.of("message","Login Successful"));
-
-        } catch (RegisterException e) {
-
-
-            System.out.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
-
-
-        }
-
-    }
 
     @GetMapping("/get_user/{email}")
-    ResponseEntity<User> getUser(@PathVariable String email){
+    ResponseEntity<User> getUser(@PathVariable String email,HttpServletRequest request){
         try {
 
-            return new ResponseEntity<>(userService.getUser(email), HttpStatus.ACCEPTED);
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            User user = userService.getUser(email);
+
+            if(user.getUsername().equals(userName) || user.getEmail().equals(userName)){
+                return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+            }else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
         } catch (RegisterException e) {
 
 
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         }
     }
 
     @GetMapping("/get_user_id/{uid}")
-    ResponseEntity<User> getUserById(@PathVariable Integer uid){
+    ResponseEntity<User> getUserById(@PathVariable Integer uid, HttpServletRequest request){
         try {
 
-            return new ResponseEntity<>(userService.getUser(uid), HttpStatus.ACCEPTED);
+
+            String userName = Common.getUserNameFromRequest(request,jwtTokenProvider);
+            User user = userService.getUser(uid);
+
+            if(user.getUsername().equals(userName)){
+                return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+            }else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
         } catch (RegisterException e) {
 
 
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         }
     }
+
+
 
 
 

@@ -3,8 +3,8 @@
 }
 
 .assign_head_container{
-    /* border: 1px solid red; */
-    background-color: white;
+   
+ 
     padding: 20px;
     margin-top: -47px;
     margin-bottom: 40px;
@@ -16,6 +16,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+       background-color: white;
+    /* border: 1px solid red; */
 }
 
 .assign_head_container .head_container>div:nth-child(1){

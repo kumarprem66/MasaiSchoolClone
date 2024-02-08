@@ -13,7 +13,7 @@ export class AssignmentService {
   // http://127.0.0.1:8000/sparleom/assignment/create/
   baseUrl = "http://127.0.0.1:8088/assignment/"
 
-  createAssignment(data:any,courseId:number,lectureId:number,token:string):Observable<any>{
+  createAssignment(userId:number,data:any,courseId:number,lectureId:number,token:string):Observable<any>{
 
     const headers = new HttpHeaders({
       "Content-Type":"Application/json",
@@ -21,37 +21,37 @@ export class AssignmentService {
     })
 
 
-   return  this.http.post(`${this.baseUrl}create/${courseId}/${lectureId}`,JSON.stringify(data),{headers:headers})
+   return  this.http.post(`${this.baseUrl}create/${userId}/${courseId}/${lectureId}`,JSON.stringify(data),{headers:headers})
 
   }
 
-  getAllAssignment(courseId:number,token:string){
+  getAllAssignment(userId:number,courseId:number,token:string){
 
     const headers = new HttpHeaders( {
       
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json', // Add other headers as needed
     });
-    return this.http.get(`${this.baseUrl}fetch-all/${courseId}`,{headers : headers})
+    return this.http.get(`${this.baseUrl}fetch-all/${userId}/${courseId}`,{headers : headers})
   }
 
-  getAllAssignmentCAL(courseId:number,lectureId:number,token:string){
+  getAllAssignmentCAL(userId:number,courseId:number,lectureId:number,token:string){
 
     const headers = new HttpHeaders( {
       
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json', // Add other headers as needed
     });
-    return this.http.get(`${this.baseUrl}fetch-all/${courseId}/${lectureId}`,{headers : headers})
+    return this.http.get(`${this.baseUrl}fetch-all/${userId}/${courseId}/${lectureId}`,{headers : headers})
   }
 
-  getAssignment(assignId:number,token:string){
+  getAssignment(userId:number,assignId:number,token:string){
 
     const headers = new HttpHeaders( {
       
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json', // Add other headers as needed
     });
-    return this.http.get(`${this.baseUrl}fetch/${assignId}`,{headers : headers})
+    return this.http.get(`${this.baseUrl}fetch/${userId}/${assignId}`,{headers : headers})
   }
 }
