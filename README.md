@@ -1,3 +1,6 @@
+# NOTE 
+### If You switch one profile to another profile(ex- user to admin or student or instructor) it shows page not found try going back to original link, then it will work.
+
 # MasaiSchoolClone
 
 **Table of Contents**
