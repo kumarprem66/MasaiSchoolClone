@@ -43,6 +43,101 @@ Deployment: Vercel (Frontend)
 -  **ChatBot:** ChatBot helps to resolve the issue of the user in no time.
 
 ## API EndPoints
+# User Authentication
+- **POST** user/register
+- **GET** auth/signin
+
+# User Profile
+- **GET** user/get_user/{email}
+- **GET** user/get_user_id/{uid}
+
+# Student Profile
+- **POST** student/create/{email}
+- **GET** student/fetch-all/{userId}
+- **GET** student/fetch-all-courses/{stu_id}
+- **GET** student/fetch-by-user-id/{userId}
+- **PUT** student/update/{studentId}/{userId}
+- **DELETE** student/delete/{studentId}
+- **GET** student/fetch/{studentId}
+- **GET** student/enroll/{studentId}/{courseId}
+
+# Instructor Profile
+- **POST** instructor/create/{departId}/{email}
+- **GET** instructor/fetch-all
+- **GET** instructor/fetch-by-user/{uid}
+- **GET** instructor/fetch/{insId}
+- **GET** instructor/get_dept/{ins_id}
+- **GET** instructor/fetch-all-byDept/{departID}
+- **PUT** instructor/update/{instructorId}
+- **DELETE** instructor/delete/{insId}
+
+# Department Profile
+- **POST** depart/create
+- **GET** depart/fetch-all
+- **GET** depart/get/{department_id}
+
+# Category 
+- **POST** category/create
+- **GET** category/getAll
+- **GET** category/get/{id}
+- **PUT** category/update/{updateId}
+
+# Course
+- **POST** course/create/{departID}/{ins_id}/{categoryId}
+- **GET** course/fetch-all
+- **GET** course/fetch-all-sorted/{pageNumber}/{sortingStr}/{sortDir}
+- **PUT** course/update/{updateId}
+- **PUT** course/update-depart/{departId}/{courseId}
+- **DELETE** course/delete/{courseId}
+- **GET** course/fetch/{courseId}
+- **GET** course/fetch-all/{departmentID}
+- **GET** course/instructor-course/{instructorId}
+- **GET** course/course-by-category/{categoryId}
+- **GET** course/course-by-category-and-instructor
+- **PUT** course/assign-to-instructor/{instructorId}/{courseId}
+- **GET** course/get-inst/{courseId}
+- **GET** course/get-cat/{courseId}
+- **GET** course/get-dept/{courseId}
+- **GET** course/rate/{courseId}/{rating}
+
+# Lecture
+- **POST** lecture/create/{courseId}/{instructorId}
+- **GET** lecture/fetch-all
+- **PUT** lecture/update/{lectureId}
+- **DELETE** lecture/delete/{lectureId}
+- **GET** lecture/fetch/{id}
+- **GET** lecture/lecture-of-course/{courseId}
+- **GET** lecture/lecture-of-course-instructor/{instructorId}/{courseId}
+- **GET** lecture/course-of-lecture/{lectureId}
+- **GET** lecture/instructor-of-lecture/{lectureId}
+- **GET** lecture/lecture-of-course-instructor/{instructorId}
+- **GET** lecture/assignment-of-lecture/{lectureId}
+
+# Assignment
+- **POST** /assignment/create/{userId}/{courseId}/{lectureId}
+- **GET** /assignment/fetch-all/{userId}/{courseId}
+- **GET** /assignment/fetch-all/{userId}/{courseId}/{lectureId}
+- **PUT** /assignment/update/{userId}/{updateId}
+- **DELETE** /assignment/delete/{userId}/{assignmentId}
+- **GET** /assignment/fetch/{userId}/{assignmentId}
+
+# Submission
+- **POST** /submission/create/{studentId}/{assignmentId}
+- **GET** /submission/fetch-all/{studentId}
+- **GET** /submission/fetch-all-assignment/{studentId}/{assignmentId}
+
+# Announcement
+- **POST** /announce/create/{userId}/{departId}/{courseId}
+- **GET** /announce/getAnnounce-list/{userId}
+- **GET** /announce/getAnnounce-list-of-course/{userId}/{courseId}
+- **PUT** /announce/update-announce/{userId}/{announceId}
+- **DELETE** /announce/delete-announce/{userId}/{announceId}
+
+# Enrollment
+- **POST** /enrollment/enroll/{courseId}/{studentId}
+
+# ChatBot
+- **GET** /bot/chat/{prompt}
 
 
 ## HighLights
