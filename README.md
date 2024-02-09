@@ -163,7 +163,7 @@ The **Education System** is a comprehensive web-based platform designed to facil
 
 ## Demo
 
-Explore our **[live demo](https://65c52340426c29007446b801--frabjous-griffin-33f102.netlify.app/)** to see the Education System in action. You can experience user registration, course enrollment, and other key features.
+Explore our **[live demo](https://65c5e74996caa779dd2289db--capable-tartufo-2a8ee2.netlify.app/)** to see the Education System in action. You can experience user registration, course enrollment, and other key features.
 
 ## Getting Started
 
